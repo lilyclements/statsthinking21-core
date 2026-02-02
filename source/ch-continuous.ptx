@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="modeling-continuous-relationships">
+  <title>Modeling continuous relationships</title>
+  
+  <introduction>
+    <p>
+      This chapter covers methods for modeling relationships between continuous variables.
+    </p>
+  </introduction>
+
+  <section xml:id="correlation">
+    <title>Correlation</title>
+    <p>
+      Correlation measures the strength of linear relationships between variables.
+    </p>
+  </section>
+
+  <section xml:id="simple-regression">
+    <title>Simple linear regression</title>
+    <p>
+      Linear regression models the relationship between a predictor and outcome variable.
+    </p>
+  </section>
+</chapter>

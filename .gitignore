@@ -4,3 +4,8 @@
 .Rproj.user
 *.Rproj
 .gitignore
+
+# PreTeXt build outputs
+output/
+generated-assets/
+assets/

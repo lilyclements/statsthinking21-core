@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="resampling-simulation">
+  <title>Resampling and simulation</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces computational methods for statistical inference using resampling and simulation.
+    </p>
+  </introduction>
+
+  <section xml:id="bootstrap">
+    <title>The bootstrap</title>
+    <p>
+      Bootstrap methods use resampling to estimate uncertainty.
+    </p>
+  </section>
+
+  <section xml:id="monte-carlo">
+    <title>Monte Carlo simulation</title>
+    <p>
+      Simulation methods allow us to understand complex statistical problems.
+    </p>
+  </section>
+</chapter>

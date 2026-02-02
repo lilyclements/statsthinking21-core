@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="fitting-models">
+  <title>Fitting models to data</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the concept of statistical models and how we fit them to data.
+    </p>
+  </introduction>
+
+  <section xml:id="what-is-a-model">
+    <title>What is a model?</title>
+    <p>
+      A statistical model is a mathematical representation of the relationships in our data.
+    </p>
+  </section>
+
+  <section xml:id="fitting-models-section">
+    <title>Fitting models</title>
+    <p>
+      We fit models to data to understand patterns and make predictions.
+    </p>
+  </section>
+</chapter>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pretext xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
+  <docinfo>
+    <macros>
+    </macros>
+    <latex-image-preamble>
+    </latex-image-preamble>
+  </docinfo>
+
+  <book xml:id="statsthinking21">
+    <title>Statistical Thinking for the 21st Century</title>
+    <subtitle>Core Concepts</subtitle>
+    
+    <frontmatter xml:id="frontmatter">
+      <titlepage>
+        <author>
+          <personname>Russell A. Poldrack</personname>
+        </author>
+        <date><today/></date>
+      </titlepage>
+      
+      <xi:include href="./frontmatter.ptx"/>
+    </frontmatter>
+    
+    <!-- Main Content Chapters -->
+    <xi:include href="./ch-intro.ptx"/>
+    <xi:include href="./ch-data.ptx"/>
+    <xi:include href="./ch-summarizing.ptx"/>
+    <xi:include href="./ch-visualizing.ptx"/>
+    <xi:include href="./ch-fitting.ptx"/>
+    <xi:include href="./ch-probability.ptx"/>
+    <xi:include href="./ch-sampling.ptx"/>
+    <xi:include href="./ch-resampling.ptx"/>
+    <xi:include href="./ch-hypothesis.ptx"/>
+    <xi:include href="./ch-effect-size.ptx"/>
+    <xi:include href="./ch-bayesian.ptx"/>
+    <xi:include href="./ch-categorical.ptx"/>
+    <xi:include href="./ch-continuous.ptx"/>
+    <xi:include href="./ch-glm.ptx"/>
+    <xi:include href="./ch-comparing-means.ptx"/>
+    <xi:include href="./ch-multivariate.ptx"/>
+    <xi:include href="./ch-practical.ptx"/>
+    <xi:include href="./ch-reproducible.ptx"/>
+    
+    <backmatter xml:id="backmatter">
+      <xi:include href="./backmatter.ptx"/>
+    </backmatter>
+  </book>
+</pretext>

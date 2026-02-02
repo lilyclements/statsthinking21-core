@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<preface xml:id="preface">
+  <title>Preface</title>
+  
+  <p>
+    The goal of this book is to the tell the story of statistics as it is used today by researchers around the world. 
+    It's a different story than the one told in most introductory statistics books, which focus on teaching how to use 
+    a set of tools to achieve very specific goals. This book focuses on understanding the basic ideas of <em>statistical 
+    thinking</em> <mdash/> a systematic way of thinking about how we describe the world and use data to make decisions 
+    and predictions, all in the context of the inherent uncertainty that exists in the real world.
+  </p>
+
+  <section xml:id="preface-why-exists">
+    <title>Why does this book exist?</title>
+    <p>
+      This book is designed to provide a modern approach to statistical thinking, focusing on concepts and methods 
+      that are relevant for data analysis in the 21st century.
+    </p>
+  </section>
+
+  <section xml:id="preface-golden-age">
+    <title>The golden age of data</title>
+    <p>
+      Throughout this book we use examples from real data whenever possible. This is now very easy because we are 
+      swimming in open datasets, as governments, scientists, and companies are increasingly making data freely available.
+    </p>
+  </section>
+
+  <section xml:id="preface-doing-stats">
+    <title>The importance of doing statistics</title>
+    <p>
+      The only way to really learn statistics is to <em>do</em> statistics. While historically many statistics courses 
+      were taught using point-and-click statistical software, it is increasingly common for statistical education to 
+      use open-source languages in which students can code their own analyses.
+    </p>
+  </section>
+
+  <section xml:id="preface-open-source">
+    <title>An open source book</title>
+    <p>
+      This book is meant to be a living document. The source is available online at 
+      <url href="https://github.com/statsthinking21/statsthinking21-core">GitHub</url>. 
+      If you find any errors in the book or want to make a suggestion for how to improve it, 
+      please open an issue on the GitHub site.
+    </p>
+    <p>
+      The book is licensed according to the Creative Commons Attribution-NonCommercial 4.0 Generic (CC BY-NC 4.0) License.
+    </p>
+  </section>
+
+  <section xml:id="preface-acknowledgements">
+    <title>Acknowledgements</title>
+    <p>
+      Thanks to all contributors and reviewers who have helped improve this book.
+    </p>
+  </section>
+</preface>

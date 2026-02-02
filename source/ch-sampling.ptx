@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="sampling">
+  <title>Sampling</title>
+  
+  <introduction>
+    <p>
+      This chapter covers sampling theory and methods for drawing inferences from samples to populations.
+    </p>
+  </introduction>
+
+  <section xml:id="populations-and-samples">
+    <title>Populations and samples</title>
+    <p>
+      We use samples to make inferences about larger populations.
+    </p>
+  </section>
+
+  <section xml:id="sampling-methods">
+    <title>Sampling methods</title>
+    <p>
+      Different sampling methods have different properties and appropriate uses.
+    </p>
+  </section>
+</chapter>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="practical-example">
+  <title>Practical statistical modeling</title>
+  
+  <introduction>
+    <p>
+      This chapter demonstrates practical application of statistical methods to real-world problems.
+    </p>
+  </introduction>
+
+  <section xml:id="model-building">
+    <title>Building statistical models</title>
+    <p>
+      Practical model building involves careful consideration of many factors.
+    </p>
+  </section>
+
+  <section xml:id="model-checking">
+    <title>Model checking and validation</title>
+    <p>
+      Models must be validated to ensure they are appropriate for the data.
+    </p>
+  </section>
+</chapter>

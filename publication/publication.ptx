@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<publication>
+  <!-- Set where external assets and generated assets will be   -->
+  <!-- stored or created.  Directories are relative to the main -->
+  <!-- source PreTeXt file                                      -->
+  <source>
+    <directories external="../assets" generated="../generated-assets"/>
+  </source>
+
+  <common>
+    <!-- Set various options for LaTeX print output -->
+    <tableofcontents level="2"/>
+    <exercise-divisional hint="yes" answer="no" solution="no"/>
+  </common>
+
+  <!-- HTML-Specific Options -->
+  <html>
+    <!-- Set the style of the html by selecting colors -->
+    <css style="default" colors="blue_red"/>
+    <!-- Specify options for navigation elements -->
+    <navigation logic="linear"/>
+    <!-- Specify styling for pages -->
+    <baseurl href="https://statsthinking21.org/"/>
+  </html>
+
+  <!-- PDF-Specific Options -->
+  <latex print="yes" sides="two">
+    <page>
+      <geometry>letterpaper,margin=1in</geometry>
+    </page>
+  </latex>
+</publication>

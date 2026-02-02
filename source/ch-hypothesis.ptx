@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="hypothesis-testing">
+  <title>Hypothesis testing</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the framework of hypothesis testing for making decisions based on data.
+    </p>
+  </introduction>
+
+  <section xml:id="null-hypothesis">
+    <title>The null hypothesis</title>
+    <p>
+      Hypothesis testing begins with formulating null and alternative hypotheses.
+    </p>
+  </section>
+
+  <section xml:id="p-values">
+    <title>P-values and statistical significance</title>
+    <p>
+      P-values quantify the evidence against the null hypothesis.
+    </p>
+  </section>
+</chapter>

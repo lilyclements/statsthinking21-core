@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="comparing-means">
+  <title>Comparing means</title>
+  
+  <introduction>
+    <p>
+      This chapter covers methods for comparing means across groups.
+    </p>
+  </introduction>
+
+  <section xml:id="t-tests">
+    <title>t-tests</title>
+    <p>
+      t-tests compare means between two groups or conditions.
+    </p>
+  </section>
+
+  <section xml:id="anova">
+    <title>Analysis of Variance (ANOVA)</title>
+    <p>
+      ANOVA extends t-tests to compare means across multiple groups.
+    </p>
+  </section>
+</chapter>

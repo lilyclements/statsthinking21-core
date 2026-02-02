@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="probability">
+  <title>Probability</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the fundamental concepts of probability theory.
+    </p>
+  </introduction>
+
+  <section xml:id="what-is-probability">
+    <title>What is probability?</title>
+    <p>
+      Probability quantifies uncertainty and randomness in a mathematical framework.
+    </p>
+  </section>
+
+  <section xml:id="probability-rules">
+    <title>Rules of probability</title>
+    <p>
+      Probability follows specific mathematical rules and axioms.
+    </p>
+  </section>
+</chapter>

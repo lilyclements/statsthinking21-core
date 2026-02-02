@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="general-linear-model">
+  <title>The General Linear Model</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the general linear model as a unifying framework for statistical modeling.
+    </p>
+  </introduction>
+
+  <section xml:id="glm-framework">
+    <title>The GLM framework</title>
+    <p>
+      The general linear model provides a unified approach to many statistical analyses.
+    </p>
+  </section>
+
+  <section xml:id="multiple-regression">
+    <title>Multiple regression</title>
+    <p>
+      Multiple regression extends simple regression to multiple predictors.
+    </p>
+  </section>
+</chapter>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ci-effect-size-power">
+  <title>Quantifying effects and designing studies</title>
+  
+  <introduction>
+    <p>
+      This chapter covers confidence intervals, effect sizes, and statistical power.
+    </p>
+  </introduction>
+
+  <section xml:id="confidence-intervals">
+    <title>Confidence intervals</title>
+    <p>
+      Confidence intervals provide a range of plausible values for parameters.
+    </p>
+  </section>
+
+  <section xml:id="effect-size">
+    <title>Effect size</title>
+    <p>
+      Effect sizes quantify the magnitude of relationships or differences.
+    </p>
+  </section>
+
+  <section xml:id="statistical-power">
+    <title>Statistical power</title>
+    <p>
+      Statistical power is the probability of detecting an effect when it exists.
+    </p>
+  </section>
+</chapter>

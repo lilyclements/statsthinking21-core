@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="working-with-data">
+  <title>Working with data</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the fundamental concepts of working with data in statistical analysis.
+    </p>
+  </introduction>
+
+  <section xml:id="what-are-data">
+    <title>What are data?</title>
+    <p>
+      The first important point about data is that data <em>are</em> <mdash/> meaning that the word "data" is plural.
+      Data are composed of <em>variables</em>, where a variable reflects a unique measurement or quantity.
+    </p>
+  </section>
+
+  <section xml:id="qualitative-data">
+    <title>Qualitative data</title>
+    <p>
+      Some variables are <em>qualitative</em>, meaning that they describe a quality rather than a numeric quantity.
+    </p>
+  </section>
+
+  <section xml:id="quantitative-data">
+    <title>Quantitative data</title>
+    <p>
+      More commonly in statistics we will work with <em>quantitative</em> data, meaning data that are numerical.
+    </p>
+  </section>
+</chapter>

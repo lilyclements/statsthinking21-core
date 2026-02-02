@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="doing-reproducible-research">
+  <title>Doing reproducible research</title>
+  
+  <introduction>
+    <p>
+      This chapter covers principles and practices for conducting reproducible statistical research.
+    </p>
+  </introduction>
+
+  <section xml:id="reproducibility-crisis">
+    <title>The reproducibility crisis</title>
+    <p>
+      Many scientific findings have failed to replicate, highlighting the importance of reproducible research practices.
+    </p>
+  </section>
+
+  <section xml:id="best-practices">
+    <title>Best practices for reproducible research</title>
+    <p>
+      Following best practices helps ensure that research can be verified and built upon.
+    </p>
+  </section>
+</chapter>

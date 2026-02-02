@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="multivariate">
+  <title>Multivariate statistics</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces methods for analyzing data with multiple variables simultaneously.
+    </p>
+  </introduction>
+
+  <section xml:id="pca">
+    <title>Principal Component Analysis</title>
+    <p>
+      PCA reduces dimensionality while preserving important variation in data.
+    </p>
+  </section>
+
+  <section xml:id="factor-analysis">
+    <title>Factor analysis</title>
+    <p>
+      Factor analysis identifies latent variables underlying observed measurements.
+    </p>
+  </section>
+</chapter>

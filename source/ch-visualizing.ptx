@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="data-visualization">
+  <title>Data Visualization</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces principles and techniques for visualizing data effectively.
+    </p>
+  </introduction>
+
+  <section xml:id="principles-of-visualization">
+    <title>Principles of visualization</title>
+    <p>
+      Effective data visualization follows key principles for clarity and accuracy.
+    </p>
+  </section>
+
+  <section xml:id="types-of-plots">
+    <title>Types of plots</title>
+    <p>
+      Different types of data require different visualization approaches.
+    </p>
+  </section>
+</chapter>

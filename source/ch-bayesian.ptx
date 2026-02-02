@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="bayesian-statistics">
+  <title>Bayesian statistics</title>
+  
+  <introduction>
+    <p>
+      This chapter introduces the Bayesian approach to statistical inference.
+    </p>
+  </introduction>
+
+  <section xml:id="bayes-theorem">
+    <title>Bayes' theorem</title>
+    <p>
+      Bayes' theorem provides a framework for updating beliefs based on evidence.
+    </p>
+  </section>
+
+  <section xml:id="bayesian-inference">
+    <title>Bayesian inference</title>
+    <p>
+      Bayesian inference offers an alternative approach to statistical reasoning.
+    </p>
+  </section>
+</chapter>

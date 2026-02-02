@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="modeling-categorical-relationships">
+  <title>Modeling categorical relationships</title>
+  
+  <introduction>
+    <p>
+      This chapter covers methods for analyzing relationships between categorical variables.
+    </p>
+  </introduction>
+
+  <section xml:id="contingency-tables">
+    <title>Contingency tables</title>
+    <p>
+      Contingency tables display relationships between categorical variables.
+    </p>
+  </section>
+
+  <section xml:id="chi-square-test">
+    <title>Chi-square test</title>
+    <p>
+      The chi-square test assesses independence between categorical variables.
+    </p>
+  </section>
+</chapter>

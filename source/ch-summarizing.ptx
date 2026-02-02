@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="summarizing-data">
+  <title>Summarizing data</title>
+  
+  <introduction>
+    <p>
+      This chapter covers methods for summarizing and describing data using statistical measures.
+    </p>
+  </introduction>
+
+  <section xml:id="measures-of-central-tendency">
+    <title>Measures of central tendency</title>
+    <p>
+      Central tendency measures include the mean, median, and mode.
+    </p>
+  </section>
+
+  <section xml:id="measures-of-variability">
+    <title>Measures of variability</title>
+    <p>
+      Variability measures describe how spread out the data are.
+    </p>
+  </section>
+</chapter>
