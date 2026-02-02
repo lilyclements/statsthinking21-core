@@ -10,15 +10,10 @@
   <common>
     <!-- Set various options for LaTeX print output -->
     <tableofcontents level="2"/>
-    <exercise-divisional hint="yes" answer="no" solution="no"/>
   </common>
 
   <!-- HTML-Specific Options -->
   <html>
-    <!-- Set the style of the html by selecting colors -->
-    <css style="default" colors="blue_red"/>
-    <!-- Specify options for navigation elements -->
-    <navigation logic="linear"/>
     <!-- Specify styling for pages -->
     <baseurl href="https://statsthinking21.org/"/>
   </html>

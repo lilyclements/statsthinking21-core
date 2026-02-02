@@ -32,9 +32,14 @@ jobs:
         run: |
           pip install pretext
           
+      - name: Install Playwright browsers (for PreTeXt)
+        run: |
+          playwright install chromium
+          
       - name: Build PreTeXt HTML
         run: |
           pretext build html
+        continue-on-error: false
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
