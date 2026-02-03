@@ -116,6 +116,28 @@
         In this case, we will sample 250 individuals from the NHANES dataset. Figure <xref ref="fig-bmi-sample"/> shows an example of such a sample, with BMI shown separately for active and inactive individuals, and Table <xref ref="table-bmi-summary"/> shows summary statistics for each group.
       </p>
 
+      <program language="r">
+        <input>
+# sample 250 adults from NHANES and compute mean BMI separately for active
+# and inactive individuals
+
+sampSize &lt;- 250
+
+NHANES_sample &lt;- 
+  NHANES_adult %&gt;%
+  sample_n(sampSize)
+
+sampleSummary &lt;-
+  NHANES_sample %&gt;%
+  group_by(PhysActive) %&gt;%
+  summarize(
+    N = length(BMI),
+    mean = mean(BMI),
+    sd = sd(BMI)
+  )
+        </input>
+      </program>
+
       <table xml:id="table-bmi-summary">
         <title>Summary of BMI data for active versus inactive individuals</title>
         <tabular halign="center">
@@ -139,6 +161,16 @@
           </row>
         </tabular>
       </table>
+
+      <program language="r">
+        <input>
+# Create box plot
+ggplot(NHANES_sample, aes(PhysActive, BMI)) +
+  geom_boxplot() + 
+  xlab('Physically active?') + 
+  ylab('Body Mass Index (BMI)')
+        </input>
+      </program>
 
       <figure xml:id="fig-bmi-sample">
         <caption>Box plot of BMI data from a sample of adults from the NHANES dataset, split by whether they reported engaging in regular physical activity.</caption>
@@ -203,6 +235,34 @@
         <me>
           P(X \ge k) = 1 - P(X \lt k)
         </me>
+
+        <program language="r">
+          <input>
+# simulate tossing of 100,000 flips of 100 coins to identify empirical 
+# probability of 70 or more heads out of 100 flips
+
+# create function to toss coins
+tossCoins &lt;- function() {
+  flips &lt;- runif(100) &gt; 0.5 
+  return(sum(flips))
+}
+
+# compute the probability of 69 or fewer heads, when P(heads)=0.5
+p_lt_70 &lt;- pbinom(69, 100, 0.5) 
+
+# the probability of 70 or more heads is simply the complement
+p_ge_70 &lt;- 1 - p_lt_70
+
+# use a large number of replications
+coinFlips &lt;- replicate(100000, tossCoins())
+p_ge_70_sim &lt;- mean(coinFlips &gt;= 70)
+
+# Plot histogram
+ggplot(data.frame(coinFlips), aes(coinFlips)) +
+  geom_histogram(binwidth = 1) + 
+  geom_vline(xintercept = 70, color='red', size=1)
+          </input>
+        </program>
 
         <figure xml:id="fig-coin-flips">
           <caption>Distribution of numbers of heads (out of 100 flips) across 100,000 simulated runs with the observed value of 70 flips represented by the vertical line.</caption>
