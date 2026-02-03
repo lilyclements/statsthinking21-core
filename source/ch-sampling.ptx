@@ -69,9 +69,60 @@
       </tabular>
     </table>
 
+    <program language="r">
+      <input>
+# Sample 50 individuals from NHANES dataset and compute statistics
+sample_df &lt;- data.frame(sampnum=seq(5), sampleMean=0, sampleSD=0)
+
+for (i in 1:5){
+  exampleSample &lt;- 
+    NHANES_adult %&gt;% 
+    sample_n(50) %&gt;%
+    pull(Height)
+  sample_df$sampleMean[i] &lt;- mean(exampleSample)
+  sample_df$sampleSD[i] &lt;- sd(exampleSample)
+}
+      </input>
+    </program>
+
     <p>
       The sample mean and standard deviation are similar but not exactly equal to the population values. Now let's take a large number of samples of 50 individuals, compute the mean for each sample, and look at the resulting sampling distribution of means. We have to decide how many samples to take in order to do a good job of estimating the sampling distribution <mdash/> in this case we will take 5000 samples so that we are very confident in the answer. Note that simulations like this one can sometimes take a few minutes to run, and might make your computer huff and puff. The histogram in the figure below shows that the means estimated for each of the samples of 50 individuals vary somewhat, but that overall they are centered around the population mean. The average of the 5000 sample means (168.35 cm) is very close to the true population mean (168.35 cm).
     </p>
+
+    <program language="r">
+      <input>
+# Compute sample means across 5000 samples from NHANES data
+sampSize &lt;- 50  # size of sample
+nsamps &lt;- 5000  # number of samples we will take
+
+# Set up variable to store all of the results
+sampMeans &lt;- array(NA, nsamps)
+
+# Loop through and repeatedly sample and compute the mean
+for (i in 1:nsamps) {
+  NHANES_sample &lt;- sample_n(NHANES_adult, sampSize)
+  sampMeans[i] &lt;- mean(NHANES_sample$Height)
+}
+
+sampMeans_df &lt;- tibble(sampMeans = sampMeans)
+
+# Create plot comparing sampling distribution to population
+sampMeans_df %&gt;% 
+  ggplot(aes(sampMeans)) +
+  geom_histogram(
+    data = NHANES_adult, 
+    aes(Height, ..density..),
+    bins = 100, col = "gray", fill = "gray"
+  ) +
+  geom_histogram(
+    aes(y = ..density.. * 0.2),
+    bins = 100,
+    col = "blue", fill = "blue"
+  ) +
+  geom_vline(xintercept = mean(NHANES_adult$Height)) +
+  labs(x = "Height (cm)")
+      </input>
+    </program>
 
     <figure xml:id="fig-sample-plot">
       <caption>The blue histogram shows the sampling distribution of the mean over 5000 random samples from the NHANES dataset. The histogram for the full dataset is shown in gray for reference. The vertical line indicates the population mean.</caption>
