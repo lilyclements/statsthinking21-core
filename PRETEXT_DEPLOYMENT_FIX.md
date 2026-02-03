@@ -20,7 +20,7 @@ Updated `project.ptx` to use attribute-based configuration compatible with PreTe
 ## Next Steps for Deployment
 
 ### 1. Merge This PR
-Merge this pull request into the `main` branch.
+Merge this pull request into the `master` branch.
 
 ### 2. Configure GitHub Pages
 **This is the critical step!**
@@ -32,11 +32,11 @@ Go to your repository settings:
 4. Click **Save**
 
 ### 3. Trigger the Workflow
-The workflow will automatically run when you merge to `main`, or you can manually trigger it:
+The workflow will automatically run when you merge to `master`, or you can manually trigger it:
 1. Go to **Actions** tab
 2. Select "Build and Deploy PreTeXt" workflow
 3. Click "Run workflow"
-4. Select the `main` branch
+4. Select the `master` branch
 5. Click "Run workflow"
 
 ### 4. Verify Deployment
@@ -77,7 +77,7 @@ If the workflow fails:
 To complete the deployment setup, you need to:
 
 ### 1. Merge This PR
-Merge this pull request into the `main` branch.
+Merge this pull request into the `master` branch.
 
 ### 2. Configure GitHub Pages
 **This is the critical step that was likely causing the 404 error!**
@@ -89,11 +89,11 @@ Go to your repository settings:
 4. Click **Save**
 
 ### 3. Trigger the Workflow
-The workflow will automatically run when you merge to `main`, or you can manually trigger it:
+The workflow will automatically run when you merge to `master`, or you can manually trigger it:
 1. Go to **Actions** tab
 2. Select "Build and Deploy PreTeXt" workflow
 3. Click "Run workflow"
-4. Select the `main` branch
+4. Select the `master` branch
 5. Click "Run workflow"
 
 ### 4. Verify Deployment

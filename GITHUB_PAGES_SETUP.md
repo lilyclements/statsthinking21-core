@@ -18,7 +18,7 @@ That's it! Once this is configured, the workflow will automatically deploy your 
 ## How It Works
 
 The GitHub Actions workflow (`.github/workflows/pretext.yml`) will:
-- Trigger automatically on pushes to the `main` branch
+- Trigger automatically on pushes to the `master` branch
 - Install PreTeXt and build the book
 - Deploy the built HTML to GitHub Pages
 
@@ -40,7 +40,7 @@ You can also manually trigger the workflow:
 1. Go to **Actions** tab
 2. Select "Build and Deploy PreTeXt" workflow
 3. Click "Run workflow"
-4. Select the `main` branch
+4. Select the `master` branch
 5. Click "Run workflow"
 
 ## Troubleshooting
