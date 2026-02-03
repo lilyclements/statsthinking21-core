@@ -14,16 +14,13 @@
     <subtitle>A Systematic Way of Thinking About Data</subtitle>
 
     <frontmatter xml:id="frontmatter">
-      <titlepage>
+      <bibinfo>
         <author>
           <personname>Russell A. Poldrack</personname>
           <department>Department of Psychology</department>
           <institution>Stanford University</institution>
         </author>
         <date><today /></date>
-      </titlepage>
-
-      <colophon>
         <copyright>
           <year>2019<ndash/>2026</year>
           <holder>Russell A. Poldrack</holder>
@@ -35,6 +32,14 @@
             CreativeCommons.org</url>
           </shortlicense>
         </copyright>
+      </bibinfo>
+
+      <titlepage>
+        <titlepage-items/>
+      </titlepage>
+
+      <colophon>
+        <colophon-items/>
       </colophon>
 
       <preface xml:id="preface">
