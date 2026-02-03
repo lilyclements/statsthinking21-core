@@ -117,7 +117,7 @@
     <subsection xml:id="subsec-hypothesis-testing-correlations">
       <title>Hypothesis testing for correlations</title>
       <p>
-        The correlation value of 0.42 between hate crimes and income inequality seems to indicate a reasonably strong relationship between the two, but we can also imagine that this could occur by chance even if there is no relationship. We can test the null hypothesis that the correlation is zero, using a simple equation that lets us convert a correlation value into a <em>t</em> statistic:
+        The correlation value of 0.40 between hate crimes and income inequality seems to indicate a reasonably strong relationship between the two, but we can also imagine that this could occur by chance even if there is no relationship. We can test the null hypothesis that the correlation is zero, using a simple equation that lets us convert a correlation value into a <em>t</em> statistic:
       </p>
       <me>
         \textit{t}_r = \frac{r\sqrt{N-2}}{\sqrt{1-r^2}}
