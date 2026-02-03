@@ -4,15 +4,357 @@
 
   <introduction>
     <p>
-      <!-- Chapter introduction content goes here -->
+      So far we have discussed the general concepts of statistical modeling and hypothesis testing, and applied them to some simple analyses; now we will turn to the question of how to model particular kinds of relationships in our data. In this chapter we will focus on the modeling of <em>categorical</em> relationships, by which we mean relationships between variables that are measured qualitatively. These data are usually expressed in terms of counts; that is, for each value of the variable (or combination of values of multiple variables), how many observations take that value? For example, when we count how many people from each major are in our class, we are fitting a categorical model to the data.
     </p>
   </introduction>
 
-  <section xml:id="sec-chi-square">
-    <title>Chi-Square Test</title>
+  <section xml:id="sec-example-candy-colors">
+    <title>Example: Candy colors</title>
     <p>
-      <!-- Section content goes here -->
+      Let's say that I have purchased a bag of 100 candies, which are labeled as having 1/3 chocolates, 1/3 licorices, and 1/3 gumballs. When I count the candies in the bag, we get the following numbers: 30 chocolates, 33 licorices, and 37 gumballs. Because I like chocolate much more than licorice or gumballs, I feel slightly ripped off and I'd like to know if this was just a random accident. To answer that question, I need to know: What is the likelihood that the count would come out this way if the true probability of each candy type is the averaged proportion of 1/3 each?
     </p>
+  </section>
+
+  <section xml:id="sec-chi-squared-test">
+    <title>Pearson's chi-squared test</title>
+    <p>
+      The Pearson chi-squared test provides us with a way to test whether a set of observed counts differs from some specific expected values that define the null hypothesis:
+    </p>
+    <me>
+      \chi^2 = \sum_i\frac{(observed_i - expected_i)^2}{expected_i}
+    </me>
+    <p>
+      In the case of our candy example, the null hypothesis is that the proportion of each type of candy is equal. To compute the chi-squared statistic, we first need to come up with our expected counts under the null hypothesis: since the null is that they are all the same, then this is just the total count split across the three categories (as shown in <xref ref="table-candy"/>). We then take the difference between each count and its expectation under the null hypothesis, square them, divide them by the null expectation, and add them up to obtain the chi-squared statistic.
+    </p>
+
+    <table xml:id="table-candy">
+      <title>Observed counts, expectations under the null hypothesis, and squared differences in the candy data</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>Candy Type</cell>
+          <cell>count</cell>
+          <cell>nullExpectation</cell>
+          <cell>squared difference</cell>
+        </row>
+        <row>
+          <cell>chocolate</cell>
+          <cell>30</cell>
+          <cell>33.333</cell>
+          <cell>11.111</cell>
+        </row>
+        <row>
+          <cell>licorice</cell>
+          <cell>33</cell>
+          <cell>33.333</cell>
+          <cell>0.111</cell>
+        </row>
+        <row>
+          <cell>gumball</cell>
+          <cell>37</cell>
+          <cell>33.333</cell>
+          <cell>13.444</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The chi-squared statistic for this analysis comes out to 0.74, which on its own is not interpretable, since it depends on the number of different values that were added together. However, we can take advantage of the fact that the chi-squared statistic is distributed according to a specific distribution under the null hypothesis, which is known as the <em>chi-squared</em> distribution. This distribution is defined as the sum of squares of a set of standard normal random variables; it has a number of degrees of freedom that is equal to the number of variables being added together. The shape of the distribution depends on the number of degrees of freedom. The left panel of <xref ref="fig-chisq-dist"/> shows examples of the distribution for several different degrees of freedom.
+    </p>
+
+    <figure xml:id="fig-chisq-dist">
+      <caption>Left: Examples of the chi-squared distribution for various degrees of freedom. Right: Simulation of sum of squared random normal variables. The histogram is based on the sum of squares of 50,000 sets of 8 random normal variables; the dotted line shows the values of the theoretical chi-squared distribution with 8 degrees of freedom.</caption>
+      <image source="chisqDist.png" width="80%">
+        <description>Two panel figure. Left panel shows curves of chi-squared distributions with different degrees of freedom (1, 2, 4, 8). Right panel shows a histogram of simulated data matching the theoretical chi-squared distribution with 8 degrees of freedom.</description>
+      </image>
+    </figure>
+
+    <p>
+      Let's verify that the chi-squared distribution accurately describes the sum of squares of a set of standard normal random variables, using simulation. To do this, we repeatedly draw sets of 8 random numbers, and add up each set after squaring each value. The right panel of <xref ref="fig-chisq-dist"/> shows that the theoretical distribution matches closely with the results of a simulation that repeatedly added together the squares of a set of random normal variables.
+    </p>
+
+    <p>
+      For the candy example, we can compute the likelihood of our observed chi-squared value of 0.74 under the null hypothesis of equal frequency across all candies. We use a chi-squared distribution with degrees of freedom equal to k - 1 (where k = the number of categories) since we lost one degree of freedom when we computed the mean in order to generate the expected values. The resulting p-value (P(Chi-squared) > 0.74 = 0.691) shows that the observed counts of candies are not particularly surprising based on the proportions printed on the bag of candy, and we would not reject the null hypothesis of equal proportions.
+    </p>
+  </section>
+
+  <section xml:id="sec-contingency-tables-two-way-test">
+    <title>Contingency tables and the two-way test</title>
+    <p>
+      Another way that we often use the chi-squared test is to ask whether two categorical variables are related to one another. As a more realistic example, let's take the question of whether a Black driver is more likely to be searched when they are pulled over by a police officer, compared to a white driver. The Stanford Open Policing Project (https://openpolicing.stanford.edu/) has studied this, and provides data that we can use to analyze the question. We will use the data from the State of Connecticut since they are fairly small and thus easier to analyze.
+    </p>
+
+    <p>
+      The standard way to represent data from a categorical analysis is through a <em>contingency table</em>, which presents the number or proportion of observations falling into each possible combination of values for each of the variables. <xref ref="table-police-ct"/> below shows the contingency table for the police search data. It can also be useful to look at the contingency table using proportions rather than raw numbers, since they are easier to compare visually, so we include both absolute and relative numbers here.
+    </p>
+
+    <table xml:id="table-police-ct">
+      <title>Contingency table for police search data</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>searched</cell>
+          <cell>Black</cell>
+          <cell>White</cell>
+          <cell>Black (relative)</cell>
+          <cell>White (relative)</cell>
+        </row>
+        <row>
+          <cell>FALSE</cell>
+          <cell>36244</cell>
+          <cell>239241</cell>
+          <cell>0.130</cell>
+          <cell>0.854</cell>
+        </row>
+        <row>
+          <cell>TRUE</cell>
+          <cell>1219</cell>
+          <cell>3108</cell>
+          <cell>0.004</cell>
+          <cell>0.011</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The Pearson chi-squared test allows us to test whether observed frequencies are different from expected frequencies, so we need to determine what frequencies we would expect in each cell if searches and race were unrelated <mdash/> which we can define as being <em>independent</em>. Remember from the chapter on probability that if X and Y are independent, then:
+    </p>
+    <me>
+      P(X \cap Y) = P(X) * P(Y)
+    </me>
+    <p>
+      That is, the joint probability under the null hypothesis of independence is simply the product of the <em>marginal</em> probabilities of each individual variable. The marginal probabilities are simply the probabilities of each event occuring regardless of other events. We can compute those marginal probabilities, and then multiply them together to get the expected proportions under independence.
+    </p>
+
+    <table xml:id="table-marginal-probs">
+      <title>Marginal probabilities for independence</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell></cell>
+          <cell>Black</cell>
+          <cell>White</cell>
+          <cell></cell>
+        </row>
+        <row>
+          <cell>Not searched</cell>
+          <cell>P(NS)*P(B)</cell>
+          <cell>P(NS)*P(W)</cell>
+          <cell>P(NS)</cell>
+        </row>
+        <row>
+          <cell>Searched</cell>
+          <cell>P(S)*P(B)</cell>
+          <cell>P(S)*P(W)</cell>
+          <cell>P(S)</cell>
+        </row>
+        <row>
+          <cell></cell>
+          <cell>P(B)</cell>
+          <cell>P(W)</cell>
+          <cell></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      We then compute the chi-squared statistic, which comes out to 828.4. To compute a p-value, we need to compare it to the null chi-squared distribution in order to determine how extreme our chi-squared value is compared to our expectation under the null hypothesis. The degrees of freedom for this distribution are <m>df = (nRows - 1) * (nColumns - 1)</m> <mdash/> thus, for a 2X2 table like the one here, <m>df = (2-1)*(2-1)=1</m>. The intuition here is that computing the expected frequencies requires us to use three values: the total number of observations and the marginal probability for each of the two variables. Thus, once those values are computed, there is only one number that is free to vary, and thus there is one degree of freedom. Given this, we can compute the p-value for the chi-squared statistic, which is about as close to zero as one can get: <m>3.79 \times 10^{-182}</m>. This shows that the observed data would be highly unlikely if there was truly no relationship between race and police searches, and thus we should reject the null hypothesis of independence.
+    </p>
+  </section>
+
+  <section xml:id="sec-standardized-residuals">
+    <title>Standardized residuals</title>
+    <p>
+      When we find a significant effect with the chi-squared test, this tells us that the data are unlikely under the null hypothesis, but it doesn't tell us <em>how</em> the data differ. To get a deeper insight into how the data differ from what we would expect under the null hypothesis, we can examine the residuals from the model, which reflects the deviation of the data (i.e., the observed frequencies) from the model (i.e., the expected frequencies) in each cell. Rather than looking at the raw residuals (which will vary simply depending on the number of observations in the data), it's more common to look at the <em>standardized residuals</em> (sometimes called <em>Pearson residuals</em>), which are computed as:
+    </p>
+    <me>
+      standardized\ residual_{ij} = \frac{observed_{ij} - expected_{ij}}{\sqrt{expected_{ij}}}
+    </me>
+    <p>
+      where <m>i</m> and <m>j</m> are the indices for the rows and columns respectively.
+    </p>
+
+    <p>
+      <xref ref="table-std-residuals"/> shows these for the police stop data. These standardized residuals can be interpreted as Z scores <mdash/> in this case, we see that the number of searches for Black individuals are substantially higher than expected based on independence, and the number of searches for white individuals are substantially lower than expected. This provides us with the context that we need to interpret the signficant chi-squared result.
+    </p>
+
+    <table xml:id="table-std-residuals">
+      <title>Summary of standardized residuals for police stop data</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>searched</cell>
+          <cell>driver_race</cell>
+          <cell>Standardized residuals</cell>
+        </row>
+        <row>
+          <cell>FALSE</cell>
+          <cell>Black</cell>
+          <cell>-6.36</cell>
+        </row>
+        <row>
+          <cell>FALSE</cell>
+          <cell>White</cell>
+          <cell>2.54</cell>
+        </row>
+        <row>
+          <cell>TRUE</cell>
+          <cell>Black</cell>
+          <cell>22.81</cell>
+        </row>
+        <row>
+          <cell>TRUE</cell>
+          <cell>White</cell>
+          <cell>-9.11</cell>
+        </row>
+      </tabular>
+    </table>
+  </section>
+
+  <section xml:id="sec-odds-ratios">
+    <title>Odds ratios</title>
+    <p>
+      We can also represent the relative likelihood of different outcomes in the contingency table using the odds ratio that we introduced earlier, in order to better understand the magnitude of the effect. First, we represent the odds of being stopped for each race, then we compute their ratio:
+    </p>
+    <md>
+      <mrow>
+        odds_{searched|black} \amp = \frac{N_{searched\cap black}}{N_{not\ searched\cap black}} = \frac{1219}{36244} = 0.034
+      </mrow>
+      <mrow>
+        odds_{searched|white} \amp = \frac{N_{searched\cap white}}{N_{not\ searched\cap white}} = \frac{3108}{239241} = 0.013
+      </mrow>
+      <mrow>
+        odds\ ratio \amp = \frac{odds_{searched|black}}{odds_{searched|white}} = 2.59
+      </mrow>
+    </md>
+    <p>
+      The odds ratio shows that the odds of being searched are 2.59 times higher for Black versus white drivers, based on this dataset.
+    </p>
+  </section>
+
+  <section xml:id="sec-bayes-factor">
+    <title>Bayes factor</title>
+    <p>
+      We discussed Bayes factors in the earlier chapter on Bayesian statistics <mdash/> you may remember that it represents the ratio of the likelihood of the data under each of the two hypotheses:
+    </p>
+    <me>
+      K = \frac{P(data|H_A)}{P(data|H_0)} = \frac{P(H_A|data)*P(H_A)}{P(H_0|data)*P(H_0)}
+    </me>
+    <p>
+      We can compute the Bayes factor for the police search data using statistical software. The result shows that the evidence in favor of a relationship between driver race and police searches in this dataset is exceedingly strong <mdash/> <m>1.8 \times 10^{142}</m> is about as close to infinity as we can imagine getting in statistics.
+    </p>
+  </section>
+
+  <section xml:id="sec-categorical-beyond-2x2">
+    <title>Categorical analysis beyond the 2 X 2 table</title>
+    <p>
+      Categorical analysis can also be applied to contingency tables where there are more than two categories for each variable.
+    </p>
+
+    <p>
+      For example, let's look at the NHANES data and compare the variable <em>Depressed</em> which denotes the <q>self-reported number of days where the participant felt down, depressed or hopeless</q>. This variable is coded as <c>None</c>, <c>Several</c>, or <c>Most</c>. Let's test whether this variable is related to the <em>SleepTrouble</em> variable which denotes whether the individual has reported sleeping problems to a doctor.
+    </p>
+
+    <table xml:id="table-depression-sleep">
+      <title>Relationship between depression and sleep problems in the NHANES dataset</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>Depressed</cell>
+          <cell>NoSleepTrouble</cell>
+          <cell>YesSleepTrouble</cell>
+        </row>
+        <row>
+          <cell>Most</cell>
+          <cell>223</cell>
+          <cell>240</cell>
+        </row>
+        <row>
+          <cell>None</cell>
+          <cell>2614</cell>
+          <cell>634</cell>
+        </row>
+        <row>
+          <cell>Several</cell>
+          <cell>575</cell>
+          <cell>306</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Simply by looking at these data, we can tell that it is likely that there is a relationship between the two variables; notably, while the total number of people with sleep trouble is much less than those without, for people who report being depresssed most days the number with sleep problems is greater than those without. We can quantify this directly using the chi-squared test, which shows that there is a strong relationship between depression and sleep trouble (chi-squared = 476.45, df = 2, p-value &lt; 2.2e-16).
+    </p>
+
+    <p>
+      We can also compute the Bayes factor to quantify the strength of the evidence in favor of the alternative hypothesis. Here we see that the Bayes factor is very large (<m>1.8 \times 10^{35}</m>), showing that the evidence in favor of a relation between depression and sleep problems is very strong.
+    </p>
+  </section>
+
+  <section xml:id="sec-simpsons-paradox">
+    <title>Beware of Simpson's paradox</title>
+    <p>
+      The contingency tables presented above represent summaries of large numbers of observations, but summaries can sometimes be misleading. Let's take an example from baseball. The table below shows the batting data (hits/at bats and batting average) for Derek Jeter and David Justice over the years 1995-1997:
+    </p>
+
+    <table xml:id="table-simpsons-paradox">
+      <title>Baseball batting averages showing Simpson's paradox</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>Player</cell>
+          <cell>1995</cell>
+          <cell></cell>
+          <cell>1996</cell>
+          <cell></cell>
+          <cell>1997</cell>
+          <cell></cell>
+          <cell>Combined</cell>
+          <cell></cell>
+        </row>
+        <row>
+          <cell>Derek Jeter</cell>
+          <cell>12/48</cell>
+          <cell>.250</cell>
+          <cell>183/582</cell>
+          <cell>.314</cell>
+          <cell>190/654</cell>
+          <cell>.291</cell>
+          <cell>385/1284</cell>
+          <cell><em>.300</em></cell>
+        </row>
+        <row>
+          <cell>David Justice</cell>
+          <cell>104/411</cell>
+          <cell><em>.253</em></cell>
+          <cell>45/140</cell>
+          <cell><em>.321</em></cell>
+          <cell>163/495</cell>
+          <cell><em>.329</em></cell>
+          <cell>312/1046</cell>
+          <cell>.298</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      If you look closely, you will see that something odd is going on: In each individual year Justice had a higher batting average than Jeter, but when we combine the data across all three years, Jeter's average is actually higher than Justice's! This is an example of a phenomenon known as <em>Simpson's paradox</em>, in which a pattern that is present in a combined dataset may not be present in any of the subsets of the data. This occurs when there is another variable that may be changing across the different subsets <mdash/> in this case, the number of at-bats varies across years, with Justice batting many more times in 1995 (when batting averages were low). We refer to this as a <em>lurking variable</em>, and it's always important to be attentive to such variables whenever one examines categorical data.
+    </p>
+  </section>
+
+  <section xml:id="sec-categorical-learning-objectives">
+    <title>Learning objectives</title>
+    <p>
+      Having read this chapter, you should be able to:
+    </p>
+    <ul>
+      <li>Describe the concept of a contingency table for categorical data.</li>
+      <li>Describe the concept of the chi-squared test for association and compute it for a given contingency table.</li>
+      <li>Describe Simpson's paradox and why it is important for categorical data analysis.</li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-categorical-additional-readings">
+    <title>Additional readings</title>
+    <ul>
+      <li>
+        <url href="https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00513/full" visual="frontiersin.org">Simpson's paradox in psychological science: a practical guide</url>
+      </li>
+    </ul>
   </section>
 
 </chapter>
