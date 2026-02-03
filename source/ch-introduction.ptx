@@ -33,13 +33,11 @@
     <p>
       There are three major things that we can do with statistics:
     </p>
-    <p>
-      <ul>
-        <li><em>Describe</em>: The world is complex and we often need to describe it in a simplified way that we can understand.</li>
-        <li><em>Decide</em>: We often need to make decisions based on data, usually in the face of uncertainty.</li>
-        <li><em>Predict</em>: We often wish to make predictions about new situations based on our knowledge of previous situations.</li>
-      </ul>
-    </p>
+    <ul>
+      <li><em>Describe</em>: The world is complex and we often need to describe it in a simplified way that we can understand.</li>
+      <li><em>Decide</em>: We often need to make decisions based on data, usually in the face of uncertainty.</li>
+      <li><em>Predict</em>: We often wish to make predictions about new situations based on our knowledge of previous situations.</li>
+    </ul>
     <p>
       Let's look at an example of these in action, centered on a question that many of us are interested in: How do we decide what's healthy to eat? There are many different sources of guidance; government dietary guidelines, diet books, and bloggers, just to name a few. Let's focus in on a specific question: Is saturated fat in our diet a bad thing?
     </p>
@@ -133,24 +131,20 @@
     <p>
       Having read this chapter, you should be able to:
     </p>
-    <p>
-      <ul>
-        <li>Describe the central goals and fundamental concepts of statistics</li>
-        <li>Describe the difference between experimental and observational research with regard to what can be inferred about causality</li>
-        <li>Explain how randomization provides the ability to make inferences about causation.</li>
-      </ul>
-    </p>
+    <ul>
+      <li>Describe the central goals and fundamental concepts of statistics</li>
+      <li>Describe the difference between experimental and observational research with regard to what can be inferred about causality</li>
+      <li>Explain how randomization provides the ability to make inferences about causation.</li>
+    </ul>
   </section>
 
   <section xml:id="sec-intro-suggested-readings">
     <title>Suggested readings</title>
-    <p>
-      <ul>
-        <li><em>The Seven Pillars of Statistical Wisdom</em>, by Stephen Stigler</li>
-        <li><em>The Lady Tasting Tea: How Statistics Revolutionized Science in the Twentieth Century</em>, by David Salsburg</li>
-        <li><em>Naked Statistics: Stripping the Dread from the Data</em>, by Charles Wheelan</li>
-      </ul>
-    </p>
+    <ul>
+      <li><em>The Seven Pillars of Statistical Wisdom</em>, by Stephen Stigler</li>
+      <li><em>The Lady Tasting Tea: How Statistics Revolutionized Science in the Twentieth Century</em>, by David Salsburg</li>
+      <li><em>Naked Statistics: Stripping the Dread from the Data</em>, by Charles Wheelan</li>
+    </ul>
   </section>
 
 </chapter>
