@@ -1,5 +1,8 @@
 # Generate figures for Comparing Means chapter (ch-comparing-means.ptx)
 # This script generates the PNG files needed for the PreTeXt version
+#
+# IMPORTANT: Run this script from the repository root directory
+# Example: Rscript R/generate_comparing_means_figures.R
 
 library(ggplot2)
 library(tidyr)
@@ -8,6 +11,14 @@ library(cowplot)
 
 # Set random seed for reproducibility
 set.seed(123456)
+
+# Check that required source files exist
+if (!file.exists("R/setup.R")) {
+  stop("Error: R/setup.R not found. Please run this script from the repository root.")
+}
+if (!file.exists("R/load_data.R")) {
+  stop("Error: R/load_data.R not found. Please run this script from the repository root.")
+}
 
 # Load NHANES data
 source("R/setup.R")
