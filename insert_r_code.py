@@ -358,51 +358,304 @@ def add_example_code_to_remaining_chapters():
     """
     Add example R code to chapters that don't have displayable chunks in Rmd
     but should have code examples for educational purposes.
+    
+    Based on the task requirements, add code to:
+    - Chapter 9.3, 10.1.4, 10.3.1, 11.6, 12.3, 12.6, 12.7
+    - Chapter 13.3.1, 13.3.2, 13.7.2
+    - Chapter 14 (intro), 14.1.4, 14.2, 14.3, 14.5, 14.9
+    - Chapter 15.1-15.6, 15.8
+    - Chapter 16.3, 16.4
+    - Chapter 17.1.5, 17.1.7, 17.2
     """
     base_dir = Path('/home/runner/work/statsthinking21-core/statsthinking21-core')
     
     # Chapter-specific example code to add
     examples = {
-        'source/ch-general-linear-model.ptx': [
+        'source/ch-hypothesis-testing.ptx': [
             {
-                'search': 'General Linear Model',
-                'code': '''# Multiple regression example
-model <- lm(Weight ~ Height + Age + Gender, data = NHANES_adult)
-summary(model)
+                'search': 'Compute the probability of the observed result',
+                'code': '''# Calculate p-value from t-statistic
+# Assuming t-statistic and degrees of freedom
+t_stat <- 2.47  # example value
+df <- 248
+p_value <- 2 * pt(-abs(t_stat), df)  # two-tailed test
+print(p_value)
 
-# Check model fit
-summary(model)$r.squared
-summary(model)$adj.r.squared
-
-# ANOVA table
-anova(model)''',
+# Using t.test for complete analysis
+t.test(BMI ~ PhysActive, data = NHANES_sample)''',
                 'indent': 2,
-                'description': 'Multiple regression intro'
+                'description': 'Chapter 9.3 - p-value calculation'
             },
         ],
-        'source/ch-comparing-means.ptx': [
+        'source/ch-quantifying-effects.ptx': [
             {
-                'search': 'independent samples t-test',
-                'code': '''# Independent samples t-test
-t.test(BMI ~ PhysActive, data = NHANES_adult)
-
-# Welch's t-test (unequal variances)
-t.test(BMI ~ PhysActive, data = NHANES_adult, var.equal = FALSE)''',
+                'search': 'confidence interval',
+                'code': '''# Calculate 95% CI for mean
+mean_val <- mean(data$variable)
+se <- sd(data$variable) / sqrt(length(data$variable))
+ci_lower <- mean_val - qt(0.975, df = length(data$variable) - 1) * se
+ci_upper <- mean_val + qt(0.975, df = length(data$variable) - 1) * se
+c(ci_lower, ci_upper)''',
                 'indent': 2,
-                'description': 't-test example'
+                'description': 'Chapter 10.1.4 - CI calculation'
+            },
+            {
+                'search': 'effect size',
+                'code': '''# Calculate Cohen's d effect size
+library(effsize)
+cohen.d(BMI ~ PhysActive, data = NHANES_sample)
+
+# Manual calculation
+group1 <- NHANES_sample$BMI[NHANES_sample$PhysActive == "No"]
+group2 <- NHANES_sample$BMI[NHANES_sample$PhysActive == "Yes"]
+mean_diff <- mean(group1) - mean(group2)
+pooled_sd <- sqrt((var(group1) + var(group2)) / 2)
+cohens_d <- mean_diff / pooled_sd
+print(cohens_d)''',
+                'indent': 2,
+                'description': 'Chapter 10.3.1 - Effect size'
+            },
+        ],
+        'source/ch-bayesian-statistics.ptx': [
+            {
+                'search': 'Bayes factor',
+                'code': '''# Bayesian t-test with Bayes Factor
+library(BayesFactor)
+
+# Two-sample Bayesian t-test
+bf <- ttestBF(formula = BMI ~ PhysActive, data = NHANES_sample)
+print(bf)
+
+# Extract and interpret Bayes Factor
+bf_value <- extractBF(bf)$bf
+cat(sprintf("Bayes Factor: %.2f\\n", bf_value))
+
+# Get posterior samples
+samples <- posterior(bf, iterations = 10000)
+plot(samples[, "mu"])''',
+                'indent': 2,
+                'description': 'Chapter 11.6 - Bayesian analysis'
+            },
+        ],
+        'source/ch-categorical-relationships.ptx': [
+            {
+                'search': 'chi-square test',
+                'code': '''# Chi-square test of independence
+contingency_table <- table(data$var1, data$var2)
+chisq.test(contingency_table)
+
+# With Yates' continuity correction
+chisq.test(contingency_table, correct = TRUE)
+
+# Expected frequencies
+chisq_result <- chisq.test(contingency_table)
+chisq_result$expected''',
+                'indent': 2,
+                'description': 'Chapter 12.3 - Chi-square test'
+            },
+            {
+                'search': 'odds ratio',
+                'code': '''# Calculate odds ratio for 2x2 table
+library(epitools)
+oddsratio(contingency_table)
+
+# Manual odds ratio calculation
+odds1 <- contingency_table[1,1] / contingency_table[1,2]
+odds2 <- contingency_table[2,1] / contingency_table[2,2]
+or <- odds1 / odds2
+log_or <- log(or)
+cat(sprintf("Odds Ratio: %.2f\\n", or))
+cat(sprintf("Log Odds Ratio: %.2f\\n", log_or))''',
+                'indent': 2,
+                'description': 'Chapter 12.6 - Odds ratio'
+            },
+            {
+                'search': 'Cramér',
+                'code': '''# Cramér's V effect size for chi-square
+library(lsr)
+cramersV(contingency_table)
+
+# Manual calculation
+chisq_stat <- chisq.test(contingency_table)$statistic
+n <- sum(contingency_table)
+min_dim <- min(nrow(contingency_table), ncol(contingency_table))
+cramers_v <- sqrt(chisq_stat / (n * (min_dim - 1)))
+print(cramers_v)''',
+                'indent': 2,
+                'description': 'Chapter 12.7 - Cramér V'
             },
         ],
         'source/ch-continuous-relationships.ptx': [
             {
-                'search': 'correlation',
-                'code': '''# Pearson correlation
-cor.test(NHANES_adult$Height, NHANES_adult$Weight)
+                'search': 'Pearson correlation',
+                'code': '''# Pearson correlation coefficient
+cor.test(data$x, data$y, method = "pearson")
 
-# Simple linear regression
-model <- lm(Weight ~ Height, data = NHANES_adult)
-summary(model)''',
+# Correlation matrix for multiple variables
+cor(data[, c("var1", "var2", "var3")], use = "complete.obs")
+
+# Spearman's rank correlation (non-parametric)
+cor.test(data$x, data$y, method = "spearman")''',
                 'indent': 2,
-                'description': 'Correlation and regression'
+                'description': 'Chapter 13.3.1 - Correlation'
+            },
+            {
+                'search': 'linear regression',
+                'code': '''# Simple linear regression
+model <- lm(y ~ x, data = data)
+summary(model)
+
+# Extract coefficients
+coef(model)
+
+# Confidence intervals for coefficients
+confint(model)
+
+# Predictions
+new_data <- data.frame(x = c(1, 2, 3))
+predict(model, new_data, interval = "confidence")
+
+# Add regression line to plot
+plot(data$x, data$y)
+abline(model, col = "red", lwd = 2)''',
+                'indent': 2,
+                'description': 'Chapter 13.3.2 - Regression'
+            },
+            {
+                'search': 'residual',
+                'code': '''# Model diagnostics and residual analysis
+model <- lm(y ~ x, data = data)
+
+# Residual plots
+par(mfrow = c(2, 2))
+plot(model)
+
+# Test for normality of residuals
+shapiro.test(residuals(model))
+
+# Test for homoscedasticity
+library(lmtest)
+bptest(model)
+
+# Influential observations
+plot(cooks.distance(model))
+abline(h = 4/length(data$y), col = "red", lty = 2)''',
+                'indent': 2,
+                'description': 'Chapter 13.7.2 - Diagnostics'
+            },
+        ],
+        'source/ch-general-linear-model.ptx': [
+            {
+                'search': 'General Linear Model',
+                'code': '''# Multiple regression example
+model <- lm(y ~ x1 + x2 + x3, data = data)
+summary(model)
+
+# Partial R-squared
+library(rsq)
+rsq.partial(model)
+
+# ANOVA table
+anova(model)''',
+                'indent': 2,
+                'description': 'Chapter 14 intro - GLM'
+            },
+        ],
+        'source/ch-comparing-means.ptx': [
+            {
+                'search': 'One-way ANOVA',
+                'code': '''# One-way ANOVA
+model_aov <- aov(y ~ group, data = data)
+summary(model_aov)
+
+# Post-hoc tests
+TukeyHSD(model_aov)
+
+# Pairwise comparisons
+pairwise.t.test(data$y, data$group, p.adjust.method = "bonferroni")
+
+# Effect size (eta-squared)
+library(effectsize)
+eta_squared(model_aov)''',
+                'indent': 2,
+                'description': 'Chapter 15.8 - ANOVA'
+            },
+        ],
+        'source/ch-multivariate-statistics.ptx': [
+            {
+                'search': 'principal component',
+                'code': '''# Principal Component Analysis
+# Prepare data (numeric variables only)
+data_numeric <- data[, sapply(data, is.numeric)]
+
+# Standardize and perform PCA
+pca_result <- prcomp(data_numeric, scale. = TRUE)
+
+# Summary of variance explained
+summary(pca_result)
+
+# Scree plot
+plot(pca_result, type = "l", main = "Scree Plot")
+
+# Biplot
+biplot(pca_result)
+
+# Loadings
+pca_result$rotation[, 1:2]''',
+                'indent': 2,
+                'description': 'Chapter 16.3 - PCA'
+            },
+            {
+                'search': 'factor analysis',
+                'code': '''# Factor Analysis
+library(psych)
+
+# Determine number of factors
+fa.parallel(data_numeric, fa = "fa")
+
+# Perform factor analysis
+fa_result <- fa(data_numeric, nfactors = 2, rotate = "varimax")
+print(fa_result)
+
+# Factor loadings
+fa_result$loadings
+
+# Factor scores
+factor_scores <- factor.scores(data_numeric, fa_result)
+head(factor_scores$scores)''',
+                'indent': 2,
+                'description': 'Chapter 16.4 - Factor Analysis'
+            },
+        ],
+        'source/ch-practical-examples.ptx': [
+            {
+                'search': 'practical example',
+                'code': '''# Complete data analysis workflow
+# 1. Load and explore
+library(tidyverse)
+summary(data)
+str(data)
+
+# 2. Clean data
+data_clean <- data %>%
+  filter(!is.na(outcome)) %>%
+  mutate(group = factor(group))
+
+# 3. Exploratory visualization
+ggplot(data_clean, aes(x = predictor, y = outcome, color = group)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal()
+
+# 4. Statistical analysis
+model <- lm(outcome ~ predictor * group, data = data_clean)
+summary(model)
+
+# 5. Check assumptions
+par(mfrow = c(2, 2))
+plot(model)''',
+                'indent': 2,
+                'description': 'Chapter 17 - Practical workflow'
             },
         ],
     }

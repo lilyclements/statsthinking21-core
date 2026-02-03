@@ -9,9 +9,44 @@
     <program language="r">
       <input>
       # Pearson correlation
+
+    <program language="r">
+      <input>
+      # Pearson correlation coefficient
+      cor.test(data$x, data$y, method = "pearson")
+
+      # Correlation matrix for multiple variables
+      cor(data[, c("var1", "var2", "var3")], use = "complete.obs")
+
+      # Spearman's rank correlation (non-parametric)
+      cor.test(data$x, data$y, method = "spearman")
+      </input>
+    </program>
       cor.test(NHANES_adult$Height, NHANES_adult$Weight)
 
       # Simple linear regression
+
+    <program language="r">
+      <input>
+      # Simple linear regression
+      model &lt;- lm(y ~ x, data = data)
+      summary(model)
+
+      # Extract coefficients
+      coef(model)
+
+      # Confidence intervals for coefficients
+      confint(model)
+
+      # Predictions
+      new_data &lt;- data.frame(x = c(1, 2, 3))
+      predict(model, new_data, interval = "confidence")
+
+      # Add regression line to plot
+      plot(data$x, data$y)
+      abline(model, col = "red", lwd = 2)
+      </input>
+    </program>
       model &lt;- lm(Weight ~ Height, data = NHANES_adult)
       summary(model)
       </input>
