@@ -262,6 +262,25 @@
       plot(samples[, "mu"])
       </input>
     </program>
+
+    <program language="r">
+      <input>
+      # Bayesian t-test with Bayes Factor
+      library(BayesFactor)
+
+      # Two-sample Bayesian t-test
+      bf &lt;- ttestBF(formula = BMI ~ PhysActive, data = NHANES_sample)
+      print(bf)
+
+      # Extract and interpret Bayes Factor
+      bf_value &lt;- extractBF(bf)$bf
+      cat(sprintf("Bayes Factor: %.2f\n", bf_value))
+
+      # Get posterior samples
+      samples &lt;- posterior(bf, iterations = 10000)
+      plot(samples[, "mu"])
+      </input>
+    </program>
     </p>
 
     <subsection xml:id="subsec-bayes-factors">

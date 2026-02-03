@@ -34,6 +34,35 @@
       plot(model)
       </input>
     </program>
+
+    <program language="r">
+      <input>
+      # Complete data analysis workflow
+      # 1. Load and explore
+      library(tidyverse)
+      summary(data)
+      str(data)
+
+      # 2. Clean data
+      data_clean &lt;- data %&gt;%
+        filter(!is.na(outcome)) %&gt;%
+        mutate(group = factor(group))
+
+      # 3. Exploratory visualization
+      ggplot(data_clean, aes(x = predictor, y = outcome, color = group)) +
+        geom_point() +
+        geom_smooth(method = "lm") +
+        theme_minimal()
+
+      # 4. Statistical analysis
+      model &lt;- lm(outcome ~ predictor * group, data = data_clean)
+      summary(model)
+
+      # 5. Check assumptions
+      par(mfrow = c(2, 2))
+      plot(model)
+      </input>
+    </program>
     </p>
   </introduction>
 

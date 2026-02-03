@@ -227,6 +227,22 @@
       cat(sprintf("Log Odds Ratio: %.2f\n", log_or))
       </input>
     </program>
+
+    <program language="r">
+      <input>
+      # Calculate odds ratio for 2x2 table
+      library(epitools)
+      oddsratio(contingency_table)
+
+      # Manual odds ratio calculation
+      odds1 &lt;- contingency_table[1,1] / contingency_table[1,2]
+      odds2 &lt;- contingency_table[2,1] / contingency_table[2,2]
+      or &lt;- odds1 / odds2
+      log_or &lt;- log(or)
+      cat(sprintf("Odds Ratio: %.2f\n", or))
+      cat(sprintf("Log Odds Ratio: %.2f\n", log_or))
+      </input>
+    </program>
     </p>
     <md>
       <mrow>

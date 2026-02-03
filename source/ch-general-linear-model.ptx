@@ -20,6 +20,21 @@
     <program language="r">
       <input>
       # Multiple regression example
+      model &lt;- lm(y ~ x1 + x2 + x3, data = data)
+      summary(model)
+
+      # Partial R-squared
+      library(rsq)
+      rsq.partial(model)
+
+      # ANOVA table
+      anova(model)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Multiple regression example
       model &lt;- lm(Weight ~ Height + Age + Gender, data = NHANES_adult)
       summary(model)
 
@@ -151,6 +166,27 @@
         If we look at the difference between the mean test performance at the first and second test, it appears that the intervention has helped these students substantially, as their scores have gone up by more than ten points on the test! However, we know that in fact the students didn't improve at all, since in both cases the scores were simply selected from a random normal distribution. What has happened is that some students scored badly on the first test simply due to random chance. If we select just those subjects on the basis of their first test scores, they are guaranteed to move back towards the mean of the entire group on the second test, even if there is no effect of training. This is the reason that we always need an untreated <em>control group</em> in order to interpret any changes in performance due to an intervention; otherwise we are likely to be tricked by regression to the mean. In addition, the participants need to be randomly assigned to the control or treatment group, so that there won't be any systematic differences between the groups (on average).
       </p>
     </subsection>
+
+    <program language="r">
+      <input>
+      df &lt;-
+        tibble(
+          studyTime = c(2, 3, 5, 6, 6, 8, 10, 12) / 3,
+          priorClass = c(0, 1, 1, 0, 1, 0, 1, 0)
+        ) %&gt;%
+        mutate(
+          grade = 
+            studyTime * betas[1] + 
+            priorClass * betas[2] + 
+            round(rnorm(8, mean = 70, sd = 5))
+        )
+
+      df_matrix &lt;- 
+        df %&gt;%
+        dplyr::select(studyTime, grade) %&gt;%
+        as.matrix()
+      </input>
+    </program>
 
     <program language="r">
       <input>
@@ -586,6 +622,27 @@
       </me>
       <p>
         The challenge here is that <m>X</m> and <m>\beta</m> are now matrices, not single numbers -- but the rules of linear algebra tell us how to divide by a matrix, which is the same as multiplying by the <em>inverse</em> of the matrix (referred to as <m>X^{-1}</m>). We can do this in R:
+
+    <program language="r">
+      <input>
+      # compute beta estimates using linear algebra
+
+      #create Y variable 8 x 1 matrix
+      Y &lt;- as.matrix(df$grade) 
+       #create X variable 8 x 2 matrix
+      X &lt;- matrix(0, nrow = 8, ncol = 2)
+      #assign studyTime values to first column in X matrix
+      X[, 1] &lt;- as.matrix(df$studyTime) 
+      #assign constant of 1 to second column in X matrix
+      X[, 2] &lt;- 1 
+
+      # compute inverse of X using ginv()
+      # %*% is the R matrix multiplication operator
+
+      beta_hat &lt;- ginv(X) %*% Y #multiple the inverse of X by Y
+      print(beta_hat)
+      </input>
+    </program>
 
     <program language="r">
       <input>
