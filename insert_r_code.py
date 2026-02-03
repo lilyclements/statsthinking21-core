@@ -169,6 +169,16 @@ def insert_code_blocks_in_chapter(ptx_file: Path, code_blocks: List[Tuple[str, s
             print(f"  ✗ Could not find insertion point for: {search_pattern[:60]}...")
             continue
         
+        # Check if we're inside a <program> block
+        # Count opening and closing program tags before insertion point
+        content_before = '\n'.join(lines[:insert_line])
+        open_count = content_before.count('<program')
+        close_count = content_before.count('</program>')
+        
+        if open_count > close_count:
+            print(f"  ⊘ Skipping - insertion point is inside existing program block: {search_pattern[:50]}...")
+            continue
+        
         insertion_points.append((insert_line, code, indent_level, search_pattern))
     
     # Sort by line number (descending)
