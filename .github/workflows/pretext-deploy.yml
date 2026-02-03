@@ -1,68 +1,52 @@
-# This file was automatically generated with PreTeXt 2.32.0.
-# If you modify this file, PreTeXt will no longer automatically update it.
-#
+name: Build and Deploy PreTeXt to GitHub Pages
 
-name: Build and Deploy
 on:
-  # Currently, this workflow only runs when manually selected (the `workflow_dispatch` event).
-  # If you would like it to run on other events, uncomment some of the lines below.
-
-  # # Runs on pull requests
-  # pull_request:
-  #     branches: ["*"]
-
-  # # Runs on pushes to main
-  # push:
-  #     branches: ["main"]
-
-  # # Runs every day at 00:00 UTC
-  # schedule:
-  #     - cron: '0 0 * * *'
-
-  # Runs on demand
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    container: oscarlevin/pretext-full
-
     steps:
-      - name: Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: set up node
-        uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '22'
+          python-version: '3.11'
 
-      - name: add gh-cli
+      - name: Install PreTeXt dependencies
         run: |
-          apt-get update
-          apt-get install gh jq -y
+          pip install -r requirements.txt
 
-      - name: setup git config
+      - name: Build HTML with PreTeXt
         run: |
-          git config --global --add safe.directory $(pwd)
-          git config user.name "${{ github.actor }} via GitHub Actions"
-          git config user.email "${{ github.actor }}@github_actions.no_reply"
+          pretext build html
 
-      - name: install deps
-        run: pip install -r requirements.txt --break-system-packages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'output/html'     # <-- Update if your build path is different!
 
-      - name: install local ptx files
-        run: pretext --version
-
-      - name: build deploy targets
-        run: pretext build --deploys
-
-      - name: run deploy
-        run: pretext deploy --no-push
-
-      - name: push gh-pages branch
-        run: git push origin gh-pages --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
