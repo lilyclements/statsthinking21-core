@@ -38,6 +38,9 @@ jobs:
             - name: install local ptx files
               run: pretext --version
 
+            - name: setup pretext cache
+              run: bash .github/scripts/setup-pretext-cache.sh
+
             - name: build deploy targets
               run: |
                 version="$(pretext --version)"
