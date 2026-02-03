@@ -27,7 +27,7 @@ The workflow runs automatically when:
 3. Save the setting
 
 Once the workflow runs successfully, the book will be available at:
-https://statsthinking21.github.io/statsthinking21-core/
+https://lilyclements.github.io/statsthinking21-core/
 
 ## Local Development
 

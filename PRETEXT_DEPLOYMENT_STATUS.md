@@ -12,7 +12,7 @@ All required components are properly configured for PreTeXt deployment to GitHub
 - Also includes html, latex, and pdf targets for flexibility
 
 #### 2. ✅ Publication Settings (`publication/publication.ptx`)
-- Base URL properly configured: `https://statsthinking21.github.io/statsthinking21-core/`
+- Base URL properly configured: `https://lilyclements.github.io/statsthinking21-core/`
 - External and generated directories correctly specified
 
 #### 3. ✅ Source Files (`source/`)
@@ -68,7 +68,7 @@ When code is pushed to the `main` branch:
 5. Builds the book for web deployment
 6. Uploads the `output/web` directory as an artifact
 7. Deploys to GitHub Pages
-8. Book becomes available at: https://statsthinking21.github.io/statsthinking21-core/
+8. Book becomes available at: https://lilyclements.github.io/statsthinking21-core/
 
 ### Conclusion
 
