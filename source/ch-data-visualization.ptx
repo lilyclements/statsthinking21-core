@@ -4,14 +4,375 @@
 
   <introduction>
     <p>
-      <!-- Chapter introduction content goes here -->
+      On January 28, 1986, the Space Shuttle Challenger exploded 73 seconds after takeoff, killing all 7 of the astronauts on board. As when any such disaster occurs, there was an official investigation into the cause of the accident, which found that an O-ring connecting two sections of the solid rocket booster leaked, resulting in failure of the joint and explosion of the large liquid fuel tank (see <xref ref="fig-srb-leak"/>).
     </p>
+
+    <figure xml:id="fig-srb-leak">
+      <caption>An image of the solid rocket booster leaking fuel, seconds before the explosion. The small flame visible on the side of the rocket is the site of the O-ring failure. By NASA (Great Images in NASA Description) [Public domain], via Wikimedia Commons</caption>
+      <image source="Booster_Rocket_Breach_-_GPN-2000-001425.jpg" width="40%">
+        <description>A photograph of the Space Shuttle Challenger's solid rocket booster with a small flame visible on its side, indicating the O-ring failure that led to the explosion</description>
+      </image>
+    </figure>
+
+    <p>
+      The investigation found that many aspects of the NASA decision making process were flawed, and focused in particular on a meeting between NASA staff and engineers from Morton Thiokol, a contractor who built the solid rocket boosters. These engineers were particularly concerned because the temperatures were forecast to be very cold on the morning of the launch, and they had data from previous launches showing that performance of the O-rings was compromised at lower temperatures. In a meeting on the evening before the launch, the engineers presented their data to the NASA managers, but were unable to convince them to postpone the launch. Their evidence was a set of hand-written slides showing numbers from various past launches.
+    </p>
+
+    <p>
+      The visualization expert Edward Tufte has argued that with a proper presentation of all of the data, the engineers could have been much more persuasive. In particular, they could have shown a figure like the one in <xref ref="fig-challenger-temps"/>, which highlights two important facts. First, it shows that the amount of O-ring damage (defined by the amount of erosion and soot found outside the rings after the solid rocket boosters were retrieved from the ocean in previous flights) was closely related to the temperature at takeoff. Second, it shows that the range of forecasted temperatures for the morning of January 28 (shown in the shaded area) was well outside of the range of all previous launches. While we can't know for sure, it seems at least plausible that this could have been more persuasive.
+    </p>
+
+    <figure xml:id="fig-challenger-temps">
+      <caption>A replotting of Tufte's damage index data. The line shows the trend in the data, and the shaded patch shows the projected temperatures for the morning of the launch.</caption>
+      <image source="challengerTemps.png" width="70%">
+        <description>A scatter plot showing O-ring damage index versus temperature at launch, with a smoothed trend line showing higher damage at lower temperatures, and a shaded red area around 27.5 degrees showing the forecasted temperature for January 28</description>
+      </image>
+    </figure>
   </introduction>
 
-  <section xml:id="sec-visualization-principles">
-    <title>Principles of Data Visualization</title>
+  <section xml:id="sec-anatomy-of-plot">
+    <title>Anatomy of a plot</title>
     <p>
-      <!-- Section content goes here -->
+      The goal of plotting data is to present a summary of a dataset in a two-dimensional (or occasionally three-dimensional) presentation. We refer to the dimensions as <em>axes</em> <mdash/> the horizontal axis is called the <em>X-axis</em> and the vertical axis is called the <em>Y-axis</em>. We can arrange the data along the axes in a way that highlights the data values. These values may be either continuous or categorical.
+    </p>
+
+    <p>
+      There are many different types of plots that we can use, which have different advantages and disadvantages. Let's say that we are interested in characterizing the difference in height between men and women in the NHANES dataset. <xref ref="fig-plot-height"/> shows four different ways to plot these data.
+    </p>
+
+    <figure xml:id="fig-plot-height">
+      <caption>Four different ways of plotting the difference in height between men and women in the NHANES dataset. Panel A plots the means of the two groups, which gives no way to assess the relative overlap of the two distributions. Panel B shows the same bars, but also overlays the data points, jittering them so that we can see their overall distribution. Panel C shows a violin plot, which shows the distribution of the datasets for each group. Panel D shows a box plot, which highlights the spread of the distribution along with any outliers (which are shown as individual points).</caption>
+      <image source="plotHeight.png" width="80%">
+        <description>A four-panel figure showing height data by gender: Panel A shows bar charts of mean heights, Panel B shows bars with overlaid jittered data points, Panel C shows violin plots displaying the distribution shape, and Panel D shows box plots with medians and outliers</description>
+      </image>
+    </figure>
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            The bar graph in panel A shows the difference in means, but doesn't show us how much spread there is in the data around these means <mdash/> and as we will see later, knowing this is essential to determine whether we think the difference between the groups is large enough to be important.
+          </p>
+        </li>
+        <li>
+          <p>
+            The second plot shows the bars with all of the data points overlaid <mdash/> this makes it a bit clearer that the distributions of height for men and women are overlapping, but it's still hard to see due to the large number of data points.
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      In general we prefer using a plotting technique that provides a clearer view of the distribution of the data points.
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            In panel C, we see one example of a <em>violin plot</em>, which plots the distribution of data in each condition (after smoothing it out a bit).
+          </p>
+        </li>
+        <li>
+          <p>
+            Another option is the <em>box plot</em> shown in panel D, which shows the median (central line), a measure of variability (the width of the box, which is based on a measure called the interquartile range), and any outliers (noted by the points at the ends of the lines). These are both effective ways to show data that provide a good feel for the distribution of the data.
+          </p>
+        </li>
+      </ol>
+    </p>
+  </section>
+
+  <section xml:id="sec-principles-good-visualization">
+    <title>Principles of good visualization</title>
+    <p>
+      Many books have been written on effective visualization of data. There are some principles that most of these authors agree on, while others are more contentious. Here we summarize some of the major principles; if you want to learn more, then some good resources are listed in the <em>Suggested Readings</em> section at the end of this chapter.
+    </p>
+
+    <subsection xml:id="subsec-show-data">
+      <title>Show the data and make them stand out</title>
+      <p>
+        Let's say that I performed a study that examined the relationship between dental health and time spent flossing, and I would like to visualize my data. <xref ref="fig-dental-figs"/> shows four possible presentations of these data.
+      </p>
+
+      <figure xml:id="fig-dental-figs">
+        <caption>Four different possible presentations of data for the dental health example. Each point in the scatter plot represents one data point in the dataset, and the line in each plot represents the linear trend in the data.</caption>
+        <image source="dentalFigs.png" width="80%">
+          <description>A four-panel figure showing dental health versus time spent flossing: Panel A shows only a trend line without data points, Panel B shows data points following a very clean linear pattern, Panel C shows realistic messy data with a trend, and Panel D shows data where the trend is driven by a single outlier</description>
+        </image>
+      </figure>
+
+      <p>
+        <ol>
+          <li>
+            <p>
+              In panel A, we don't actually show the data, just a line expressing the relationship between the data. This is clearly not optimal, because we can't actually see what the underlying data look like.
+            </p>
+          </li>
+        </ol>
+      </p>
+
+      <p>
+        Panels B-D show three possible outcomes from plotting the actual data, where each plot shows a different way that the data might have looked.
+      </p>
+
+      <p>
+        <ol>
+          <li>
+            <p>
+              If we saw the plot in Panel B, we would probably be suspicious <mdash/> rarely would real data follow such a precise pattern.
+            </p>
+          </li>
+          <li>
+            <p>
+              The data in Panel C, on the other hand, look like real data <mdash/> they show a general trend, but they are messy, as data in the world usually are.
+            </p>
+          </li>
+          <li>
+            <p>
+              The data in Panel D show us that the apparent relationship between the two variables is solely caused by one individual, who we would refer to as an <em>outlier</em> because they fall so far outside of the pattern of the rest of the group. It should be clear that we probably don't want to conclude very much from an effect that is driven by one data point. This figure highlights why it is <em>always</em> important to look at the raw data before putting too much faith in any summary of the data.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-maximize-data-ink">
+      <title>Maximize the data/ink ratio</title>
+      <p>
+        Edward Tufte has proposed an idea called the data/ink ratio:
+      </p>
+
+      <me>
+        \text{data/ink ratio} = \frac{\text{amount of ink used on data}}{\text{total amount of ink}}
+      </me>
+
+      <p>
+        The point of this is to minimize visual clutter and let the data show through. For example, take the two presentations of the dental health data in <xref ref="fig-data-ink-example"/>. Both panels show the same data, but panel A is much easier to apprehend, because of its relatively higher data/ink ratio.
+      </p>
+
+      <figure xml:id="fig-data-ink-example">
+        <caption>An example of the same data plotted with two different data/ink ratios.</caption>
+        <image source="dataInkExample.png" width="70%">
+          <description>Two panels showing dental health versus time spent flossing: Panel A has a clean, minimal design with high data/ink ratio, while Panel B has heavy grid lines and visual clutter with low data/ink ratio</description>
+        </image>
+      </figure>
+    </subsection>
+
+    <subsection xml:id="subsec-avoid-chartjunk">
+      <title>Avoid chartjunk</title>
+      <p>
+        It's especially common to see presentations of data in the popular media that are adorned with lots of visual elements that are thematically related to the content but unrelated to the actual data. This is known as <em>chartjunk</em>, and should be avoided at all costs.
+      </p>
+
+      <p>
+        One good way to avoid chartjunk is to avoid using popular spreadsheet programs to plot one's data. For example, the chart in <xref ref="fig-chart-junk"/> (created using Microsoft Excel) plots the relative popularity of different religions in the United States. There are at least three things wrong with this figure:
+      </p>
+
+      <p>
+        <ul>
+          <li>
+            <p>
+              it has graphics overlaid on each of the bars that have nothing to do with the actual data
+            </p>
+          </li>
+          <li>
+            <p>
+              it has a distracting background texture
+            </p>
+          </li>
+          <li>
+            <p>
+              it uses three-dimensional bars, which distort the data
+            </p>
+          </li>
+        </ul>
+      </p>
+
+      <figure xml:id="fig-chart-junk">
+        <caption>An example of chart junk.</caption>
+        <image source="excel_chartjunk.png" width="60%">
+          <description>A bar chart created in Microsoft Excel showing religious affiliation data with excessive 3D effects, decorative graphics overlaid on bars, and a distracting textured background</description>
+        </image>
+      </figure>
+    </subsection>
+
+    <subsection xml:id="subsec-avoid-distorting">
+      <title>Avoid distorting the data</title>
+      <p>
+        It's often possible to use visualization to distort the message of a dataset. A very common one is use of different axis scaling to either exaggerate or hide a pattern of data. For example, let's say that we are interested in seeing whether rates of violent crime have changed in the US. In <xref ref="fig-crime-plot-axes"/>, we can see these data plotted in ways that either make it look like crime has remained constant, or that it has plummeted. The same data can tell two very different stories!
+      </p>
+
+      <figure xml:id="fig-crime-plot-axes">
+        <caption>Crime data from 1990 to 2014 plotted over time. Panels A and B show the same data, but with different ranges of values along the Y axis. Data obtained from https://www.ucrdatatool.gov/Search/Crime/State/RunCrimeStatebyState.cfm</caption>
+        <image source="crimePlotAxes.png" width="70%">
+          <description>Two line graphs showing violent crime per capita over time from 1990 to 2014: Panel A uses a Y-axis range that makes the trend appear flat, while Panel B uses an appropriate range showing a clear decline in crime rates</description>
+        </image>
+      </figure>
+
+      <p>
+        One of the major controversies in statistical data visualization is how to choose the Y axis, and in particular whether it should always include zero. In his famous book <q>How to lie with statistics</q>, Darrell Huff argued strongly that one should always include the zero point in the Y axis. On the other hand, Edward Tufte has argued against this:
+      </p>
+
+      <blockquote>
+        <p>
+          In general, in a time-series, use a baseline that shows the data not the zero point; don't spend a lot of empty vertical space trying to reach down to the zero point at the cost of hiding what is going on in the data line itself.
+        </p>
+      </blockquote>
+
+      <p>
+        (from https://qz.com/418083/its-ok-not-to-start-your-y-axis-at-zero/)
+      </p>
+
+      <p>
+        There are certainly cases where using the zero point makes no sense at all. Let's say that we are interested in plotting body temperature for an individual over time. In <xref ref="fig-body-temp-axis"/> we plot the same (simulated) data with or without zero in the Y axis. It should be obvious that by plotting these data with zero in the Y axis (Panel A) we are wasting a lot of space in the figure, given that body temperature of a living person could never go to zero! By including zero, we are also making the apparent jump in temperature during days 21-30 much less evident. In general, my inclination for line plots and scatterplots is to use all of the space in the graph, unless the zero point is truly important to highlight.
+      </p>
+
+      <figure xml:id="fig-body-temp-axis">
+        <caption>Body temperature over time, plotted with or without the zero point in the Y axis.</caption>
+        <image source="bodyTempAxis.png" width="70%">
+          <description>Two line graphs of body temperature over 40 days: Panel A includes zero on the Y-axis making the temperature variation barely visible, while Panel B focuses on the relevant range (95-105 degrees) showing a clear temperature spike around days 21-30</description>
+        </image>
+      </figure>
+
+      <p>
+        Edward Tufte introduced the concept of the <em>lie factor</em> to describe the degree to which physical differences in a visualization correspond to the magnitude of the differences in the data. If a graphic has a lie factor near 1, then it is appropriately representing the data, whereas lie factors far from one reflect a distortion of the underlying data.
+      </p>
+
+      <p>
+        The lie factor supports the argument that one should always include the zero point in a bar chart in many cases. In <xref ref="fig-bar-chart-lie-factor"/> we plot the same data with and without zero in the Y axis. In panel A, the proportional difference in area between the two bars is exactly the same as the proportional difference between the values (i.e. lie factor = 1), whereas in Panel B (where zero is not included) the proportional difference in area between the two bars is roughly 2.8 times bigger than the proportional difference in the values, and thus it visually exaggerates the size of the difference.
+      </p>
+
+      <figure xml:id="fig-bar-chart-lie-factor">
+        <caption>Two bar charts with associated lie factors.</caption>
+        <image source="barChartLieFactor.png" width="70%">
+          <description>Two bar charts comparing conditions 1 and 2 with values 100 and 95: Panel A shows bars starting at zero with lie factor = 1, while Panel B shows bars with a truncated Y-axis starting at 92.5 with lie factor approximately 2.8, visually exaggerating the difference</description>
+        </image>
+      </figure>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-accommodating-human-limitations">
+    <title>Accommodating human limitations</title>
+    <p>
+      Humans have both perceptual and cognitive limitations that can make some visualizations very difficult to understand. It's always important to keep these in mind when building a visualization.
+    </p>
+
+    <subsection xml:id="subsec-perceptual-limitations">
+      <title>Perceptual limitations</title>
+      <p>
+        One important perceptual limitation that many people (including myself) suffer from is color blindness. This can make it very difficult to perceive the information in a figure (like the one in <xref ref="fig-bad-colors"/>) where there is only color contrast between the elements but no brightness contrast. It is always helpful to use graph elements that differ substantially in brightness and/or texture, in addition to color. There are also <url href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette"><q>colorblind-friendly</q> palettes</url> available for use with many visualization tools.
+      </p>
+
+      <figure xml:id="fig-bad-colors">
+        <caption>Example of a bad figure that relies solely on color contrast.</caption>
+        <image source="badColors.png" width="70%">
+          <description>A bar chart with a dark background showing grouped bars that differ only in color, making it difficult to distinguish for people with color blindness</description>
+        </image>
+      </figure>
+
+      <p>
+        Even for people with perfect color vision, there are perceptual limitations that can make some plots ineffective. This is one reason why statisticians <em>never</em> use pie charts: It can be very difficult for humans to accurately perceive differences in the volume of shapes. The pie chart in <xref ref="fig-pie-chart"/> (presenting the same data on religious affiliation that we showed above) shows how tricky this can be.
+      </p>
+
+      <figure xml:id="fig-pie-chart">
+        <caption>An example of a pie chart, highlighting the difficulty in apprehending the relative volume of the different pie slices.</caption>
+        <image source="religion_piechart.png" width="50%">
+          <description>A 3D pie chart showing religious affiliation data with many small slices, perspective distortion, and a legend separated from the chart, making it very difficult to interpret accurately</description>
+        </image>
+      </figure>
+
+      <p>
+        This plot is terrible for several reasons. First, it requires distinguishing a large number of colors from very small patches at the bottom of the figure. Second, the visual perspective distorts the relative numbers, such that the pie wedge for Catholic appears much larger than the pie wedge for None, when in fact the number for None is slightly larger (22.8 vs 20.8 percent), as was evident in <xref ref="fig-chart-junk"/>. Third, by separating the legend from the graphic, it requires the viewer to hold information in their working memory in order to map between the graphic and legend and to conduct many <q>table look-ups</q> in order to continuously match the legend labels to the visualization. And finally, it uses text that is far too small, making it impossible to read without zooming in.
+      </p>
+
+      <p>
+        Plotting the data using a more reasonable approach (<xref ref="fig-religion-bars"/>), we can see the pattern much more clearly. This plot may not look as flashy as the pie chart generated using Excel, but it's a much more effective and accurate representation of the data.
+      </p>
+
+      <figure xml:id="fig-religion-bars">
+        <caption>A clearer presentation of the religious affiliation data (obtained from http://www.pewforum.org/religious-landscape-study/).</caption>
+        <image source="religionBars.png" width="70%">
+          <description>A simple bar chart showing religious affiliation data with bars sorted by percentage, clear labels, and values displayed, making it easy to compare different religions</description>
+        </image>
+      </figure>
+
+      <p>
+        This plot allows the viewer to make comparisons based on the the length of the bars along a common scale (the y-axis). Humans tend to be more accurate when decoding differences based on these perceptual elements than based on area or color.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-correcting-other-factors">
+    <title>Correcting for other factors</title>
+    <p>
+      Often we are interested in plotting data where the variable of interest is affected by other factors than the one we are interested in. For example, let's say that we want to understand how the price of gasoline has changed over time. <xref ref="fig-gas-prices"/> shows historical gas price data, plotted either with or without adjustment for inflation. Whereas the unadjusted data show a huge increase, the adjusted data show that this is mostly just reflective of inflation. Other examples where one needs to adjust data for other factors include population size and data collected across different seasons.
+    </p>
+
+    <figure xml:id="fig-gas-prices">
+      <caption>The price of gasoline in the US from 1930 to 2013 (obtained from http://www.thepeoplehistory.com/70yearsofpricechange.html) with or without correction for inflation (based on Consumer Price Index).</caption>
+      <image source="gasPrices.png" width="60%">
+        <description>A line graph showing gasoline prices over time from 1930 to 2013 with two lines: one showing unadjusted prices that increase dramatically, and another showing inflation-adjusted prices that remain relatively stable</description>
+        </image>
+    </figure>
+  </section>
+
+  <section xml:id="sec-visualization-learning-objectives">
+    <title>Learning objectives</title>
+    <p>
+      Having read this chapter, you should be able to:
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <p>
+            Describe the principles that distinguish between good and bad graphs, and use them to identify good versus bad graphs.
+          </p>
+        </li>
+        <li>
+          <p>
+            Understand the human limitations that must be accommodated in order to make effective graphs.
+          </p>
+        </li>
+        <li>
+          <p>
+            Promise to never create a pie chart. <em>Ever</em>.
+          </p>
+        </li>
+      </ul>
+    </p>
+  </section>
+
+  <section xml:id="sec-visualization-suggested-readings">
+    <title>Suggested readings and videos</title>
+    <p>
+      <ul>
+        <li>
+          <p>
+            <url href="https://serialmentor.com/dataviz/"><em>Fundamentals of Data Visualization</em></url>, by Claus Wilke
+          </p>
+        </li>
+        <li>
+          <p>
+            <em>Visual Explanations</em>, by Edward Tufte
+          </p>
+        </li>
+        <li>
+          <p>
+            <em>Visualizing Data</em>, by William S. Cleveland
+          </p>
+        </li>
+        <li>
+          <p>
+            <em>Graph Design for the Eye and Mind</em>, by Stephen M. Kosslyn
+          </p>
+        </li>
+        <li>
+          <p>
+            <url href="https://www.youtube.com/watch?v=fSgEeI2Xpdc&amp;feature=youtu.be"><em>How Humans See Data</em></url>, by John Rauser
+          </p>
+        </li>
+      </ul>
     </p>
   </section>
 
