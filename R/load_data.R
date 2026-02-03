@@ -1,6 +1,9 @@
 # Data loading and preprocessing functions
 # This file contains functions for loading and cleaning datasets used in the book
 
+# Load NHANES package at the top
+library(NHANES)
+
 #' Load and clean NHANES data
 #'
 #' This function loads the NHANES dataset and performs standard cleaning:
@@ -12,8 +15,6 @@
 #'   - NHANES: Full cleaned NHANES dataset
 #'   - NHANES_adult: Adult subset (Age >= 18) with non-missing Height
 load_nhanes <- function() {
-  library(NHANES)
-  
   # Load and remove duplicated IDs within the NHANES dataset
   NHANES_clean <- NHANES %>% 
     dplyr::distinct(ID, .keep_all = TRUE)
