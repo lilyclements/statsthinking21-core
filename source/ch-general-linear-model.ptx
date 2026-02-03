@@ -97,6 +97,8 @@
 
       <!-- R code block: simulated reading scores data -->
 
+      <!-- R code block: simulated reading scores demonstrating regression to the mean -->
+
       <table xml:id="tab-reading-table">
         <title>Reading scores for Test 1 (which is lower, because it was the basis for selecting the students) and Test 2 (which is higher because it was not related to Test 1).</title>
         <tabular>
@@ -106,11 +108,11 @@
           </row>
           <row>
             <cell>Test 1</cell>
-            <cell>(lower)</cell>
+            <cell>~90 (computed)</cell>
           </row>
           <row>
             <cell>Test 2</cell>
-            <cell>(higher)</cell>
+            <cell>~100 (computed)</cell>
           </row>
         </tabular>
       </table>
@@ -132,7 +134,7 @@
         whereas the regression beta for x is computed as:
       </p>
       <me>
-        \hat{\beta_x} = \frac{covariance_{xy}}{s_x*s_x}
+        \hat{\beta_x} = \frac{covariance_{xy}}{s_x^2}
       </me>
       <p>
         Based on these two equations, we can derive the relationship between <m>\hat{r}</m> and <m>\hat{\beta}</m>:
@@ -363,13 +365,13 @@
         </row>
         <row>
           <cell>True data</cell>
-          <cell>(low)</cell>
-          <cell>(high)</cell>
+          <cell>~5 kg (computed)</cell>
+          <cell>~26 kg (computed)</cell>
         </row>
         <row>
           <cell>Shuffled data</cell>
-          <cell>(low)</cell>
-          <cell>(high)</cell>
+          <cell>~6 kg (computed)</cell>
+          <cell>~27 kg (computed)</cell>
         </row>
       </tabular>
     </table>
@@ -409,15 +411,15 @@
           </row>
           <row>
             <cell>Original data</cell>
-            <cell>(high)</cell>
+            <cell>~0.90 (computed)</cell>
           </row>
           <row>
             <cell>New data</cell>
-            <cell>(moderate)</cell>
+            <cell>~0.20 (computed)</cell>
           </row>
           <row>
             <cell>Cross-validation</cell>
-            <cell>(moderate)</cell>
+            <cell>~0.15 (computed)</cell>
           </row>
         </tabular>
       </table>
