@@ -29,16 +29,15 @@ The script has added R code examples to the following chapters:
 
 | Chapter | File | Code Blocks Added | Topics Covered |
 |---------|------|-------------------|----------------|
-| 10 | ch-quantifying-effects.ptx | 2 | Confidence intervals, Effect sizes (Cohen's d) |
-| 11 | ch-bayesian-statistics.ptx | 1 | Bayesian t-test, Bayes Factors, Posterior sampling |
-| 12 | ch-categorical-relationships.ptx | 1 | Odds ratios |
-| 13 | ch-continuous-relationships.ptx | 3 | Pearson correlation, Linear regression, Model diagnostics |
-| 14 | ch-general-linear-model.ptx | 6 | Multiple regression, Matrix operations, GLM intro |
+| 13 | ch-continuous-relationships.ptx | 1 | Correlation and linear regression |
+| 14 | ch-general-linear-model.ptx | 3 | Multiple regression, Matrix operations, linear algebra |
 | 15 | ch-comparing-means.ptx | 2 | T-tests, Bayesian comparison |
-| 16 | ch-multivariate-statistics.ptx | 2 | Principal Component Analysis (PCA), Factor Analysis |
-| 17 | ch-practical-examples.ptx | 1 | Complete data analysis workflow |
 
-**Total**: 18 R code blocks across 8 chapters
+**Total**: 6 R code blocks across 3 chapters
+
+### Additional Chapters Configured
+
+The script includes configuration for adding R code to additional chapters (9-12, 16-17), but these require appropriate search patterns to be updated in the PreTeXt files for proper placement.
 
 ## Usage
 
