@@ -40,7 +40,7 @@
       <preface xml:id="preface">
         <title>Preface</title>
         
-        <section xml:id="preface-about-version">
+        <paragraphs xml:id="preface-about-version">
           <title>About This PreTeXt Version</title>
           <p>
             This is a PreTeXt version of <em>Statistical Thinking for the 21st Century</em>, originally authored by Russell A. Poldrack.
@@ -61,9 +61,9 @@
             For content-related issues with the original material, please refer to the 
             <url href="https://github.com/statsthinking21/statsthinking21-core" visual="github.com/statsthinking21/statsthinking21-core">original repository</url>.
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-intro">
+        <paragraphs xml:id="preface-intro">
           <title>Introduction</title>
           <p>
             The goal of this book is to tell the story of statistics as it is used today by researchers around the world. 
@@ -83,9 +83,9 @@
             Thus, a goal of the book is to highlight the ways in which current statistical methods may be problematic, and to suggest 
             alternatives.
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-why-exists">
+        <paragraphs xml:id="preface-why-exists">
           <title>Why does this book exist?</title>
           <p>
             In 2018 I began teaching an undergraduate statistics course at Stanford (Psych 10/Stats 60). I had never taught statistics 
@@ -110,9 +110,9 @@
             less fun and clever). I also tailored this book for the 10-week quarter system that we use at Stanford, which provides less 
             time than the 16-week semester that most statistical textbooks are built for.
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-golden-age">
+        <paragraphs xml:id="preface-golden-age">
           <title>The golden age of data</title>
           <p>
             Throughout this book I have tried when possible to use examples from real data. This is now very easy because we are swimming 
@@ -130,9 +130,9 @@
             and because many of the other complex datasets included in R (such as those in the fivethirtyeight package) are also based in 
             the US. If you have suggestions for datasets from other regions, please pass them along to me!
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-doing-statistics">
+        <paragraphs xml:id="preface-doing-statistics">
           <title>The importance of doing statistics</title>
           <p>
             The only way to really learn statistics is to do statistics. While historically many statistics courses were taught using 
@@ -147,9 +147,9 @@
             and <url href="https://statsthinking21.github.io/statsthinking21-python/" visual="statsthinking21.github.io/statsthinking21-python/">another focuses on the Python language</url>. 
             Both are currently works in progress <mdash/> please feel free to contribute!
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-open-source">
+        <paragraphs xml:id="preface-open-source">
           <title>An open source book</title>
           <p>
             This book is meant to be a living document, which is why its source is available online at 
@@ -162,9 +162,9 @@
             <url href="https://creativecommons.org/licenses/by-nc/4.0/" visual="creativecommons.org/licenses/by-nc/4.0">Creative Commons Attribution-NonCommercial 4.0 Generic (CC BY-NC 4.0) License</url>. 
             Please see the terms of that license for more details.
           </p>
-        </section>
+        </paragraphs>
 
-        <section xml:id="preface-acknowledgements">
+        <paragraphs xml:id="preface-acknowledgements">
           <title>Acknowledgements</title>
           <p>
             I'd first like to thank Susan Holmes, who first inspired me to consider writing my own statistics book. Anna Khazenzon provided 
@@ -192,7 +192,7 @@
           <p>
             Special thanks to Isil Bilgin for assistance in fixing many of these issues.
           </p>
-        </section>
+        </paragraphs>
       </preface>
     </frontmatter>
 
