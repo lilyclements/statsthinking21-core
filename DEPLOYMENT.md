@@ -45,6 +45,16 @@ pip install -r requirements.txt
 pretext init --system
 ```
 
+### Prepare Images
+
+Before building, copy images to the external directory:
+
+```bash
+bash prepare-pretext-build.sh
+```
+
+This script copies all images from the `images/` directory to the `external/` directory, which PreTeXt requires for the build.
+
 ### Build the Book
 
 ```bash

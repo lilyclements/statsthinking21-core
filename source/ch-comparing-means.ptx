@@ -4,15 +4,269 @@
 
   <introduction>
     <p>
-      <!-- Chapter introduction content goes here -->
+      We have already encountered a number of cases where we wanted to ask questions about the mean of a sample. In this chapter, we will delve deeper into the various ways that we can compare means across groups.
     </p>
   </introduction>
 
-  <section xml:id="sec-t-test">
-    <title>The t-test</title>
+  <section xml:id="sec-single-mean">
+    <title>Testing the Value of a Single Mean</title>
     <p>
-      <!-- Section content goes here -->
+      The simplest question we might want to ask of a mean is whether it has a specific value. Let's say that we want to test whether the mean diastolic blood pressure value in adults from the NHANES dataset is above 80, which is cutoff for hypertension according to the American College of Cardiology. We take a sample of 200 adults in order to ask this question; each adult had their blood pressure measured three times, and we use the average of these for our test.
     </p>
+    
+    <p>
+      One simple way to test for this difference is using a test called the <term>sign test</term>, which asks whether the proportion of positive differences between the actual value and the hypothesized value is different than what we would expect by chance. To do this, we take the differences between each data point and the hypothesized mean value and compute their sign. If the data are normally distributed and the actual mean is equal to the hypothesized mean, then the proportion of values above the hypothesized mean (or below it) should be 0.5, such that the proportion of positive differences should also be 0.5. In our sample, we see that 43.0 percent of individuals have a diastolic blood pressure above 80. We can then use a binomial test to ask whether this proportion of positive differences is greater than 0.5, using the binomial testing function in our statistical software.
+    </p>
+    
+    <p>
+      Here we see that the proportion of individuals with positive signs is not very surprising under the null hypothesis of <m>p \le 0.5</m>, which should not surprise us given that the observed value is actually less than <m>0.5</m>.
+    </p>
+    
+    <p>
+      We can also ask this question using Student's t-test, which you have already encountered earlier in the book. We will refer to the mean as <m>\bar{X}</m> and the hypothesized population mean as <m>\mu</m>. Then, the t test for a single mean is:
+    </p>
+    
+    <me>
+      t = \frac{\bar{X} - \mu}{SEM}
+    </me>
+    
+    <p>
+      where SEM (as you may remember from the chapter on sampling) is defined as:
+    </p>
+    
+    <me>
+      SEM = \frac{\hat{\sigma}}{\sqrt{n}}
+    </me>
+    
+    <p>
+      In essence, the t statistic asks how large the deviation of the sample mean from the hypothesized quantity is with respect to the sampling variability of the mean.
+    </p>
+    
+    <p>
+      We can compute this for the NHANES dataset using our statistical software. This shows us that the mean diastolic blood pressure in the dataset (approximately 70.6) is actually much lower than 80, so our test for whether it is above 80 is very far from significance.
+    </p>
+    
+    <p>
+      Remember that a large p-value doesn't provide us with evidence in favor of the null hypothesis, since we had already assumed that the null hypothesis is true to start with. However, as we discussed in the chapter on Bayesian analysis, we can use the Bayes factor to quantify evidence for or against the null hypothesis. The Bayes factor listed here (approximately <m>2.73 \times 10^{16}</m>) denotes the fact that there is exceedingly strong evidence in favor of the null hypothesis over the alternative.
+    </p>
+  </section>
+
+  <section xml:id="sec-comparing-two-means">
+    <title>Comparing Two Means</title>
+    <p>
+      A more common question that often arises in statistics is whether there is a difference between the means of two different groups. Let's say that we would like to know whether regular marijuana smokers watch more television, which we can also ask using the NHANES dataset. We take a sample of 200 individuals from the dataset and test whether the number of hours of television watching per day is related to regular marijuana use. The left panel of Figure <xref ref="fig-pot-tv-violin"/> shows these data using a violin plot.
+    </p>
+    
+    <figure xml:id="fig-pot-tv-violin">
+      <caption>Left: Violin plot showing distributions of TV watching separated by regular marijuana use. Right: Violin plots showing data for each group, with a dotted line connecting the predicted values for each group, computed on the basis of the results of the linear model.</caption>
+      <image source="PotTVViolin.png" width="80%">
+        <description>Two side-by-side violin plots showing TV watching hours distribution for regular marijuana users vs non-users, with the right plot including a dotted line connecting group means.</description>
+      </image>
+    </figure>
+    
+    <p>
+      We can also use Student's t test to test for differences between two groups of independent observations (as we saw in an earlier chapter); we will turn later in the chapter to cases where the observations are not independent. As a reminder, the t-statistic for comparison of two independent groups is computed as:
+    </p>
+    
+    <me>
+      t = \frac{\bar{X_1} - \bar{X_2}}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
+    </me>
+    
+    <p>
+      where <m>\bar{X}_1</m> and <m>\bar{X}_2</m> are the means of the two groups, <m>S^2_1</m> and <m>S^2_2</m> are the variances for each of the groups, and <m>n_1</m> and <m>n_2</m> are the sizes of the two groups. Under the null hypothesis of no difference between means, this statistic is distributed according to a t distribution, with degrees of freedom computed using the Welch test (as discussed previously) since the number of individuals differs between the two groups. In this case, we started with the specific hypothesis that smoking marijuana is associated with greater TV watching, so we will use a one-tailed test.
+    </p>
+    
+    <p>
+      In this case we see that there is a statistically significant difference between groups, in the expected direction<mdash/>regular pot smokers watch more TV.
+    </p>
+  </section>
+
+  <section xml:id="sec-ttest-linear-model">
+    <title>The t-test as a Linear Model</title>
+    <p>
+      The t-test is often presented as a specialized tool for comparing means, but it can also be viewed as an application of the general linear model. In this case, the model would look like this:
+    </p>
+    
+    <me>
+      \hat{TV} = \hat{\beta_1} \cdot Marijuana + \hat{\beta_0}
+    </me>
+    
+    <p>
+      Since smoking is a binary variable, we treat it as a <term>dummy variable</term> like we discussed in the previous chapter, setting it to a value of 1 for smokers and zero for nonsmokers. In that case, <m>\hat{\beta_1}</m> is simply the difference in means between the two groups, and <m>\hat{\beta_0}</m> is the mean for the group that was coded as zero. We can fit this model using the general linear model function in our statistical software, and see that it gives the same t statistic as the t-test above, except that it's positive in this case because of the way that our software arranges the groups.
+    </p>
+    
+    <p>
+      We can also view the linear model results graphically (see the right panel of Figure <xref ref="fig-pot-tv-violin"/>). In this case, the predicted value for nonsmokers is <m>\hat{\beta_0}</m> and the predicted value for smokers is <m>\hat{\beta_0} + \hat{\beta_1}</m>.
+    </p>
+    
+    <p>
+      To compute the standard errors for this analysis, we can use exactly the same equations that we used for linear regression<mdash/>since this really is just another example of linear regression. In fact, if you compare the p-value from the t-test above with the p-value in the linear regression analysis for the marijuana use variable, you will see that the one from the linear regression analysis is exactly twice the one from the t-test, because the linear regression analysis is performing a two-tailed test.
+    </p>
+    
+    <subsection xml:id="subsec-effect-sizes-two-means">
+      <title>Effect Sizes for Comparing Two Means</title>
+      <p>
+        The most commonly used effect size for a comparison between two means is Cohen's d, which (as you may remember from the chapter on confidence intervals, effect sizes and power) is an expression of the effect size in terms of standard deviation units. For the t-test estimated using the general linear model outlined above (i.e. with a single dummy-coded variable), this is expressed as:
+      </p>
+      
+      <me>
+        d = \frac{\hat{\beta_1}}{\sigma_{residual}}
+      </me>
+      
+      <p>
+        We can obtain these values from the analysis output above, giving us a d value which we would generally interpret as a medium sized effect.
+      </p>
+      
+      <p>
+        We can also compute <m>R^2</m> for this analysis, which tells us what proportion of the variance in TV watching is accounted for by marijuana smoking. This value tells us that while the effect may be statistically significant, it accounts for relatively little of the variance in TV watching.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-bayes-factor-mean-diff">
+    <title>Bayes Factor for Mean Differences</title>
+    <p>
+      As we discussed in the chapter on Bayesian analysis, Bayes factors provide a way to better quantify evidence in favor of or against the null hypothesis of no difference. We can perform that analysis on the same data. Because of the way that the data are organized, the Bayes factor for this analysis is 61.4. This shows us that the evidence against the null hypothesis is quite strong.
+    </p>
+  </section>
+
+  <section xml:id="sec-paired-ttests">
+    <title>Comparing Paired Observations</title>
+    <p>
+      In experimental research, we often use <term>within-subjects</term> designs, in which we compare the same person on multiple measurements. The measurements that come from this kind of design are often referred to as <term>repeated measures</term>. For example, in the NHANES dataset blood pressure was measured three times. Let's say that we are interested in testing whether there is a difference in mean systolic blood pressure between the first and second measurement across individuals in our sample (Figure <xref ref="fig-bp-measurements"/>).
+    </p>
+    
+    <figure xml:id="fig-bp-measurements">
+      <caption>Left: Violin plot of systolic blood pressure on first and second recording, from NHANES. Right: Same violin plot with lines connecting the two data points for each individual.</caption>
+      <image source="BPfig.png" width="80%">
+        <description>Two side-by-side violin plots showing systolic blood pressure measurements at two time points, with the right plot showing lines connecting paired measurements for each individual.</description>
+      </image>
+    </figure>
+    
+    <p>
+      We see that there does not seem to be much of a difference in mean blood pressure (about one point) between the first and second measurement. First let's test for a difference using an independent samples t-test, which ignores the fact that pairs of data points come from the same individuals. This analysis shows no significant difference. However, this analysis is inappropriate since it assumes that the two samples are independent, when in fact they are not, since the data come from the same individuals. We can plot the data with a line for each individual to show this (see the right panel in Figure <xref ref="fig-bp-measurements"/>).
+    </p>
+    
+    <p>
+      In this analysis, what we really care about is whether the blood pressure for each person changed in a systematic way between the two measurements, so another way to represent the data is to compute the difference between the two timepoints for each individual, and then analyze these difference scores rather than analyzing the individual measurements. In Figure <xref ref="fig-bp-diff-hist"/>, we show a histogram of these difference scores, with a blue line denoting the mean difference.
+    </p>
+    
+    <figure xml:id="fig-bp-diff-hist">
+      <caption>Histogram of difference scores between first and second BP measurement. The vertical line represents the mean difference in the sample.</caption>
+      <image source="BPDiffHist.png" width="50%">
+        <description>A histogram showing the distribution of blood pressure differences between measurements, with a vertical blue line marking the mean difference.</description>
+      </image>
+    </figure>
+    
+    <subsection xml:id="subsec-sign-test">
+      <title>Sign Test</title>
+      <p>
+        One simple way to test for differences is using the <term>sign test</term>. To do this, we take the differences and compute their sign, and then we use a binomial test to ask whether the proportion of positive signs differs from 0.5.
+      </p>
+      
+      <p>
+        Here we see that the proportion of individuals with positive signs is not large enough to be surprising under the null hypothesis of <m>p=0.5</m>. However, one problem with the sign test is that it is throwing away information about the magnitude of the differences, and thus might be missing something.
+      </p>
+    </subsection>
+    
+    <subsection xml:id="subsec-paired-ttest">
+      <title>Paired t-test</title>
+      <p>
+        A more common strategy is to use a <term>paired t-test</term>, which is equivalent to a one-sample t-test for whether the mean difference between the measurements within each person is zero. We can compute this using our statistical software, telling it that the data points are paired.
+      </p>
+      
+      <p>
+        With this analyses we see that there is in fact a significant difference between the two measurements. Let's compute the Bayes factor to see how much evidence is provided by the result. The observed Bayes factor of 2.97 tells us that although the effect was significant in the paired t-test, it actually provides very weak evidence in favor of the alternative hypothesis.
+      </p>
+      
+      <p>
+        The paired t-test can also be defined in terms of a linear model; see the Appendix for more details on this.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-comparing-more-than-two">
+    <title>Comparing More Than Two Means</title>
+    <p>
+      Often we want to compare more than two means to determine whether any of them differ from one another. Let's say that we are analyzing data from a clinical trial for the treatment of high blood pressure. In the study, volunteers are randomized to one of three conditions: Drug 1, Drug 2 or placebo. Let's generate some data and plot them (see Figure <xref ref="fig-drug-trial"/>).
+    </p>
+    
+    <figure xml:id="fig-drug-trial">
+      <caption>Box plots showing blood pressure for three different groups in our clinical trial.</caption>
+      <image source="DrugTrial.png" width="50%">
+        <description>Box plots comparing systolic blood pressure across three groups: placebo, drug 1, and drug 2.</description>
+      </image>
+    </figure>
+    
+    <subsection xml:id="subsec-anova">
+      <title>Analysis of Variance</title>
+      <p>
+        We would first like to test the null hypothesis that the means of all of the groups are equal<mdash/>that is, neither of the treatments had any effect compared to placebo. We can do this using a method called <term>analysis of variance (ANOVA)</term>. This is one of the most commonly used methods in psychological statistics, and we will only scratch the surface here. The basic idea behind ANOVA is one that we already discussed in the chapter on the general linear model, and in fact ANOVA is just a name for a specific version of such a model.
+      </p>
+      
+      <p>
+        Remember from the last chapter that we can partition the total variance in the data (<m>SS_{total}</m>) into the variance that is explained by the model (<m>SS_{model}</m>) and the variance that is not (<m>SS_{error}</m>). We can then compute a <term>mean square</term> for each of these by dividing them by their degrees of freedom; for the error this is <m>N - p</m> (where <m>p</m> is the number of means that we have computed), and for the model this is <m>p - 1</m>:
+      </p>
+      
+      <md>
+        <mrow>MS_{model} \amp = \frac{SS_{model}}{df_{model}} = \frac{SS_{model}}{p-1}</mrow>
+      </md>
+      
+      <md>
+        <mrow>MS_{error} \amp = \frac{SS_{error}}{df_{error}} = \frac{SS_{error}}{N - p}</mrow>
+      </md>
+      
+      <p>
+        With ANOVA, we want to test whether the variance accounted for by the model is greater than what we would expect by chance, under the null hypothesis of no differences between means. Whereas for the t distribution the expected value is zero under the null hypothesis, that's not the case here, since sums of squares are always positive numbers. Fortunately, there is another theoretical distribution that describes how ratios of sums of squares are distributed under the null hypothesis: The <term>F distribution</term> (see Figure <xref ref="fig-f-dist"/>). This distribution has two degrees of freedom, which correspond to the degrees of freedom for the numerator (which in this case is the model), and the denominator (which in this case is the error).
+      </p>
+      
+      <figure xml:id="fig-f-dist">
+        <caption>F distributions under the null hypothesis, for different values of degrees of freedom.</caption>
+        <image source="FDist.png" width="50%">
+          <description>Curves showing F distributions with different degrees of freedom parameters, demonstrating their shapes under the null hypothesis.</description>
+        </image>
+      </figure>
+      
+      <p>
+        To create an ANOVA model, we extend the idea of <term>dummy coding</term> that you encountered in the last chapter. Remember that for the t-test comparing two means, we created a single dummy variable that took the value of 1 for one of the conditions and zero for the others. Here we extend that idea by creating two dummy variables, one that codes for the Drug 1 condition and the other that codes for the Drug 2 condition. Just as in the t-test, we will have one condition (in this case, placebo) that doesn't have a dummy variable, and thus represents the baseline against which the others are compared; its mean defines the intercept of the model. Using dummy coding for drugs 1 and 2, we can fit a model using the same approach that we used in the previous chapter.
+      </p>
+      
+      <p>
+        The output from this command provides us with two things. First, it shows us the result of a t-test for each of the dummy variables, which basically tell us whether each of the conditions separately differs from placebo; it appears that Drug 1 does whereas Drug 2 does not. However, keep in mind that if we wanted to interpret these tests, we would need to correct the p-values to account for the fact that we have done multiple hypothesis tests; we will see an example of how to do this in the next chapter.
+      </p>
+      
+      <p>
+        Remember that the hypothesis that we started out wanting to test was whether there was any difference between any of the conditions; we refer to this as an <term>omnibus</term> hypothesis test, and it is the test that is provided by the F statistic. The F statistic basically tells us whether our model is better than a simple model that just includes an intercept. In this case we see that the F test is highly significant, consistent with our impression that there did seem to be differences between the groups (which in fact we know there were, because we created the data).
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-comparing-means-learning-objectives">
+    <title>Learning Objectives</title>
+    <p>
+      After reading this chapter, you should be able to:
+    </p>
+    <ul>
+      <li><p>Describe the rationale behind the sign test</p></li>
+      <li><p>Describe how the t-test can be used to compare a single mean to a hypothesized value</p></li>
+      <li><p>Compare the means for two paired or unpaired groups using a two-sample t-test</p></li>
+      <li><p>Describe how analysis of variance can be used to test differences between more than two means</p></li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-comparing-means-appendix">
+    <title>Appendix</title>
+    
+    <subsection xml:id="subsec-paired-linear-model">
+      <title>The Paired t-test as a Linear Model</title>
+      <p>
+        We can also define the paired t-test in terms of a general linear model. To do this, we include all of the measurements for each subject as data points (within a tidy data frame). We then include in the model a variable that codes for the identity of each individual (in this case, the ID variable that contains a subject ID for each person). This is known as a <term>mixed model</term>, since it includes effects of independent variables as well as effects of individuals. The standard model fitting procedure <c>lm()</c> can't do this, but we can do it using the <c>lmer()</c> function from a popular R package called <em>lme4</em>, which is specialized for estimating mixed models. The <c>(1|ID)</c> in the formula tells <c>lmer()</c> to estimate a separate intercept (which is what the <c>1</c> refers to) for each value of the <c>ID</c> variable (i.e. for each individual in the dataset), and then estimate a common slope relating timepoint to BP.
+      </p>
+      
+      <p>
+        You can see that this shows us a p-value that is very close to the result from the paired t-test computed using the <c>t.test()</c> function.
+      </p>
+    </subsection>
   </section>
 
 </chapter>

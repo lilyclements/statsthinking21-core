@@ -47,3 +47,25 @@ The following code was extracted from individual chapter files:
 - Common knitr options and display settings
 
 All 18 chapter `.Rmd` files plus `index.Rmd` now use these shared files.
+
+## Generating Figures for PreTeXt
+
+### `generate_comparing_means_figures.R`
+
+Generates static PNG figures for the Comparing Means chapter (ch-comparing-means.ptx). The PreTeXt version requires pre-generated images, unlike the R Markdown version which generates them dynamically.
+
+**To generate the figures:**
+```bash
+Rscript R/generate_comparing_means_figures.R
+```
+
+**Generated files:**
+- `images/PotTVViolin.png` - Violin plots showing TV watching by marijuana use
+- `images/BPfig.png` - Paired blood pressure measurements  
+- `images/BPDiffHist.png` - Histogram of blood pressure differences
+- `images/DrugTrial.png` - Box plots for clinical trial with three groups
+- `images/FDist.png` - F distributions with different degrees of freedom
+
+**Required packages:** ggplot2, tidyr, dplyr, cowplot
+
+**Note:** The generated PNG files should be committed to the repository to ensure they're available during the GitHub Actions build process.

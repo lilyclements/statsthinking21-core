@@ -36,6 +36,9 @@ jobs:
       - name: Setup PreTeXt cache workaround
         run: bash .github/scripts/setup-pretext-cache.sh
 
+      - name: Prepare images for PreTeXt build
+        run: bash prepare-pretext-build.sh
+
       - name: Build PreTeXt web output
         run: pretext build web
 
