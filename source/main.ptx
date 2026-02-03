@@ -73,6 +73,134 @@
 
       <references xml:id="references">
         <title>References</title>
+    
+      <biblio type="raw" xml:id="Sullivan-2012ta">
+        Gail M Sullivan and Richard Feinn. <title>Using Effect Size-or Why the P Value Is Not Enough</title>. <journal>J Grad Med Educ</journal>, <volume>4</volume>, (3), 279-82. 2012. doi:<url href="https://doi.org/10.4300/JGME-D-12-00156.1">10.4300/JGME-D-12-00156.1</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="scho-ioan-2013">
+        Jonathan D Schoenfeld and John P A Ioannidis. <title>Is everything we eat associated with cancer? A systematic cookbook review</title>. <journal>Am J Clin Nutr</journal>, <volume>97</volume>, (1), 127-34. 2013. doi:<url href="https://doi.org/10.3945/ajcn.112.047142">10.3945/ajcn.112.047142</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="sche-gent-2001">
+        Nathaniel Schenker and Jane F. Gentleman. <title>On Judging the Significance of Differences by Examining the Overlap Between Confidence Intervals</title>. <journal>The American Statistician</journal>, <volume>55</volume>, (3), 182--186. 2001. <url href="http://www.jstor.org/stable/2685796">http://www.jstor.org/stable/2685796</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="payt-gree-sche-2003">
+        Mark E Payton, Matthew H Greenstone, and Nathaniel Schenker. <title>Overlapping confidence intervals or standard error intervals: what do they mean in terms of statistical significance?</title>. <journal>J Insect Sci</journal>, <volume>3</volume>, 34. 2003.
+      </biblio>
+    
+      <biblio type="raw" xml:id="wake-1999">
+        A J Wakefield. <title>MMR vaccination and autism</title>. <journal>Lancet</journal>, <volume>354</volume>, (9182), 949-50. 1999. doi:<url href="https://doi.org/10.1016/S0140-6736(05)75696-8">10.1016/S0140-6736(05)75696-8</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="Neyman289">
+        J. Neyman and K. Pearson. <title>On the problem of the most efficient tests of statistical hypotheses</title>. <journal>Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences</journal>, <volume>231</volume>, (694-706), 289--337. 1933. doi:<url href="https://doi.org/10.1098/rsta.1933.0009">10.1098/rsta.1933.0009</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="fish-1956">
+        Ronald Aylmer Fisher. <title>Statistical methods and scientific inference</title>. New York: Hafner Pub. Co. 1956.
+      </biblio>
+    
+      <biblio type="raw" xml:id="fisher1925statistical">
+        R.A. Fisher. <title>Statistical methods for research workers</title>. Edinburgh Oliver \&amp; Boyd. 1925.
+      </biblio>
+    
+      <biblio type="raw" xml:id="efron1998">
+        Bradley Efron. <title>R. A. Fisher in the 21st century (Invited paper presented at the 1996 R. A. Fisher Lecture)</title>. <journal>Statist. Sci.</journal>, <volume>13</volume>, (2), 95--122. 1998. doi:<url href="https://doi.org/10.1214/ss/1028905930">10.1214/ss/1028905930</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="dehg-ment-zhan-2017">
+        Mahshid Dehghan, Andrew Mente, Xiaohe Zhang, Sumathi Swaminathan, Wei Li, Viswanathan Mohan, Romaina Iqbal, Rajesh Kumar, Edelweiss Wentzel-Viljoen, Annika Rosengren, Leela Itty Amma, Alvaro Avezum, Jephat Chifamba, Rafael Diaz, Rasha Khatib, Scott Lear, Patricio Lopez-Jaramillo, Xiaoyun Liu, Rajeev Gupta, Noushin Mohammadifard, Nan Gao, Aytekin Oguz, Anis Safura Ramli, Pamela Seron, Yi Sun, Andrzej Szuba, Lungiswa Tsolekile, Andreas Wielgosz, Rita Yusuf, Afzal Hussein Yusufali, Koon K Teo, Sumathy Rangarajan, Gilles Dagenais, Shrikant I Bangdiwala, Shofiqul Islam, Sonia S Anand, Salim Yusuf, and {Prospective Urban Rural Epidemiology (PURE) study investigators}. <title>Associations of fats and carbohydrate intake with cardiovascular disease and mortality in 18 countries from five continents (PURE): a prospective cohort study</title>. <journal>Lancet</journal>, <volume>390</volume>, (10107), 2050-2062. 2017. doi:<url href="https://doi.org/10.1016/S0140-6736(17)32252-3">10.1016/S0140-6736(17)32252-3</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="teic-2014">
+        Nina Teicholz. <title>The big fat surprise</title>. Simon &amp; Schuster. 2014.
+      </biblio>
+    
+      <biblio type="raw" xml:id="copa-1983">
+        J. B. Copas. <title>Regression, prediction and shrinkage (with discussion)</title>. <journal>Journal of the Royal Statistical Society, Series B: Methodological</journal>, <volume>45</volume>, 311--354. 1983.
+      </biblio>
+    
+      <biblio type="raw" xml:id="gala-lebo-nels-2012">
+        Jeff Galak, Robyn A LeBoeuf, Leif D Nelson, and Joseph P Simmons. <title>Correcting the past: failures to replicate psi</title>. <journal>J Pers Soc Psychol</journal>, <volume>103</volume>, (6), 933-948. 2012. doi:<url href="https://doi.org/10.1037/a0029709">10.1037/a0029709</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="kapl-irvi-2015">
+        Robert M Kaplan and Veronica L Irvin. <title>Likelihood of Null Effects of Large NHLBI Clinical Trials Has Increased over Time</title>. <journal>PLoS One</journal>, <volume>10</volume>, (8), e0132382. 2015. doi:<url href="https://doi.org/10.1371/journal.pone.0132382">10.1371/journal.pone.0132382</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="bem-2011">
+        Daryl J Bem. <title>Feeling the future: experimental evidence for anomalous retroactive influences on cognition and affect</title>. <journal>J Pers Soc Psychol</journal>, <volume>100</volume>, (3), 407-25. 2011. doi:<url href="https://doi.org/10.1037/a0021524">10.1037/a0021524</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="simm-nels-simo-2011">
+        Joseph P Simmons, Leif D Nelson, and Uri Simonsohn. <title>False-positive psychology: undisclosed flexibility in data collection and analysis allows presenting anything as significant</title>. <journal>Psychol Sci</journal>, <volume>22</volume>, (11), 1359-66. 2011. doi:<url href="https://doi.org/10.1177/0956797611417632">10.1177/0956797611417632</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="kerr-1998">
+        N L Kerr. <title>HARKing: hypothesizing after the results are known</title>. <journal>Pers Soc Psychol Rev</journal>, <volume>2</volume>, (3), 196-217. 1998. doi:<url href="https://doi.org/10.1207/s15327957pspr0203_4">10.1207/s15327957pspr0203_4</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="darl-zann-roed-2004">
+        John M Darley, Mark P Zanna, and Henry L Roediger. <title>The compleat academic: a career guide</title>. Washington, DC: American Psychological Association. 2004. <url href="http://www.loc.gov/catdir/toc/fy037/2003041830.html">http://www.loc.gov/catdir/toc/fy037/2003041830.html</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="smal-mcel-2016">
+        Paul E Smaldino and Richard McElreath. <title>The natural selection of bad science</title>. <journal>R Soc Open Sci</journal>, <volume>3</volume>, (9), 160384. 2016. doi:<url href="https://doi.org/10.1098/rsos.160384">10.1098/rsos.160384</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="ioan-2005">
+        John P A Ioannidis. <title>Why most published research findings are false</title>. <journal>PLoS Med</journal>, <volume>2</volume>, (8), e124. 2005. doi:<url href="https://doi.org/10.1371/journal.pmed.0020124">10.1371/journal.pmed.0020124</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="Camerer2018EvaluatingTR">
+        Colin F. Camerer, Anna Dreber, Felix Holzmeister, Teck-Hua Ho, Jürgen Huber, Magnus Johannesson, Michael Kirchler, Gidi Nave, Brian A. Nosek, Thomas Pfeiffer, Adam Altmejd, Nick Buttrick, Taizan Chan, Yiling Chen, Eskil Forsell, Anup Gampa, Emma Heikensten, Lily Hummer, Taisuke Imai, Siri Isaksson, Dylan Manfredi, Julia Hannum Rose, Eric-Jan Wagenmakers, and Hang Wu. <title>Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015</title>. <journal>Nature Human Behaviour</journal>, <volume>2</volume>, 637-644. 2018.
+      </biblio>
+    
+      <biblio type="raw" xml:id="bake-2017">
+        Monya Baker. <title>Reproducibility: Check your chemistry</title>. <journal>Nature</journal>, <volume>548</volume>, (7668), 485-488. 2017. doi:<url href="https://doi.org/10.1038/548485a">10.1038/548485a</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="NBERw22989">
+        Garret S Christensen and Edward Miguel. <title>Transparency, Reproducibility, and the Credibility of Economics Research</title>. 2016. doi:<url href="https://doi.org/10.3386/w22989">10.3386/w22989</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="erri-iorn-gunn-2014">
+        Timothy M Errington, Elizabeth Iorns, William Gunn, Fraser Elisabeth Tan, Joelle Lomax, and Brian A Nosek. <title>An open investigation of the reproducibility of cancer biology research</title>. <journal>Elife</journal>, <volume>3</volume>. 2014. doi:<url href="https://doi.org/10.7554/eLife.04333">10.7554/eLife.04333</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="open-2015">
+        {Open Science Collaboration}. <title>PSYCHOLOGY. Estimating the reproducibility of psychological science</title>. <journal>Science</journal>, <volume>349</volume>, (6251), aac4716. 2015. doi:<url href="https://doi.org/10.1126/science.aac4716">10.1126/science.aac4716</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="wans-just-payn-2012">
+        Brian Wansink, David R Just, and Collin R Payne. <title>Can branding improve school lunches?</title>. <journal>Arch Pediatr Adolesc Med</journal>, <volume>166</volume>, (10), 1-2. 2012. doi:<url href="https://doi.org/10.1001/archpediatrics.2012.999">10.1001/archpediatrics.2012.999</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="gard-kiaz-alha-2007">
+        Christopher D Gardner, Alexandre Kiazand, Sofiya Alhassan, Soowon Kim, Randall S Stafford, Raymond R Balise, Helena C Kraemer, and Abby C King. <title>Comparison of the Atkins, Zone, Ornish, and LEARN diets for change in weight and related risk factors among overweight premenopausal women: the A TO Z Weight Loss Study: a randomized trial</title>. <journal>JAMA</journal>, <volume>297</volume>, (9), 969-77. 2007. doi:<url href="https://doi.org/10.1001/jama.297.9.969">10.1001/jama.297.9.969</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="Neyman37">
+        J Neyman. <title>Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability</title>. <journal>Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences</journal>, <volume>236</volume>, (767), 333--380. 1937. doi:<url href="https://doi.org/10.1098/rsta.1937.0005">10.1098/rsta.1937.0005</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="kass-raff-1995">
+        Robert E. Kass and Adrian E. Raftery. <title>Bayes Factors</title>. <journal>Journal of the American Statistical Association</journal>, <volume>90</volume>, (430), 773-795. 1995. doi:<url href="https://doi.org/10.1080/01621459.1995.10476572">10.1080/01621459.1995.10476572</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="breiman2001">
+        Leo Breiman. <title>Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author)</title>. <journal>Statist. Sci.</journal>, <volume>16</volume>, (3), 199--231. 2001. doi:<url href="https://doi.org/10.1214/ss/1009213726">10.1214/ss/1009213726</url>.
+      </biblio>
+    
+      <biblio type="raw" xml:id="stig">
+        Stephen M. Stigler. <title>The seven pillars of statistical wisdom</title>. Harvard University Press. 2016.
+      </biblio>
+    
+      <biblio type="raw" xml:id="pesc-kend-gust-2012">
+        Beate Pesch, Benjamin Kendzia, Per Gustavsson, Karl-Heinz Jöckel, Georg Johnen, Hermann Pohlabeln, Ann Olsson, Wolfgang Ahrens, Isabelle Mercedes Gross, Irene Brüske, Heinz-Erich Wichmann, Franco Merletti, Lorenzo Richiardi, Lorenzo Simonato, Cristina Fortes, Jack Siemiatycki, Marie-Elise Parent, Dario Consonni, Maria Teresa Landi, Neil Caporaso, David Zaridze, Adrian Cassidy, Neonila Szeszenia-Dabrowska, Peter Rudnai, Jolanta Lissowska, Isabelle Stücker, Eleonora Fabianova, Rodica Stanescu Dumitru, Vladimir Bencko, Lenka Foretova, Vladimir Janout, Charles M Rudin, Paul Brennan, Paolo Boffetta, Kurt Straif, and Thomas Brüning. <title>Cigarette smoking and lung cancer--relative risk estimates for the major histological types from a pooled analysis of case-control studies</title>. <journal>Int J Cancer</journal>, <volume>131</volume>, (5), 1210-9. 2012. doi:<url href="https://doi.org/10.1002/ijc.27339">10.1002/ijc.27339</url>.
+      </biblio>
       </references>
 
       <index>
