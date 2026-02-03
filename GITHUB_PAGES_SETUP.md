@@ -17,13 +17,13 @@ That's it! Once this is configured, the workflow will automatically deploy your 
 
 ## How It Works
 
-The GitHub Actions workflow (`.github/workflows/deploy-pretext.yml`) will:
+The GitHub Actions workflow (`.github/workflows/pretext.yml`) will:
 - Trigger automatically on pushes to the `main` branch
 - Install PreTeXt and build the book
 - Deploy the built HTML to GitHub Pages
 
 Your book will be available at:
-**https://statsthinking21.github.io/statsthinking21-core/**
+**https://lilyclements.github.io/statsthinking21-core/**
 
 ## Testing the Workflow
 

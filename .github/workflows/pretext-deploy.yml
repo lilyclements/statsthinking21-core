@@ -57,10 +57,10 @@ jobs:
         run: pretext --version
 
       - name: build deploy targets
-        run: cd PreText && pretext build --deploys
+        run: pretext build --deploys
 
       - name: run deploy
-        run: cd PreText && pretext deploy --no-push
+        run: pretext deploy --no-push
 
       - name: push gh-pages branch
         run: git push origin gh-pages --force
