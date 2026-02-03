@@ -4,14 +4,247 @@
 
   <introduction>
     <p>
-      <!-- Chapter introduction content goes here -->
+      In this chapter we will bring together everything that we have learned, by applying our knowledge to a practical example. In 2007, Christopher Gardner and colleagues from Stanford published a study in the <em>Journal of the American Medical Association</em> titled <q>Comparison of the Atkins, Zone, Ornish, and LEARN Diets for Change in Weight and Related Risk Factors Among Overweight Premenopausal Women <mdash/> The A TO Z Weight Loss Study: A Randomized Trial</q>. We will use this study to show how one would go about analyzing an experimental dataset from start to finish.
     </p>
   </introduction>
 
-  <section xml:id="sec-real-world-examples">
-    <title>Real-World Examples</title>
+  <section xml:id="sec-process-statistical-modeling">
+    <title>The process of statistical modeling</title>
     <p>
-      <!-- Section content goes here -->
+      There is a set of steps that we generally go through when we want to use our statistical model to test a scientific hypothesis:
+    </p>
+    <ol>
+      <li>Specify your question of interest</li>
+      <li>Identify or collect the appropriate data</li>
+      <li>Prepare the data for analysis</li>
+      <li>Determine the appropriate model</li>
+      <li>Fit the model to the data</li>
+      <li>Criticize the model to make sure it fits properly</li>
+      <li>Test hypothesis and quantify effect size</li>
+    </ol>
+
+    <subsection xml:id="subsec-specify-question">
+      <title>1: Specify your question of interest</title>
+      <p>
+        According to the authors, the goal of their study was:
+      </p>
+      <blockquote>
+        <p>
+          To compare 4 weight-loss diets representing a spectrum of low to high carbohydrate intake for effects on weight loss and related metabolic variables.
+        </p>
+      </blockquote>
+    </subsection>
+
+    <subsection xml:id="subsec-identify-data">
+      <title>2: Identify or collect the appropriate data</title>
+      <p>
+        To answer their question, the investigators randomly assigned each of 311 overweight/obese women to one of four different diets (Atkins, Zone, Ornish, or LEARN), and measured their weight along with many other measures of health over time. The authors recorded a large number of variables, but for the main question of interest let's focus on a single variable: Body Mass Index (BMI). Further, since our goal is to measure lasting changes in BMI, we will only look at the measurement taken at 12 months after onset of the diet.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-prepare-data">
+      <title>3: Prepare the data for analysis</title>
+
+      <!-- R code block for generating synthetic data based on Gardner et al. study
+           This would generate dietDf with diet assignments and BMI changes -->
+
+      <figure xml:id="fig-atoz-bmi-change">
+        <caption>Box plots for each condition, with the 50th percentile (i.e. the median) shown as a black line for each group.</caption>
+        <!-- Note: This figure would be generated from R code showing BMI changes across diet groups -->
+        <image source="AtoZBMIChangeDensity.png" width="50%">
+          <description>Box plots showing the distribution of BMI changes at 12 months for four diet groups: Atkins, LEARN, Ornish, and Zone. Each box shows the median and quartiles, with some outliers visible as individual points.</description>
+        </image>
+      </figure>
+
+      <p>
+        The actual data from the A to Z study are not publicly available, so we will use the summary data reported in their paper to generate some synthetic data that roughly match the data obtained in their study, with the same means and standard deviations for each group. Once we have the data, we can visualize them to make sure that there are no outliers. Box plots are useful to see the shape of the distributions, as shown in <xref ref="fig-atoz-bmi-change"/>. Those data look fairly reasonable <mdash/> there are a couple of outliers within individual groups (denoted by the dots outside of the box plots), but they don't seem to be extreme with regard to the other groups. We can also see that the distributions seem to differ a bit in their variance, with Atkins showing somewhat greater variability than the others. This means that any analyses that assume the variances are equal across groups might be inappropriate. Fortunately, the ANOVA model that we plan to use is fairly robust to this.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-determine-model">
+      <title>4. Determine the appropriate model</title>
+      <p>
+        There are several questions that we need to ask in order to determine the appropriate statistical model for our analysis.
+      </p>
+      <ul>
+        <li>
+          <p>What kind of dependent variable?</p>
+          <ul>
+            <li>BMI: continuous, roughly normally distributed</li>
+          </ul>
+        </li>
+        <li>
+          <p>What are we comparing?</p>
+          <ul>
+            <li>mean BMI across four diet groups</li>
+            <li>ANOVA is appropriate</li>
+          </ul>
+        </li>
+        <li>
+          <p>Are observations independent?</p>
+          <ul>
+            <li>Random assignment should ensure that the assumption of independence is appropriate</li>
+            <li>The use of difference scores (in this case the difference between starting weight and weight after 12 months) is somewhat controversial, especially when the starting points differ between the groups. In this case the starting weights are very similar between the groups, so we will use the difference scores, but in general one would want to consult a statistician before applying such a model to real data.</li>
+          </ul>
+        </li>
+      </ul>
+    </subsection>
+
+    <subsection xml:id="subsec-fit-model">
+      <title>5. Fit the model to the data</title>
+      <p>
+        Let's run an ANOVA on BMI change to compare it across the four diets. Most statistical software will automatically convert a nominal variable into a set of dummy variables. A common way of specifying a statistical model is using <em>formula notation</em>, in which the model is specified using a formula of the form:
+      </p>
+      <me>
+        \text{dependent variable} \sim \text{independent variables}
+      </me>
+      <p>
+        In this case, we want to look at the change in BMI (which is stored in a variable called <em>BMIChange12Months</em>) as a function of diet (which is stored in a variable called <em>diet</em>), so we use the formula:
+      </p>
+      <me>
+        BMIChange12Months \sim diet
+      </me>
+      <p>
+        Most statistical software (including R) will automatically create a set of dummy variables when the model includes a nominal variable (such as the <em>diet</em> variable, which contains the name of the diet that each person received). Here are the results from this model fitted to our data:
+      </p>
+
+      <!-- R code output showing ANOVA results would appear here
+           The output shows coefficients for dietLEARN, dietOrnish, dietZone
+           with Atkins as the baseline (intercept) -->
+
+      <p>
+        Note that the software automatically generated dummy variables that correspond to three of the four diets, leaving the Atkins diet without a dummy variable. This means that the intercept represents the mean of the Atkins diet group, and the other three variables model the difference between the means for each of those diets and the mean for the Atkins diet. Atkins was chosen as the unmodeled baseline variable simply because it is first in alphabetical order.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-criticize-model">
+      <title>6. Criticize the model to make sure it fits properly</title>
+      <p>
+        The first thing we want to do is to critique the model to make sure that it is appropriate. One thing we can do is to look at the residuals from the model. In <xref ref="fig-residual-plot"/>, we plot the residuals for each individual grouped by diet. There are no obvious differences in the distributions of residuals across conditions, so we can go ahead with the analysis.
+      </p>
+
+      <figure xml:id="fig-residual-plot">
+        <caption>Distribution of residuals for each condition</caption>
+        <!-- Note: This figure would be generated from R code showing residual distributions -->
+        <image source="residualPlot.png" width="50%">
+          <description>Density plots showing the distribution of residuals from the linear model for each of the four diet groups. The distributions appear similar across groups.</description>
+        </image>
+      </figure>
+
+      <p>
+        Another important assumption of the statistical tests that we apply to linear models is that the residuals from the model are normally distributed. It is a common misconception that linear models require that the <em>data</em> are normally distributed, but this is not the case; the only requirement for the statistics to be correct is that the residual errors are normally distributed. <xref ref="fig-diagnostic-qq-plot"/> shows a Q-Q (quantile-quantile) plot, which plots the residuals against their expected values based on their quantiles in the normal distribution. If the residuals are normally distributed then the data points should fall along the dashed line <mdash/> in this case it looks pretty good, except for a couple of outliers that are apparent at the very bottom. Because this model is also relatively robust to violations of normality, and these are fairly small, we will go ahead and use the results.
+      </p>
+
+      <figure xml:id="fig-diagnostic-qq-plot">
+        <caption>Q-Q plot of actual residual values against theoretical residual values</caption>
+        <!-- Note: This figure would be generated from R code showing Q-Q plot -->
+        <image source="diagnosticQQPlot.png" width="50%">
+          <description>Q-Q plot comparing the distribution of model residuals to the normal distribution. Most points fall along the diagonal line, with some deviation at the extremes.</description>
+        </image>
+      </figure>
+    </subsection>
+
+    <subsection xml:id="subsec-test-hypothesis">
+      <title>7. Test hypothesis and quantify effect size</title>
+      <p>
+        First let's look back at the summary of results from the ANOVA, shown in Step 5 above. The significant F test shows us that there is a significant difference between diets, but we should also note that the model doesn't actually account for much variance in the data; the R-squared value is only 0.03, showing that the model is only accounting for a few percent of the variance in weight loss. Thus, we would not want to overinterpret this result.
+      </p>
+      <p>
+        The significant result in the omnibus F test also doesn't tell us which diets differ from which others. We can find out more by comparing means across conditions. Because we are doing several comparisons, we need to correct for those comparisons, which is accomplished using a procedure known as the Tukey method, which is implemented by our statistical software:
+      </p>
+
+      <!-- R code output showing Tukey HSD results with letter groupings
+           would appear here showing which diets differ significantly -->
+
+      <p>
+        The letters in the rightmost column show us which of the groups differ from one another, using a method that adjusts for the number of comparisons being performed; conditions that share a letter are not significantly different from one another. This shows that Atkins and LEARN diets don't differ from one another (since they share the letter a), and the LEARN, Ornish, and Zone diets don't differ from one another (since they share the letter b), but the Atkins diet differs from the Ornish and Zone diets (since they share no letters).
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-possible-confounds">
+    <title>What about possible confounds?</title>
+    <p>
+      If we look more closely at the Gardner paper, we will see that they also report statistics on how many individuals in each group had been diagnosed with <em>metabolic syndrome</em>, which is a syndrome characterized by high blood pressure, high blood glucose, excess body fat around the waist, and abnormal cholesterol levels and is associated with increased risk for cardiovascular problems. The data from the Gardner paper are presented in <xref ref="table-metsym-data"/>.
+    </p>
+
+    <table xml:id="table-metsym-data">
+      <title>Presence of metabolic syndrome in each group in the AtoZ study</title>
+      <tabular halign="left">
+        <row header="yes" bottom="minor">
+          <cell>Diet</cell>
+          <cell>N</cell>
+          <cell>P(metabolic syndrome)</cell>
+        </row>
+        <row>
+          <cell>Atkins</cell>
+          <cell>77</cell>
+          <cell>0.286</cell>
+        </row>
+        <row>
+          <cell>LEARN</cell>
+          <cell>79</cell>
+          <cell>0.367</cell>
+        </row>
+        <row>
+          <cell>Ornish</cell>
+          <cell>76</cell>
+          <cell>0.355</cell>
+        </row>
+        <row>
+          <cell>Zone</cell>
+          <cell>79</cell>
+          <cell>0.253</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Looking at the data it seems that the rates are slightly different across groups, with more metabolic syndrome cases in the Ornish and Zone diets <mdash/> which were exactly the diets with poorer outcomes. Let's say that we are interested in testing whether the rate of metabolic syndrome was significantly different between the groups, since this might make us concerned that these differences could have affected the results of the diet outcomes.
+    </p>
+
+    <subsection xml:id="subsec-determine-model-confounds">
+      <title>Determine the appropriate model</title>
+      <ul>
+        <li>
+          <p>What kind of dependent variable?</p>
+          <ul>
+            <li>proportions</li>
+          </ul>
+        </li>
+        <li>
+          <p>What are we comparing?</p>
+          <ul>
+            <li>proportion with metabolic syndrome across four diet groups</li>
+            <li>chi-squared test for goodness of fit is appropriate against null hypothesis of no difference</li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        Let's first compute that statistic, using the chi-squared test function in our statistical software:
+      </p>
+
+      <!-- R code output showing chi-squared test results would appear here -->
+
+      <p>
+        This test shows that there is not a significant difference between means. However, it doesn't tell us how certain we are that there is no difference; remember that under NHST, we are always working under the assumption that the null is true unless the data show us enough evidence to cause us to reject the null hypothesis.
+      </p>
+      <p>
+        What if we want to quantify the evidence for or against the null? We can do this using the Bayes factor.
+      </p>
+
+      <!-- R code output showing Bayes factor results would appear here -->
+
+      <p>
+        This shows us that the alternative hypothesis is 0.058 times more likely than the null hypothesis, which means that the null hypothesis is 1/0.058 ~ 17 times more likely than the alternative hypothesis given these data. This is fairly strong, if not completely overwhelming, evidence in favor of the null hypothesis.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-getting-help">
+    <title>Getting help</title>
+    <p>
+      Whenever one is analyzing real data, it's useful to check your analysis plan with a trained statistician, as there are many potential problems that could arise in real data. In fact, it's best to speak to a statistician before you even start the project, as their advice regarding the design or implementation of the study could save you major headaches down the road. Most universities have statistical consulting offices that offer free assistance to members of the university community. Understanding the content of this book won't prevent you from needing their help at some point, but it will help you have a more informed conversation with them and better understand the advice that they offer.
     </p>
   </section>
 
