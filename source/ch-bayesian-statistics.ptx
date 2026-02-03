@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ch-bayesian-statistics" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Bayesian Statistics</title>
+
+  <introduction>
+    <p>
+      In this chapter we will take up the approach to statistical modeling and inference that stands in contrast to the null hypothesis testing framework that you encountered in <xref ref="ch-hypothesis-testing"/>. This is known as <q>Bayesian statistics</q> after the Reverend Thomas Bayes, whose theorem you have already encountered in <xref ref="ch-probability"/>. In this chapter you will learn how Bayes' theorem provides a way of understanding data that solves many of the conceptual problems that we discussed regarding null hypothesis testing, while also introducing some new challenges.
+    </p>
+  </introduction>
+
+  <section xml:id="sec-generative-models">
+    <title>Generative models</title>
+    <p>
+      Say you are walking down the street and a friend of yours walks right by but doesn't say hello. You would probably try to decide why this happened <mdash/> Did they not see you? Are they mad at you? Are you suddenly cloaked in a magic invisibility shield? One of the basic ideas behind Bayesian statistics is that we want to infer the details of how the data are being generated, based on the data themselves. In this case, you want to use the data (i.e. the fact that your friend did not say hello) to infer the process that generated the data (e.g. whether or not they actually saw you, how they feel about you, etc).
+    </p>
+    <p>
+      The idea behind a generative model is that a <em>latent</em> (unseen) process generates the data we observe, usually with some amount of randomness in the process. When we take a sample of data from a population and estimate a parameter from the sample, what we are doing in essence is trying to learn the value of a latent variable (the population mean) that gives rise through sampling to the observed data (the sample mean). <xref ref="fig-generative-model"/> shows a schematic of this idea.
+    </p>
+
+    <figure xml:id="fig-generative-model">
+      <caption>A schematic of the idea of a generative model.</caption>
+      <image source="BayesianInference.png" width="80%">
+        <description>A diagram showing how a latent process generates observed data through sampling.</description>
+      </image>
+    </figure>
+
+    <p>
+      If we know the value of the latent variable, then it's easy to reconstruct what the observed data should look like. For example, let's say that we are flipping a coin that we know to be fair, such that we would expect it to land on heads 50% of the time. We can describe the coin by a binomial distribution with a value of <m>P_{heads}=0.5</m>, and then we could generate random samples from such a distribution in order to see what the observed data should look like. However, in general we are in the opposite situation: We don't know the value of the latent variable of interest, but we have some data that we would like to use to estimate it.
+    </p>
+  </section>
+
+  <section xml:id="sec-bayes-theorem-inverse-inference">
+    <title>Bayes' theorem and inverse inference</title>
+    <p>
+      The reason that Bayesian statistics has its name is because it takes advantage of Bayes' theorem to make inferences from data about the underlying process that generated the data. Let's say that we want to know whether a coin is fair. To test this, we flip the coin 10 times and come up with 7 heads. Before this test we were pretty sure that the <m>P_{heads}=0.5</m>, but finding 7 heads out of 10 flips would certainly give us pause if we believed that <m>P_{heads}=0.5</m>. We already know how to compute the conditional probability that we would flip 7 or more heads out of 10 if the coin is really fair (<m>P(n\ge7|p_{heads}=0.5)</m>), using the binomial distribution.
+    </p>
+    <p>
+      The resulting probability is 0.172. That is a fairly small number, but this number doesn't really answer the question that we are asking <mdash/> it is telling us about the likelihood of 7 or more heads given some particular probability of heads, whereas what we really want to know is the true probability of heads for this particular coin. This should sound familiar, as it's exactly the situation that we were in with null hypothesis testing, which told us about the likelihood of data rather than the likelihood of hypotheses.
+    </p>
+    <p>
+      Remember that Bayes' theorem provides us with the tool that we need to invert a conditional probability:
+    </p>
+    <me>
+      P(H|D) = \frac{P(D|H)*P(H)}{P(D)}
+    </me>
+    <p>
+      We can think of this theorem as having four parts:
+    </p>
+    <ul>
+      <li><em>prior</em> (<m>P(Hypothesis)</m>): Our degree of belief about hypothesis H before seeing the data D</li>
+      <li><em>likelihood</em> (<m>P(Data|Hypothesis)</m>): How likely are the observed data D under hypothesis H?</li>
+      <li><em>marginal likelihood</em> (<m>P(Data)</m>): How likely are the observed data, combining over all possible hypotheses?</li>
+      <li><em>posterior</em> (<m>P(Hypothesis|Data)</m>): Our updated belief about hypothesis H, given the data D</li>
+    </ul>
+    <p>
+      In the case of our coin-flipping example:
+    </p>
+    <ul>
+      <li><em>prior</em> (<m>P_{heads}</m>): Our degree of belief about the likelhood of flipping heads, which was <m>P_{heads}=0.5</m></li>
+      <li><em>likelihood</em> (<m>P(\text{7 or more heads out of 10 flips}|P_{heads}=0.5)</m>): How likely are 7 or more heads out of 10 flips if <m>P_{heads}=0.5)</m>?</li>
+      <li><em>marginal likelihood</em> (<m>P(\text{7 or more heads out of 10 flips})</m>): How likely are we to observe 7 heads out of 10 coin flips, in general?</li>
+      <li><em>posterior</em> (<m>P_{heads}|\text{7 or more heads out of 10 coin flips}</m>): Our updated belief about <m>P_{heads}</m> given the observed coin flips</li>
+    </ul>
+    <p>
+      Here we see one of the primary differences between frequentist and Bayesian statistics. Frequentists do not believe in the idea of a probability of a hypothesis (i.e. our degree of belief about a hypothesis) <mdash/> for them, a hypothesis is either true or it isn't. Another way to say this is that for the frequentist, the hypothesis is fixed and the data are random, which is why frequentist inference focuses on describing the probability of data given a hypothesis (i.e. the p-value). Bayesians, on the other hand, are comfortable making probability statements about both data and hypotheses.
+    </p>
+  </section>
+
+  <section xml:id="sec-doing-bayesian-estimation">
+    <title>Doing Bayesian estimation</title>
+    <p>
+      We ultimately want to use Bayesian statistics to make decisions about hypotheses, but before we do that we need to estimate the parameters that are necessary to make the decision. Here we will walk through the process of Bayesian estimation. Let's use another screening example: Airport security screening. If you fly a lot, it's just a matter of time until one of the random explosive screenings comes back positive; I had the particularly unfortunate experience of this happening soon after September 11, 2001, when airport security staff were especially on edge.
+    </p>
+    <p>
+      What the security staff want to know is what is the likelihood that a person is carrying an explosive, given that the machine has given a positive test. Let's walk through how to calculate this value using Bayesian analysis.
+    </p>
+
+    <subsection xml:id="subsec-specifying-prior">
+      <title>Specifying the prior</title>
+      <p>
+        To use Bayes' theorem, we first need to specify the prior probability for the hypothesis. In this case, we don't know the real number but we can assume that it's quite small. According to the <url href="https://www.faa.gov/air_traffic/by_the_numbers/media/Air_Traffic_by_the_Numbers_2018.pdf">FAA</url>, there were 971,595,898 air passengers in the U.S. in 2017. Let's say that one of those travelers was carrying an explosive in their bag <mdash/> that would give a prior probability of 1 out of 971 million, which is very small! The security personnel may have reasonably held a stronger prior in the months after the 9/11 attack, so let's say that their subjective belief was that one out of every million flyers was carrying an explosive.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-collect-data">
+      <title>Collect some data</title>
+      <p>
+        The data are composed of the results of the explosive screening test. Let's say that the security staff runs the bag through their testing apparatus 3 times, and it gives a positive reading on 3 of the 3 tests.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-likelihood">
+      <title>Computing the likelihood</title>
+      <p>
+        We want to compute the likelihood of the data under the hypothesis that there is an explosive in the bag. Let's say that we know (from the machine's manufacturer) that the sensitivity of the test is 0.99 <mdash/> that is, when a device is present, it will detect it 99% of the time. To determine the likelihood of our data under the hypothesis that a device is present, we can treat each test as a Bernoulli trial (that is, a trial with an outcome of true or false) with a probability of success of 0.99, which we can model using a binomial distribution.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-marginal-likelihood">
+      <title>Computing the marginal likelihood</title>
+      <p>
+        We also need to know the overall likelihood of the data <mdash/> that is, finding 3 positives out of 3 tests. Computing the marginal likelihood is often one of the most difficult aspects of Bayesian analysis, but for our example it's simple because we can take advantage of the specific form of Bayes' theorem for a binary outcome that we introduced in <xref ref="ch-probability"/>:
+      </p>
+      <me>
+        P(E|T) = \frac{P(T|E)*P(E)}{P(T|E)*P(E) + P(T|\neg E)*P(\neg E)}
+      </me>
+      <p>
+        where <m>E</m> refers to the presence of explosives, and <m>T</m> refers to a postive test result.
+      </p>
+      <p>
+        The marginal likelihood in this case is a weighted average of the likelihood of the data under either presence or absence of the explosive, multiplied by the probability of the explosive being present (i.e. the prior). In this case, let's say that we know (from the manufacturer) that the specificity of the test is 0.99, such that the likelihood of a positive result when there is no explosive (<m>P(T|\neg E)</m>) is 0.01.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-posterior">
+      <title>Computing the posterior</title>
+      <p>
+        We now have all of the parts that we need to compute the posterior probability of an explosive being present, given the observed 3 positive outcomes out of 3 tests. This result shows us that the posterior probability of an explosive in the bag given these positive tests (0.495) is just under 50%, again highlighting the fact that testing for rare events is almost always liable to produce high numbers of false positives, even when the specificity and sensitivity are very high.
+      </p>
+      <p>
+        An important aspect of Bayesian analysis is that it can be sequential. Once we have the posterior from one analysis, it can become the prior for the next analysis!
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-estimating-posterior-distributions">
+    <title>Estimating posterior distributions</title>
+    <p>
+      In the previous example there were only two possible outcomes <mdash/> the explosive is either there or it's not <mdash/> and we wanted to know which outcome was most likely given the data. However, in other cases we want to use Bayesian estimation to estimate the numeric value of a parameter. Let's say that we want to know about the effectiveness of a new drug for pain; to test this, we can administer the drug to a group of patients and then ask them whether their pain was improved or not after taking the drug. We can use Bayesian analysis to estimate the proportion of people for whom the drug will be effective using these data.
+    </p>
+
+    <subsection xml:id="subsec-specifying-prior-drug">
+      <title>Specifying the prior</title>
+      <p>
+        In this case, we don't have any prior information about the effectiveness of the drug, so we will use a <em>uniform distribution</em> as our prior, since all values are equally likely under a uniform distribution. In order to simplify the example, we will only look at a subset of 99 possible values of effectiveness (from .01 to .99, in steps of .01). Therefore, each possible value has a prior probability of 1/99.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-collect-data-drug">
+      <title>Collect some data</title>
+      <p>
+        We need some data in order to estimate the effect of the drug. Let's say that we administer the drug to 100 individuals, we find that 64 respond positively to the drug.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-likelihood-drug">
+      <title>Computing the likelihood</title>
+      <p>
+        We can compute the likelihood of the observed data under any particular value of the effectiveness parameter using the binomial density function. In <xref ref="fig-like2"/> you can see the likelihood curves over numbers of responders for several different values of <m>P_{respond}</m>. Looking at this, it seems that our observed data are relatively more likely under the hypothesis of <m>P_{respond}=0.7</m>, somewhat less likely under the hypothesis of <m>P_{respond}=0.5</m>, and quite unlikely under the hypothesis of <m>P_{respond}=0.3</m>. One of the fundamental ideas of Bayesian inference is that we should upweight our belief in values of our parameter of interest in proportion to how likely the data are under those values, balanced against what we believed about the parameter values before having seen the data (our prior knowledge).
+      </p>
+
+      <figure xml:id="fig-like2">
+        <caption>Likelihood of each possible number of responders under several different hypotheses (p(respond)=0.5 (solid), 0.7 (dotted), 0.3 (dashed). Observed value shown in the vertical line</caption>
+        <image source="like2.png" width="50%">
+          <description>A plot showing likelihood curves for different values of p(respond), with a vertical line at the observed value of 64 responders.</description>
+        </image>
+      </figure>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-marginal-likelihood-drug">
+      <title>Computing the marginal likelihood</title>
+      <p>
+        In addition to the likelihood of the data under different hypotheses, we need to know the overall likelihood of the data, combining across all hypotheses (i.e., the marginal likelihood). This marginal likelihood is primarily important because it helps to ensure that the posterior values are true probabilities. In this case, our use of a set of discrete possible parameter values makes it easy to compute the marginal likelihood, because we can just compute the likelihood of each parameter value under each hypothesis and add them up.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-computing-posterior-drug">
+      <title>Computing the posterior</title>
+      <p>
+        We now have all of the parts that we need to compute the posterior probability distribution across all possible values of <m>p_{respond}</m>, as shown in <xref ref="fig-posterior-dist"/>.
+      </p>
+
+      <figure xml:id="fig-posterior-dist">
+        <caption>Posterior probability distribution for the observed data plotted in solid line against uniform prior distribution (dotted line). The maximum a posteriori (MAP) value is signified by the diamond symbol.</caption>
+        <image source="posteriorDist.png" width="50%">
+          <description>A plot showing the posterior distribution as a solid line and the uniform prior as a dotted line, with a diamond marker at the peak of the posterior.</description>
+        </image>
+      </figure>
+    </subsection>
+
+    <subsection xml:id="subsec-map-estimation">
+      <title>Maximum a posteriori (MAP) estimation</title>
+      <p>
+        Given our data we would like to obtain an estimate of <m>p_{respond}</m> for our sample. One way to do this is to find the value of <m>p_{respond}</m> for which the posterior probability is the highest, which we refer to as the <em>maximum a posteriori</em> (MAP) estimate. We can find this from the data in <xref ref="fig-posterior-dist"/> <mdash/> it's the value shown with a marker at the top of the distribution. Note that the result (0.64) is simply the proportion of responders from our sample <mdash/> this occurs because the prior was uniform and thus didn't influence our estimate.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-credible-intervals">
+      <title>Credible intervals</title>
+      <p>
+        Often we would like to know not just a single estimate for the posterior, but an interval in which we are confident that the posterior falls. We previously discussed the concept of confidence intervals in the context of frequentist inference, and you may remember that the interpretation of confidence intervals was particularly convoluted: It was an interval that will contain the the value of the parameter 95% of the time. What we really want is an interval in which we are confident that the true parameter falls, and Bayesian statistics can give us such an interval, which we call a <em>credible interval</em>.
+      </p>
+      <p>
+        The interpretation of this credible interval is much closer to what we had hoped we could get from a confidence interval (but could not): It tells us that there is a 95% probability that the value of <m>p_{respond}</m> falls between these two values. Importantly, in this case it shows that we have high confidence that <m>p_{respond} > 0.0</m>, meaning that the drug seems to have a positive effect.
+      </p>
+      <p>
+        In some cases the credible interval can be computed <em>numerically</em> based on a known distribution, but it's more common to generate a credible interval by sampling from the posterior distribution and then to compute quantiles of the samples. This is particularly useful when we don't have an easy way to express the posterior distribution numerically, which is often the case in real Bayesian data analysis. One such method (rejection sampling) is explained in more detail in the Appendix at the end of this chapter.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-effects-different-priors">
+      <title>Effects of different priors</title>
+      <p>
+        In the previous example we used a <em>flat prior</em>, meaning that we didn't have any reason to believe that any particular value of <m>p_{respond}</m> was more or less likely. However, let's say that we had instead started with some previous data: In a previous study, researchers had tested 20 people and found that 10 of them had responded positively. This would have lead us to start with a prior belief that the treatment has an effect in 50% of people. We can do the same computation as above, but using the information from our previous study to inform our prior (see panel A in <xref ref="fig-posterior-dist-prior"/>).
+      </p>
+      <p>
+        Note that the likelihood and marginal likelihood did not change <mdash/> only the prior changed. The effect of the change in prior to was to pull the posterior closer to the mass of the new prior, which is centered at 0.5.
+      </p>
+      <p>
+        Now let's see what happens if we come to the analysis with an even stronger prior belief. Let's say that instead of having previously observed 10 responders out of 20 people, the prior study had instead tested 500 people and found 250 responders. This should in principle give us a much stronger prior, and as we see in panel B of <xref ref="fig-posterior-dist-prior"/>, that's what happens: The prior is much more concentrated around 0.5, and the posterior is also much closer to the prior. The general idea is that Bayesian inference combines the information from the prior and the likelihood, weighting the relative strength of each.
+      </p>
+
+      <figure xml:id="fig-posterior-dist-prior">
+        <caption>A: Effects of priors on the posterior distribution. The original posterior distribution based on a flat prior is plotted in blue. The prior based on the observation of 10 responders out of 20 people is plotted in the dotted black line, and the posterior using this prior is plotted in red. B: Effects of the strength of the prior on the posterior distribution. The blue line shows the posterior obtained using the prior based on 50 heads out of 100 people. The dotted black line shows the prior based on 250 heads out of 500 flips, and the red line shows the posterior based on that prior. C: Effects of the strength of the prior on the posterior distribution. The blue line shows the posterior obtained using an absolute prior which states that p(respond) is 0.8 or greater. The prior is shown in the dotted black line.</caption>
+        <image source="posteriorDistPrior.png" width="80%">
+          <description>Three panels showing how different priors affect the posterior distribution, demonstrating weak, strong, and absolute priors.</description>
+        </image>
+      </figure>
+
+      <p>
+        This example also highlights the sequential nature of Bayesian analysis <mdash/> the posterior from one analysis can become the prior for the next analysis.
+      </p>
+      <p>
+        Finally, it is important to realize that if the priors are strong enough, they can completely overwhelm the data. Let's say that you have an absolute prior that <m>p_{respond}</m> is 0.8 or greater, such that you set the prior likelihood of all other values to zero. What happens if we then compute the posterior?
+      </p>
+      <p>
+        In panel C of <xref ref="fig-posterior-dist-prior"/> we see that there is zero density in the posterior for any of the values where the prior was set to zero - the data are overwhelmed by the absolute prior.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-choosing-prior">
+    <title>Choosing a prior</title>
+    <p>
+      The impact of priors on the resulting inferences are the most controversial aspect of Bayesian statistics. What is the right prior to use? If the choice of prior determines the results (i.e., the posterior), how can you be sure you results are trustworthy? These are difficult questions, but we should not back away just because we are faced with hard questions. As we discussed previously, Bayesian analyses give us interpretable results (credible intervals, etc.). This alone should inspire us to think hard about these questions so that we can arrive with results that are reasonable and interpretable.
+    </p>
+    <p>
+      There are various ways to choose one's priors, which (as we saw above) can impact the resulting inferences. Sometimes we have a very specific prior, as in the case where we expected our coin to lands heads 50% of the time, but in many cases we don't have such strong a starting point. <em>Uninformative priors</em> attempt to influence the resulting posterior as little as possible, as we saw in the example of the uniform prior above. It's also common to use <em>weakly informative priors</em> (or <em>default priors</em>), which influence the result only very slightly. For example, if we had used a binomial distribution based on one heads out of two coin flips, the prior would have been centered around 0.5 but fairly flat, influencing the posterior only slightly. It is also possible to use priors based on the scientific literature or pre-existing data, which we would call <em>empirical priors</em>. In general, however, we will stick to the use of uninformative/weakly informative priors, since they raise the least concern about influencing our results.
+    </p>
+  </section>
+
+  <section xml:id="sec-bayesian-hypothesis-testing">
+    <title>Bayesian hypothesis testing</title>
+    <p>
+      Having learned how to perform Bayesian estimation, we now turn to the use of Bayesian methods for hypothesis testing. Let's say that there are two politicians who differ in their beliefs about whether the public is in favor an extra tax to support the national parks. Senator Smith thinks that only 40% of people are in favor of the tax, whereas Senator Jones thinks that 60% of people are in favor. They arrange to have a poll done to test this, which asks 1000 randomly selected people whether they support such a tax. The results are that 490 of the people in the polled sample were in favor of the tax. Based on these data, we would like to know: Do the data support the claims of one senator over the other,and by how much? We can test this using a concept known as the <url href="https://bayesfactor.blogspot.com/2014/02/the-bayesfactor-package-this-blog-is.html">Bayes factor</url>, which quantifies which hypothesis is better by comparing how well each predicts the observed data.
+    </p>
+
+    <subsection xml:id="subsec-bayes-factors">
+      <title>Bayes factors</title>
+      <p>
+        The Bayes factor characterizes the relative likelihood of the data under two different hypotheses. It is defined as:
+      </p>
+      <me>
+        BF = \frac{p(data|H_1)}{p(data|H_2)}
+      </me>
+      <p>
+        for two hypotheses <m>H_1</m> and <m>H_2</m>. In the case of our two senators, we know how to compute the likelihood of the data under each hypothesis using the binomial distribution; let's assume for the moment that our prior probability for each senator being correct is the same (<m>P_{H_1} = P_{H_2} = 0.5</m>). We will put Senator Smith in the numerator and Senator Jones in the denominator, so that a value greater than one will reflect greater evidence for Senator Smith, and a value less than one will reflect greater evidence for Senator Jones. The resulting Bayes Factor (3158) provides a measure of the evidence that the data provides regarding the two hypotheses - in this case, it tells us the data support Senator Smith more than 3000 times more strongly than they support Senator Jones.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-bayes-factors-statistical">
+      <title>Bayes factors for statistical hypotheses</title>
+      <p>
+        In the previous example we had specific predictions from each senator, whose likelihood we could quantify using the binomial distribution. In addition, our prior probability for the two hypotheses was equal. However, in real data analysis we generally must deal with uncertainty about our parameters, which complicates the Bayes factor, because we need to compute the marginal likelihood (that is, an integrated average of the likelihoods over all possible model parameters, weighted by their prior probabilities). However, in exchange we gain the ability to quantify the relative amount of evidence in favor of the null versus alternative hypotheses.
+      </p>
+      <p>
+        Let's say that we are a medical researcher performing a clinical trial for the treatment of diabetes, and we wish to know whether a particular drug reduces blood glucose compared to placebo. We recruit a set of volunteers and randomly assign them to either drug or placebo group, and we measure the change in hemoglobin A1C (a marker for blood glucose levels) in each group over the period in which the drug or placebo was administered. What we want to know is: Is there a difference between the drug and placebo?
+      </p>
+      <p>
+        First, let's generate some data and analyze them using null hypothesis testing (see <xref ref="fig-bayes-testing"/>). Then let's perform an independent-samples t-test, which shows that there is a significant difference between the groups.
+      </p>
+
+      <figure xml:id="fig-bayes-testing">
+        <caption>Box plots showing data for drug and placebo groups.</caption>
+        <image source="bayesTesting.png" width="50%">
+          <description>Box plots comparing the change in hemoglobin A1C between drug and placebo groups, with a dotted line at zero.</description>
+        </image>
+      </figure>
+
+      <p>
+        This test tells us that there is a significant difference between the groups, but it doesn't quantify how strongly the evidence supports the null versus alternative hypotheses. To measure that, we can compute a Bayes factor using <c>ttestBF</c> function from the BayesFactor package in R.
+      </p>
+      <p>
+        We are particularly interested in the Bayes Factor for an effect greater than zero, which is listed in the line marked <q>[1]</q> in the report. The Bayes factor here tells us that the alternative hypothesis (i.e. that the difference is greater than zero) is about 3 times more likely than the point null hypothesis (i.e. a mean difference of exactly zero) given the data. Thus, while the effect is significant, the amount of evidence it provides us in favor of the alternative hypothesis is rather weak.
+      </p>
+
+      <subsubsection xml:id="subsubsec-one-sided-tests">
+        <title>One-sided tests</title>
+        <p>
+          We generally are less interested in testing against the null hypothesis of a specific point value (e.g. mean difference = 0) than we are in testing against a directional null hypothesis (e.g. that the difference is less than or equal to zero). We can also perform a directional (or <em>one-sided</em>) test using the results from <c>ttestBF</c> analysis, since it provides two Bayes factors: one for the alternative hypothesis that the mean difference is greater than zero, and one for the alternative hypothesis that the mean difference is less than zero. If we want to assess the relative evidence for a positive effect, we can compute a Bayes factor comparing the relative evidence for a positive versus a negative effect by simply dividing the two Bayes factors returned by the function.
+        </p>
+        <p>
+          Now we see that the Bayes factor for a positive effect versus a negative effect is substantially larger (almost 30).
+        </p>
+      </subsubsection>
+
+      <subsubsection xml:id="subsubsec-interpreting-bayes-factors">
+        <title>Interpreting Bayes Factors</title>
+        <p>
+          How do we know whether a Bayes factor of 2 or 20 is good or bad? There is a general guideline for interpretation of Bayes factors suggested by <url href="https://www.andrew.cmu.edu/user/kk3n/simplicity/KassRaftery1995.pdf">Kass &amp; Rafferty (1995)</url>:
+        </p>
+
+        <table xml:id="table-bayes-factor-interpretation">
+          <title>Interpretation of Bayes Factors</title>
+          <tabular>
+            <row header="yes">
+              <cell>BF</cell>
+              <cell>Strength of evidence</cell>
+            </row>
+            <row>
+              <cell>1 to 3</cell>
+              <cell>not worth more than a bare mention</cell>
+            </row>
+            <row>
+              <cell>3 to 20</cell>
+              <cell>positive</cell>
+            </row>
+            <row>
+              <cell>20 to 150</cell>
+              <cell>strong</cell>
+            </row>
+            <row>
+              <cell>>150</cell>
+              <cell>very strong</cell>
+            </row>
+          </tabular>
+        </table>
+
+        <p>
+          Based on this, even though the statisical result is significant, the amount of evidence in favor of the alternative vs. the point null hypothesis is weak enough that it's hardly worth even mentioning, whereas the evidence for the directional hypothesis is relatively strong.
+        </p>
+      </subsubsection>
+    </subsection>
+
+    <subsection xml:id="subsec-assessing-null">
+      <title>Assessing evidence for the null hypothesis</title>
+      <p>
+        Because the Bayes factor is comparing evidence for two hypotheses, it also allows us to assess whether there is evidence in favor of the null hypothesis, which we couldn't do with standard null hypothesis testing (because it starts with the assumption that the null is true). This can be very useful for determining whether a non-significant result really provides strong evidence that there is no effect, or instead just reflects weak evidence overall.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-learning-objectives-bayesian">
+    <title>Learning objectives</title>
+    <p>
+      After reading this chapter, should be able to:
+    </p>
+    <ul>
+      <li>Describe the main differences between Bayesian analysis and null hypothesis testing</li>
+      <li>Describe and perform the steps in a Bayesian analysis</li>
+      <li>Describe the effects of different priors, and the considerations that go into choosing a prior</li>
+      <li>Describe the difference in interpretation between a confidence interval and a Bayesian credible interval</li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-suggested-readings-bayesian">
+    <title>Suggested readings</title>
+    <ul>
+      <li><em>The Theory That Would Not Die: How Bayes' Rule Cracked the Enigma Code, Hunted Down Russian Submarines, and Emerged Triumphant from Two Centuries of Controversy</em>, by Sharon Bertsch McGrayne</li>
+      <li><em>Doing Bayesian Data Analysis: A Tutorial Introduction with R</em>, by John K. Kruschke</li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-appendix-bayesian">
+    <title>Appendix</title>
+
+    <subsection xml:id="subsec-rejection-sampling">
+      <title>Rejection sampling</title>
+      <p>
+        We will generate samples from our posterior distribution using a simple algorithm known as <url href="https://am207.github.io/2017/wiki/rejectionsampling.html"><em>rejection sampling</em></url>. The idea is that we choose a random value of x (in this case <m>p_{respond}</m>) and a random value of y (in this case, the posterior probability of <m>p_{respond}</m>) each from a uniform distribution. We then only accept the sample if <m>y &lt; f(x)</m> - in this case, if the randomly selected value of y is less than the actual posterior probability of y. <xref ref="fig-rejection-sampling"/> shows an example of a histogram of samples using rejection sampling, along with the 95% credible intervals obtained using this method.
+      </p>
+
+      <figure xml:id="fig-rejection-sampling">
+        <caption>Rejection sampling example. The black line shows the density of all possible values of p(respond); the blue lines show the 2.5th and 97.5th percentiles of the distribution, which represent the 95 percent credible interval for the estimate of p(respond).</caption>
+        <image source="rejectionSampling.png" width="50%">
+          <description>A density plot showing the distribution of accepted samples with vertical blue lines marking the credible interval boundaries.</description>
+        </image>
+      </figure>
+    </subsection>
+  </section>
+
+</chapter>
