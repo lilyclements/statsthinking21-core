@@ -4,15 +4,523 @@
 
   <introduction>
     <p>
-      <!-- Chapter introduction content goes here -->
+      Remember that early in the book we described the basic model of statistics:
+    </p>
+    <me>
+      data = model + error
+    </me>
+    <p>
+      where our general goal is to find the model that minimizes the error, subject to some other constraints (such as keeping the model relatively simple so that we can generalize beyond our specific dataset). In this chapter we will focus on a particular implementation of this approach, which is known as the <em>general linear model</em> (or GLM). You have already seen the general linear model in the earlier chapter on Fitting Models to Data, where we modeled height in the NHANES dataset as a function of age; here we will provide a more general introduction to the concept of the GLM and its many uses. Nearly every model used in statistics can be framed in terms of the general linear model or an extension of it.
+    </p>
+    <p>
+      Before we discuss the general linear model, let's first define two terms that will be important for our discussion:
+    </p>
+    <ul>
+      <li><term>dependent variable</term>: This is the outcome variable that our model aims to explain (usually referred to as <m>Y</m>)</li>
+      <li><term>independent variable</term>: This is a variable that we wish to use in order to explain the dependent variable (usually referred to as <m>X</m>).</li>
+    </ul>
+    <p>
+      There may be multiple independent variables, but for this course we will focus primarily on situations where there is only one dependent variable in our analysis.
+    </p>
+    <p>
+      A general linear model is one in which the model for the dependent variable is composed of a <em>linear combination</em> of independent variables that are each multiplied by a weight (which is often referred to as the Greek letter beta - <m>\beta</m>), which determines the relative contribution of that independent variable to the model prediction.
+    </p>
+
+    <!-- R code block: simulated data for study time and grades example -->
+
+    <figure xml:id="fig-studytime-grades">
+      <caption>Relation between study time and grades</caption>
+      <image source="StudytimeGrades.png" width="50%">
+        <description>A scatter plot showing the relationship between study time (in hours) on the x-axis and grade (in percent) on the y-axis. The plot shows a positive relationship with grades ranging from about 70 to 100 and study time from 0 to 5 hours.</description>
+      </image>
+    </figure>
+
+    <p>
+      As an example, let's generate some simulated data for the relationship between study time and exam grades (see <xref ref="fig-studytime-grades"/>). Given these data, we might want to engage in each of the three fundamental activities of statistics:
+    </p>
+    <ul>
+      <li><em>Describe</em>: How strong is the relationship between grade and study time?</li>
+      <li><em>Decide</em>: Is there a statistically significant relationship between grade and study time?</li>
+      <li><em>Predict</em>: Given a particular amount of study time, what grade do we expect?</li>
+    </ul>
+    <p>
+      In the previous chapter we learned how to describe the relationship between two variables using the correlation coefficient. Let's use our statistical software to compute that relationship for these data and test whether the correlation is significantly different from zero:
+    </p>
+
+    <!-- R code block: correlation test between grades and study time -->
+
+    <p>
+      The correlation is quite high, but notice that the confidence interval around the estimate is very wide, spanning nearly the entire range from zero to one, which is due in part to the small sample size.
     </p>
   </introduction>
 
-  <section xml:id="sec-linear-model-intro">
-    <title>Introduction to Linear Models</title>
+  <section xml:id="sec-linear-regression">
+    <title>Linear regression</title>
     <p>
-      <!-- Section content goes here -->
+      We can use the general linear model to describe the relation between two variables and to decide whether that relationship is statistically significant; in addition, the model allows us to predict the value of the dependent variable given some new value(s) of the independent variable(s). Most importantly, the general linear model will allow us to build models that incorporate multiple independent variables, whereas the correlation coefficient can only describe the relationship between two individual variables.
+    </p>
+    <p>
+      The specific version of the GLM that we use for this is referred to as as <em>linear regression</em>. The term <em>regression</em> was coined by Francis Galton, who had noted that when he compared parents and their children on some feature (such as height), the children of extreme parents (i.e. the very tall or very short parents) generally fell closer to the mean than did their parents. This is an extremely important point that we return to below.
+    </p>
+    <p>
+      The simplest version of the linear regression model (with a single independent variable) can be expressed as follows:
+    </p>
+    <me>
+      y = x * \beta_x + \beta_0 + \epsilon
+    </me>
+    <p>
+      The <m>\beta_x</m> value tells us how much we would expect y to change given a one-unit change in <m>x</m>. The intercept <m>\beta_0</m> is an overall offset, which tells us what value we would expect y to have when <m>x=0</m>; you may remember from our early modeling discussion that this is important to model the overall magnitude of the data, even if <m>x</m> never actually attains a value of zero. The error term <m>\epsilon</m> refers to whatever is left over once the model has been fit; we often refer to these as the <em>residuals</em> from the model. If we want to know how to predict y (which we call <m>\hat{y}</m>) after we estimate the <m>\beta</m> values, then we can drop the error term:
+    </p>
+    <me>
+      \hat{y} = x * \hat{\beta_x} + \hat{\beta_0}
+    </me>
+    <p>
+      Note that this is simply the equation for a line, where <m>\hat{\beta_x}</m> is our estimate of the slope and <m>\hat{\beta_0}</m> is the intercept. <xref ref="fig-linear-regression"/> shows an example of this model applied to the study time data.
+    </p>
+
+    <figure xml:id="fig-linear-regression">
+      <caption>The linear regression solution for the study time data is shown in the solid line. The value of the intercept is equivalent to the predicted value of the y variable when the x variable is equal to zero; this is shown with a dotted line. The value of beta is equal to the slope of the line -- that is, how much y changes for a unit change in x. This is shown schematically in the dashed lines, which show the degree of increase in grade for a single unit increase in study time.</caption>
+      <image source="LinearRegression.png" width="50%">
+        <description>A scatter plot with a fitted regression line showing the relationship between study time and grades. The plot includes a dotted horizontal line at the intercept and dashed lines showing the slope of the relationship.</description>
+      </image>
+    </figure>
+
+    <p>
+      We will not go into the details of how the best fitting slope and intercept are actually estimated from the data; if you are interested, details are available in the Appendix.
+    </p>
+
+    <subsection xml:id="subsec-regression-to-mean">
+      <title>Regression to the mean</title>
+      <p>
+        The concept of <em>regression to the mean</em> was one of Galton's essential contributions to science, and it remains a critical point to understand when we interpret the results of experimental data analyses. Let's say that we want to study the effects of a reading intervention on the performance of poor readers. To test our hypothesis, we might go into a school and recruit those individuals in the bottom 25% of the distribution on some reading test, administer the intervention, and then examine their performance on the test after the intervention. Let's say that the intervention actually has no effect, such that reading scores for each individual are simply independent samples from a normal distribution. Results from a computer simulation of this hypothetic experiment are presented in <xref ref="tab-reading-table"/>.
+      </p>
+
+      <!-- R code block: simulated reading scores data -->
+
+      <!-- R code block: simulated reading scores demonstrating regression to the mean -->
+
+      <table xml:id="tab-reading-table">
+        <title>Reading scores for Test 1 (which is lower, because it was the basis for selecting the students) and Test 2 (which is higher because it was not related to Test 1).</title>
+        <tabular>
+          <row header="yes">
+            <cell>Test</cell>
+            <cell>Score</cell>
+          </row>
+          <row>
+            <cell>Test 1</cell>
+            <cell>~90 (computed)</cell>
+          </row>
+          <row>
+            <cell>Test 2</cell>
+            <cell>~100 (computed)</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        If we look at the difference between the mean test performance at the first and second test, it appears that the intervention has helped these students substantially, as their scores have gone up by more than ten points on the test! However, we know that in fact the students didn't improve at all, since in both cases the scores were simply selected from a random normal distribution. What has happened is that some students scored badly on the first test simply due to random chance. If we select just those subjects on the basis of their first test scores, they are guaranteed to move back towards the mean of the entire group on the second test, even if there is no effect of training. This is the reason that we always need an untreated <em>control group</em> in order to interpret any changes in performance due to an intervention; otherwise we are likely to be tricked by regression to the mean. In addition, the participants need to be randomly assigned to the control or treatment group, so that there won't be any systematic differences between the groups (on average).
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-correlation-regression-relation">
+      <title>The relation between correlation and regression</title>
+      <p>
+        There is a close relationship between correlation coefficients and regression coefficients. Remember that Pearson's correlation coefficient is computed as the ratio of the covariance and the product of the standard deviations of x and y:
+      </p>
+      <me>
+        \hat{r} = \frac{covariance_{xy}}{s_x * s_y}
+      </me>
+      <p>
+        whereas the regression beta for x is computed as:
+      </p>
+      <me>
+        \hat{\beta_x} = \frac{covariance_{xy}}{s_x^2}
+      </me>
+      <p>
+        Based on these two equations, we can derive the relationship between <m>\hat{r}</m> and <m>\hat{\beta}</m>:
+      </p>
+      <me>
+        covariance_{xy} = \hat{r} * s_x * s_y
+      </me>
+      <me>
+        \hat{\beta_x} = \frac{\hat{r} * s_x * s_y}{s_x * s_x} = \hat{r} * \frac{s_y}{s_x}
+      </me>
+      <p>
+        That is, the regression slope is equal to the correlation value multiplied by the ratio of standard deviations of y and x. One thing this tells us is that when the standard deviations of x and y are the same (e.g. when the data have been converted to Z scores), then the correlation estimate is equal to the regression slope estimate.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-standard-errors">
+      <title>Standard errors for regression models</title>
+      <p>
+        If we want to make inferences about the regression parameter estimates, then we also need an estimate of their variability. To compute this, we first need to compute the <em>residual variance</em> or <em>error variance</em> for the model -- that is, how much variability in the dependent variable is not explained by the model. We can compute the model residuals as follows:
+      </p>
+      <me>
+        residual = y - \hat{y} = y - (x*\hat{\beta_x} + \hat{\beta_0})
+      </me>
+      <p>
+        We then compute the <em>sum of squared errors (SSE)</em>:
+      </p>
+      <me>
+        SS_{error} = \sum_{i=1}^n{(y_i - \hat{y_i})^2} = \sum_{i=1}^n{residuals^2}
+      </me>
+      <p>
+        and from this we compute the <em>mean squared error</em>:
+      </p>
+      <me>
+        MS_{error} = \frac{SS_{error}}{df} = \frac{\sum_{i=1}^n{(y_i - \hat{y_i})^2} }{N - p}
+      </me>
+      <p>
+        where the degrees of freedom (<m>df</m>) are determined by subtracting the number of estimated parameters (2 in this case: <m>\hat{\beta_x}</m> and <m>\hat{\beta_0}</m>) from the number of observations (<m>N</m>). Once we have the mean squared error, we can compute the standard error for the model as:
+      </p>
+      <me>
+        SE_{model} = \sqrt{MS_{error}}
+      </me>
+      <p>
+        In order to get the standard error for a specific regression parameter estimate, <m>SE_{\beta_x}</m>, we need to rescale the standard error of the model by the square root of the sum of squares of the X variable:
+      </p>
+      <me>
+        SE_{\hat{\beta}_x} = \frac{SE_{model}}{\sqrt{{\sum{(x_i - \bar{x})^2}}}}
+      </me>
+    </subsection>
+
+    <subsection xml:id="subsec-statistical-tests">
+      <title>Statistical tests for regression parameters</title>
+      <p>
+        Once we have the parameter estimates and their standard errors, we can compute a <m>t</m> statistic to tell us the likelihood of the observed parameter estimates compared to some expected value under the null hypothesis. In this case we will test against the null hypothesis of no effect (i.e. <m>\beta=0</m>):
+      </p>
+      <md>
+        <mrow>t_{N - p} \amp = \frac{\hat{\beta} - \beta_{expected}}{SE_{\hat{\beta}}}</mrow>
+        <mrow>t_{N - p} \amp = \frac{\hat{\beta} - 0}{SE_{\hat{\beta}}}</mrow>
+        <mrow>t_{N - p} \amp = \frac{\hat{\beta} }{SE_{\hat{\beta}}}</mrow>
+      </md>
+      <p>
+        In general we would use statistical software to compute these rather than computing them by hand. Here are the results from the linear model function in R:
+      </p>
+
+      <!-- R code block: summary of linear model results -->
+
+      <p>
+        In this case we see that the intercept is significantly different from zero (which is not very interesting) and that the effect of studyTime on grades is marginally significant (p = .09) -- the same p-value as the correlation test that we performed earlier.
+      </p>
+    </subsection>
+
+    <subsection xml:id="subsec-goodness-of-fit">
+      <title>Quantifying goodness of fit of the model</title>
+      <p>
+        Sometimes it's useful to quantify how well the model fits the data overall, and one way to do this is to ask how much of the variability in the data is accounted for by the model. This is quantified using a value called <m>R^2</m> (also known as the <em>coefficient of determination</em>). If there is only one x variable, then this is easy to compute by simply squaring the correlation coefficient:
+      </p>
+      <me>
+        R^2 = r^2
+      </me>
+      <p>
+        In the case of our study time example, <m>R^2</m> is approximately 0.40, which means that we have accounted for about 40% of the variance in grades.
+      </p>
+      <p>
+        More generally we can think of <m>R^2</m> as a measure of the fraction of variance in the data that is accounted for by the model, which can be computed by breaking the variance into multiple components:
+      </p>
+      <me>
+        SS_{total} = SS_{model} + SS_{error}
+      </me>
+      <p>
+        where <m>SS_{total}</m> is the variance of the data (<m>y</m>) and <m>SS_{model}</m> and <m>SS_{error}</m> are computed as shown earlier in this chapter. Using this, we can then compute the coefficient of determination as:
+      </p>
+      <me>
+        R^2 = \frac{SS_{model}}{SS_{total}} = 1 - \frac{SS_{error}}{SS_{total}}
+      </me>
+      <p>
+        A small value of <m>R^2</m> tells us that even if the model fit is statistically significant, it may only explain a small amount of information in the data.
+      </p>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-fitting-complex-models">
+    <title>Fitting more complex models</title>
+    <p>
+      Often we would like to understand the effects of multiple variables on some particular outcome, and how they relate to one another. In the context of our study time example, let's say that we discovered that some of the students had previously taken a course on the topic. If we plot their grades (see <xref ref="fig-linear-regression-priorclass"/>), we can see that those who had a prior course perform much better than those who had not, given the same amount of study time. We would like to build a statistical model that takes this into account, which we can do by extending the model that we built above:
+    </p>
+    <me>
+      \hat{y} = \hat{\beta_1}*studyTime + \hat{\beta_2}*priorClass + \hat{\beta_0}
+    </me>
+    <p>
+      To model whether each individual has had a previous class or not, we use what we call <em>dummy coding</em> in which we create a new variable that has a value of one to represent having had a class before, and zero otherwise. This means that for people who have had the class before, we will simply add the value of <m>\hat{\beta_2}</m> to our predicted value for them -- that is, using dummy coding <m>\hat{\beta_2}</m> simply reflects the difference in means between the two groups. Our estimate of <m>\hat{\beta_1}</m> reflects the regression slope over all of the data points -- we are assuming that regression slope is the same regardless of whether someone has had a class before (see <xref ref="fig-linear-regression-priorclass"/>).
+    </p>
+
+    <!-- R code block: linear regression for study time and prior class -->
+
+    <figure xml:id="fig-linear-regression-priorclass">
+      <caption>The relation between study time and grade including prior experience as an additional component in the model. The solid line relates study time to grades for students who have not had prior experience, and the dashed line relates grades to study time for students with prior experience. The dotted line corresponds to the difference in means between the two groups.</caption>
+      <image source="LinearRegressionByPriorClass.png" width="50%">
+        <description>A scatter plot showing the relationship between study time and grades with two groups distinguished by whether students had prior experience. Two parallel regression lines are shown, one solid for no prior class and one dashed for prior class, with a dotted vertical line showing the difference between groups.</description>
+      </image>
+    </figure>
+  </section>
+
+  <section xml:id="sec-interactions">
+    <title>Interactions between variables</title>
+    <p>
+      In the previous model, we assumed that the effect of study time on grade (i.e., the regression slope) was the same for both groups. However, in some cases we might imagine that the effect of one variable might differ depending on the value of another variable, which we refer to as an <em>interaction</em> between variables.
+    </p>
+
+    <!-- R code block: caffeine and speaking data simulation -->
+
+    <p>
+      Let's use a new example that asks the question: What is the effect of caffeine on public speaking? First let's generate some data and plot them. Looking at panel A of <xref ref="fig-caffeine-anxiety-interaction"/>, there doesn't seem to be a relationship, and we can confirm that by performing linear regression on the data:
+    </p>
+
+    <!-- R code block: linear regression with caffeine as independent variable -->
+
+    <p>
+      But now let's say that we find research suggesting that anxious and non-anxious people react differently to caffeine. First let's plot the data separately for anxious and non-anxious people.
+    </p>
+    <p>
+      As we see from panel B in <xref ref="fig-caffeine-anxiety-interaction"/>, it appears that the relationship between speaking and caffeine is different for the two groups, with caffeine improving performance for people without anxiety and degrading performance for those with anxiety. We'd like to create a statistical model that addresses this question. First let's see what happens if we just include anxiety in the model.
+    </p>
+
+    <!-- R code block: linear regression adding anxiety to model -->
+
+    <p>
+      Here we see there are no significant effects of either caffeine or anxiety, which might seem a bit confusing. The problem is that this model is trying to use the same slope relating speaking to caffeine for both groups. If we want to fit them using lines with separate slopes, we need to include an <em>interaction</em> in the model, which is equivalent to fitting different lines for each of the two groups; this is often denoted by using the <m>*</m> symbol in the model.
+    </p>
+
+    <!-- R code block: linear regression including caffeine X anxiety interaction -->
+
+    <p>
+      From these results we see that there are significant effects of both caffeine and anxiety (which we call <em>main effects</em>) and an interaction between caffeine and anxiety. Panel C in <xref ref="fig-caffeine-anxiety-interaction"/> shows the separate regression lines for each group.
+    </p>
+
+    <figure xml:id="fig-caffeine-anxiety-interaction">
+      <caption>A: The relationship between caffeine and public speaking. B: The relationship between caffeine and public speaking, with anxiety represented by the shape of the data points. C: The relationship between public speaking and caffeine, including an interaction with anxiety. This results in two lines that separately model the slope for each group (dashed for anxious, dotted for non-anxious).</caption>
+      <image source="CaffeineAnxietyInteraction.png" width="80%">
+        <description>A three-panel figure showing: A) scatter plot of caffeine vs speaking with no clear pattern, B) same scatter plot with points marked by anxiety status showing divergent patterns, C) scatter plot with two fitted regression lines showing opposite slopes for anxious (dashed) vs non-anxious (dotted) groups.</description>
+      </image>
+    </figure>
+
+    <p>
+      One important point to note is that we have to be very careful about interpreting a significant main effect if a significant interaction is also present, since the interaction suggests that the main effect differs according to the values of another variable, and thus is not easily interpretable.
+    </p>
+    <p>
+      Sometimes we want to compare the relative fit of two different models, in order to determine which is a better model; we refer to this as <em>model comparison</em>. For the models above, we can compare the goodness of fit of the model with and without the interaction, using what is called an <em>analysis of variance</em>:
+    </p>
+
+    <!-- R code block: ANOVA comparing models with and without interaction -->
+
+    <p>
+      This tells us that there is good evidence to prefer the model with the interaction over the one without an interaction. Model comparison is relatively simple in this case because the two models are <em>nested</em> -- one of the models is a simplified version of the other model, such that all of the variables in the simpler model are contained in the more complex model. Model comparison with non-nested models can get much more complicated.
     </p>
   </section>
 
+  <section xml:id="sec-beyond-linear">
+    <title>Beyond linear predictors and outcomes</title>
+    <p>
+      It is important to note that despite the fact that it is called the general <em>linear</em> model, we can actually use the same machinery to model effects that don't follow a straight line (such as curves). The <q>linear</q> in the general linear model doesn't refer to the shape of the response, but instead refers to the fact that model is linear in its parameters --- that is, the predictors in the model only get multiplied the parameters, rather than a nonlinear relationship like being raised to a power of the parameter. It's also common to analyze data where the outcomes are binary rather than continuous, as we saw in the chapter on categorical outcomes. There are ways to adapt the general linear model (known as <em>generalized linear models</em>) that allow this kind of analysis. We will explore these models later in the book.
+    </p>
+  </section>
+
+  <section xml:id="sec-model-criticism">
+    <title>Criticizing our model and checking assumptions</title>
+    <p>
+      The saying <q>garbage in, garbage out</q> is as true of statistics as anywhere else. In the case of statistical models, we have to make sure that our model is properly specified and that our data are appropriate for the model.
+    </p>
+    <p>
+      When we say that the model is <q>properly specified</q>, we mean that we have included the appropriate set of independent variables in the model. We have already seen examples of misspecified models. Remember that we saw several cases where the model failed to properly account for the data, such as failing to include an intercept. When building a model, we need to ensure that it includes all of the appropriate variables.
+    </p>
+    <p>
+      We also need to worry about whether our model satisfies the assumptions of our statistical methods. One of the most important assumptions that we make when using the general linear model is that the residuals (that is, the difference between the model's predictions and the actual data) are normally distributed. This can fail for many reasons, either because the model was not properly specified or because the data that we are modeling are inappropriate.
+    </p>
+    <p>
+      We can use something called a <term>Q-Q</term> (quantile-quantile) plot to see whether our residuals are normally distributed. You have already encountered <em>quantiles</em> --- they are the value that cuts off a particular proportion of a cumulative distribution. The Q-Q plot presents the quantiles of two distributions against one another; in this case, we will present the quantiles of the actual data against the quantiles of a normal distribution fit to the same data. <xref ref="fig-qqplots"/> shows examples of two such Q-Q plots. The left panel shows a Q-Q plot for data from a normal distribution, while the right panel shows a Q-Q plot from non-normal data. The data points in the right panel diverge substantially from the line, reflecting the fact that they are not normally distributed.
+    </p>
+
+    <figure xml:id="fig-qqplots">
+      <caption>Q-Q plots of normal (left) and non-normal (right) data. The line shows the point at which the x and y axes are equal.</caption>
+      <image source="qqplots.png" width="80%">
+        <description>Two Q-Q plots side by side. The left plot shows points closely following a diagonal line, indicating normal data. The right plot shows points deviating from the diagonal line in an S-shaped pattern, indicating non-normal data.</description>
+      </image>
+    </figure>
+
+    <p>
+      Model diagnostics will be explored in more detail in a later chapter.
+    </p>
+  </section>
+
+  <section xml:id="sec-what-predict-means">
+    <title>What does <q>predict</q> really mean?</title>
+    <p>
+      When we talk about <q>prediction</q> in daily life, we are generally referring to the ability to estimate the value of some variable in advance of seeing the data. However, the term is often used in the context of linear regression to refer to the fitting of a model to the data; the estimated values (<m>\hat{y}</m>) are sometimes referred to as <q>predictions</q> and the independent variables are referred to as <q>predictors</q>. This has an unfortunate connotation, as it implies that our model should also be able to predict the values of new data points in the future. In reality, the fit of a model to the dataset used to obtain the parameters will nearly always be better than the fit of the model to a new dataset.
+    </p>
+    <p>
+      As an example, let's take a sample of 48 children from NHANES and fit a regression model for weight that includes several regressors (age, height, hours spent watching TV and using the computer, and household income) along with their interactions.
+    </p>
+
+    <!-- R code block: complex regression model with multiple predictors and interactions -->
+
+    <table xml:id="tab-prediction-accuracy">
+      <title>Root mean squared error for model applied to original data and new data, and after shuffling the order of the y variable (in essence making the null hypothesis true)</title>
+      <tabular>
+        <row header="yes">
+          <cell>Data type</cell>
+          <cell>RMSE (original data)</cell>
+          <cell>RMSE (new data)</cell>
+        </row>
+        <row>
+          <cell>True data</cell>
+          <cell>~5 kg (computed)</cell>
+          <cell>~26 kg (computed)</cell>
+        </row>
+        <row>
+          <cell>Shuffled data</cell>
+          <cell>~6 kg (computed)</cell>
+          <cell>~27 kg (computed)</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Here we see that whereas the model fit on the original data showed a very good fit (only off by a few kg per individual), the same model does a much worse job of predicting the weight values for new children sampled from the same population (off by more than 25 kg per individual). This happens because the model that we specified is quite complex, since it includes not just each of the individual variables, but also all possible combinations of them (i.e. their <em>interactions</em>), resulting in a model with 32 parameters. Since this is almost as many coefficients as there are data points (i.e., the heights of 48 children), the model <em>overfits</em> the data, just like the complex polynomial curve in our initial example of overfitting.
+    </p>
+    <p>
+      Another way to see the effects of overfitting is to look at what happens if we randomly shuffle the values of the weight variable (shown in the second row of the table). Randomly shuffling the value should make it impossible to predict weight from the other variables, because they should have no systematic relationship. The results in the table show that even when there is no true relationship to be modeled (because shuffling should have obliterated the relationship), the complex model still shows a very low error in its predictions on the fitted data, because it fits the noise in the specific dataset. However, when that model is applied to a new dataset, we see that the error is much larger, as it should be.
+    </p>
+
+    <subsection xml:id="subsec-cross-validation">
+      <title>Cross-validation</title>
+      <p>
+        One method that has been developed to help address the problem of overfitting is known as <em>cross-validation</em>. This technique is commonly used within the field of machine learning, which is focused on building models that will generalize well to new data, even when we don't have a new dataset to test the model. The idea behind cross-validation is that we fit our model repeatedly, each time leaving out a subset of the data, and then test the ability of the model to predict the values in each held-out subset.
+      </p>
+
+      <figure xml:id="fig-crossvalidation">
+        <caption>A schematic of the cross-validation procedure.</caption>
+        <image source="crossvalidation.png" width="30%">
+          <description>A diagram showing how data is split into multiple folds, with each fold taking turns as the test set while the remaining folds form the training set. This process is repeated for each fold.</description>
+        </image>
+      </figure>
+
+      <p>
+        Let's see how that would work for our weight prediction example. In this case we will perform 12-fold cross-validation, which means that we will break the data into 12 subsets, and then fit the model 12 times, in each case leaving out one of the subsets and then testing the model's ability to accurately predict the value of the dependent variable for those held-out data points. Most statistical software provides tools to apply cross-validation to one's data. Using this function we can run cross-validation on 100 samples from the NHANES dataset, and compute the RMSE for cross-validation, along with the RMSE for the original data and a new dataset, as we computed above.
+      </p>
+
+      <!-- R code block: cross-validation implementation -->
+
+      <table xml:id="tab-crossvalidation-accuracy">
+        <title>R-squared from cross-validation and new data, showing that cross-validation provides a reasonable estimate of the model's performance on new data.</title>
+        <tabular>
+          <row header="yes">
+            <cell>Data source</cell>
+            <cell>R-squared</cell>
+          </row>
+          <row>
+            <cell>Original data</cell>
+            <cell>~0.90 (computed)</cell>
+          </row>
+          <row>
+            <cell>New data</cell>
+            <cell>~0.20 (computed)</cell>
+          </row>
+          <row>
+            <cell>Cross-validation</cell>
+            <cell>~0.15 (computed)</cell>
+          </row>
+        </tabular>
+      </table>
+
+      <p>
+        Here we see that cross-validation gives us an estimate of predictive accuracy that is much closer to what we see with a completely new dataset than it is to the inflated accuracy that we see with the original dataset -- in fact, it's even slightly more pessimistic than the average for a new dataset, probably because only part of the data are being used to train each of the models.
+      </p>
+      <p>
+        Note that using cross-validation properly is tricky, and it is recommended that you consult with an expert before using it in practice. However, this section has hopefully shown you three things:
+      </p>
+      <ul>
+        <li><q>Prediction</q> doesn't always mean what you think it means</li>
+        <li>Complex models can overfit data very badly, such that one can observe seemingly good prediction even when there is no true signal to predict</li>
+        <li>You should view claims about prediction accuracy very skeptically unless they have been done using the appropriate methods.</li>
+      </ul>
+    </subsection>
+  </section>
+
+  <section xml:id="sec-glm-learning-objectives">
+    <title>Learning objectives</title>
+    <p>
+      Having read this chapter, you should be able to:
+    </p>
+    <ul>
+      <li>Describe the concept of linear regression and apply it to a dataset</li>
+      <li>Describe the concept of the general linear model and provide examples of its application</li>
+      <li>Describe how cross-validation can allow us to estimate the predictive performance of a model on new data</li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-glm-suggested-readings">
+    <title>Suggested readings</title>
+    <ul>
+      <li><url href="https://web.stanford.edu/~hastie/Papers/ESLII.pdf">The Elements of Statistical Learning: Data Mining, Inference, and Prediction (2nd Edition)</url> - The <q>bible</q> of machine learning methods, available freely online.</li>
+    </ul>
+  </section>
+
+  <section xml:id="sec-glm-appendix">
+    <title>Appendix</title>
+
+    <subsection xml:id="subsec-estimating-parameters">
+      <title>Estimating linear regression parameters</title>
+      <p>
+        We generally estimate the parameters of a linear model from data using <em>linear algebra</em>, which is the form of algebra that is applied to vectors and matrices. If you aren't familiar with linear algebra, don't worry -- you won't actually need to use it here, as R will do all the work for us. However, a brief excursion in linear algebra can provide some insight into how the model parameters are estimated in practice.
+      </p>
+      <p>
+        First, let's introduce the idea of vectors and matrices; you've already encountered them in the context of R, but we will review them here. A matrix is a set of numbers that are arranged in a square or rectangle, such that there are one or more <em>dimensions</em> across which the matrix varies. It is customary to place different observation units (such as people) in the rows, and different variables in the columns. Let's take our study time data from above. We could arrange these numbers in a matrix, which would have eight rows (one for each student) and two columns (one for study time, and one for grade). If you are thinking <q>that sounds like a data frame in R</q> you are exactly right! In fact, a data frame is a specialized version of a matrix, and we can convert a data frame to a matrix using the <c>as.matrix()</c> function.
+      </p>
+
+      <!-- R code block: creating design matrix from data frame -->
+
+      <p>
+        We can write the general linear model in linear algebra as follows:
+      </p>
+      <me>
+        Y = X*\beta + E
+      </me>
+      <p>
+        This looks very much like the earlier equation that we used, except that the letters are all capitalized, which is meant to express the fact that they are vectors.
+      </p>
+      <p>
+        We know that the grade data go into the Y matrix, but what goes into the <m>X</m> matrix? Remember from our initial discussion of linear regression that we need to add a constant in addition to our independent variable of interest, so our <m>X</m> matrix (which we call the <em>design matrix</em>) needs to include two columns: one representing the study time variable, and one column with the same value for each individual (which we generally fill with all ones). We can view the resulting design matrix graphically (see <xref ref="fig-glm-matrix"/>).
+      </p>
+
+      <figure xml:id="fig-glm-matrix">
+        <caption>A depiction of the linear model for the study time data in terms of matrix algebra.</caption>
+        <image source="glm_matrix.png" width="50%">
+          <description>A diagram showing the matrix representation of the general linear model, with the Y vector on the left, the design matrix X in the middle, the beta parameter vector, and the error vector on the right, all connected by multiplication and addition symbols.</description>
+        </image>
+      </figure>
+
+      <p>
+        The rules of matrix multiplication tell us that the dimensions of the matrices have to match with one another; in this case, the design matrix has dimensions of 8 (rows) X 2 (columns) and the Y variable has dimensions of 8 X 1. Therefore, the <m>\beta</m> matrix needs to have dimensions 2 X 1, since an 8 X 2 matrix multiplied by a 2 X 1 matrix results in an 8 X 1 matrix (as the matching middle dimensions drop out). The interpretation of the two values in the <m>\beta</m> matrix is that they are the values to be multipled by study time and 1 respectively to obtain the estimated grade for each individual. We can also view the linear model as a set of individual equations for each individual:
+      </p>
+      <p>
+        <m>\hat{y}_1 = studyTime_1*\beta_1 + 1*\beta_2</m>
+      </p>
+      <p>
+        <m>\hat{y}_2 = studyTime_2*\beta_1 + 1*\beta_2</m>
+      </p>
+      <p>
+        ...
+      </p>
+      <p>
+        <m>\hat{y}_8 = studyTime_8*\beta_1 + 1*\beta_2</m>
+      </p>
+      <p>
+        Remember that our goal is to determine the best fitting values of <m>\beta</m> given the known values of <m>X</m> and <m>Y</m>. A naive way to do this would be to solve for <m>\beta</m> using simple algebra -- here we drop the error term <m>E</m> because it's out of our control:
+      </p>
+      <me>
+        \hat{\beta} = \frac{Y}{X}
+      </me>
+      <p>
+        The challenge here is that <m>X</m> and <m>\beta</m> are now matrices, not single numbers -- but the rules of linear algebra tell us how to divide by a matrix, which is the same as multiplying by the <em>inverse</em> of the matrix (referred to as <m>X^{-1}</m>). We can do this in R:
+      </p>
+
+      <!-- R code block: computing beta estimates using linear algebra with ginv() -->
+
+      <p>
+        Anyone who is interested in serious use of statistical methods is highly encouraged to invest some time in learning linear algebra, as it provides the basis for nearly all of the tools that are used in standard statistics.
+      </p>
+    </subsection>
+  </section>
 </chapter>
