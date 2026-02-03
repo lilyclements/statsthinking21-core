@@ -23,7 +23,7 @@ The GitHub Actions workflow (`.github/workflows/deploy-pretext.yml`) will:
 - Deploy the built HTML to GitHub Pages
 
 Your book will be available at:
-**https://lilyclements.github.io/statsthinking21-core/**
+**https://statsthinking21.github.io/statsthinking21-core/**
 
 ## Testing the Workflow
 

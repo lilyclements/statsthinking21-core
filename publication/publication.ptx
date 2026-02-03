@@ -3,7 +3,7 @@
   <!-- Configuration for HTML output -->
   <common>
     <!-- Set the base URL for the online version -->
-    <baseurl href="https://lilyclements.github.io/statsthinking21-core/"/>
+    <baseurl href="https://statsthinking21.github.io/statsthinking21-core/"/>
   </common>
   
   <source>
