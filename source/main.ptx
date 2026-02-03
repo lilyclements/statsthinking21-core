@@ -39,13 +39,160 @@
 
       <preface xml:id="preface">
         <title>Preface</title>
-        <p>
-          The goal of this book is to tell the story of statistics as it is used today by researchers around the world.
-          It's a different story than the one told in most introductory statistics books, which focus on teaching how to
-          use a set of tools to achieve very specific goals. This book focuses on understanding the basic ideas of
-          <em>statistical thinking</em> <mdash/> a systematic way of thinking about how we describe the world and use data to make
-          decisions and predictions, all in the context of the inherent uncertainty that exists in the real world.
-        </p>
+        
+        <section xml:id="preface-about-version">
+          <title>About This PreTeXt Version</title>
+          <p>
+            This is a PreTeXt version of <em>Statistical Thinking for the 21st Century</em>, originally authored by Russell A. Poldrack.
+            The original work is available at <url href="https://github.com/statsthinking21/statsthinking21-core" visual="github.com/statsthinking21/statsthinking21-core">github.com/statsthinking21/statsthinking21-core</url>.
+          </p>
+          <p>
+            <alert>Full Credit to Russell A. Poldrack:</alert> All content in this book was created by Russell A. Poldrack, 
+            Professor of Psychology at Stanford University. This PreTeXt conversion maintains his original content, 
+            attributions, and acknowledgements in their entirety.
+          </p>
+          <p>
+            <alert>Original Copyright:</alert> Copyright 2019 Russell A. Poldrack. This work is licensed under the 
+            Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+          </p>
+          <p>
+            If you encounter any issues specific to this PreTeXt rendering or format, please report them at 
+            <url href="https://github.com/lilyclements/statsthinking21-core/issues" visual="github.com/lilyclements/statsthinking21-core/issues">the PreTeXt version repository</url>. 
+            For content-related issues with the original material, please refer to the 
+            <url href="https://github.com/statsthinking21/statsthinking21-core" visual="github.com/statsthinking21/statsthinking21-core">original repository</url>.
+          </p>
+        </section>
+
+        <section xml:id="preface-intro">
+          <title>Introduction</title>
+          <p>
+            The goal of this book is to the tell the story of statistics as it is used today by researchers around the world. 
+            It's a different story than the one told in most introductory statistics books, which focus on teaching how to use 
+            a set of tools to achieve very specific goals. This book focuses on understanding the basic ideas of statistical 
+            thinking <mdash/> a systematic way of thinking about how we describe the world and use data to make decisions and 
+            predictions, all in the context of the inherent uncertainty that exists in the real world. It also brings to bear 
+            current methods that have only become feasible in light of the amazing increases in computational power that have 
+            happened in the last few decades. Analyses that would have taken years in the 1950's can now be completed in a few 
+            seconds on a standard laptop computer, and this power unleashes the ability to use computer simulation to ask 
+            questions in new and powerful ways.
+          </p>
+          <p>
+            The book is also written in the wake of the reproducibility crisis that has engulfed many areas of science since 2010. 
+            One of the important roots of this crisis is found in the way that statistical hypothesis testing has been used (and abused) 
+            by researchers (as I detail in the final chapter of the book), and this ties directly back to statistical education. 
+            Thus, a goal of the book is to highlight the ways in which current statistical methods may be problematic, and to suggest 
+            alternatives.
+          </p>
+        </section>
+
+        <section xml:id="preface-why-exists">
+          <title>Why does this book exist?</title>
+          <p>
+            In 2018 I began teaching an undergraduate statistics course at Stanford (Psych 10/Stats 60). I had never taught statistics 
+            before, and this was a chance to shake things up. I have been increasingly unhappy with undergraduate statistics education 
+            in psychology, and I wanted to bring a number of new ideas and approaches to the class. In particular, I wanted to bring to 
+            bear the approaches that are increasingly used in real statistical practice in the 21st century. As Brad Efron and Trevor 
+            Hastie laid out so nicely in their book <q>Computer Age Statistical Inference: Algorithms, Evidence, and Data Science</q>, 
+            these methods take advantage of today's increased computing power to solve statistical problems in ways that go far beyond 
+            the more standard methods that are usually taught in the undergraduate statistics course for psychology students.
+          </p>
+          <p>
+            The first year that I taught the class, I used Andy Field's amazing graphic novel statistics book, <q>An Adventure in 
+            Statistics</q>, as the textbook. There are many things that I really like about this book <mdash/> in particular, I like 
+            the way that it frames statistical practice around the building of models, and treats null hypothesis testing with sufficient 
+            caution. Unfortunately, many of my students disliked the book (except for the English majors, who loved it!), primarily because 
+            it involved wading through a lot of story to get to the statistical knowledge. I also found it wanting because there are a 
+            number of topics (particularly those from the burgeoning field of artificial intelligence known as machine learning) that I 
+            wanted to include but were not discussed in his book. I ultimately came to feel that the students would be best served by a 
+            book that follows very closely to my lectures, so I started writing down my lectures into a set of computational notebooks that 
+            would ultimately become this book. The outline of this book follows roughly that of Field's book, since the lectures were 
+            originally based in large part on the flow of that book, but the content is substantially different (and almost certainly much 
+            less fun and clever). I also tailored this book for the 10-week quarter system that we use at Stanford, which provides less 
+            time than the 16-week semester that most statistical textbooks are built for.
+          </p>
+        </section>
+
+        <section xml:id="preface-golden-age">
+          <title>The golden age of data</title>
+          <p>
+            Throughout this book I have tried when possible to use examples from real data. This is now very easy because we are swimming 
+            in open datasets, as governments, scientists, and companies are increasingly making data freely available. I think that using 
+            real datasets is important because it prepares students to work with real data rather than toy datasets, which I think should 
+            be one of the major goals of statistical training. It also helps us realize (as we will see at various points throughout the 
+            book) that data don't always come to us ready to analyze, and often need wrangling to help get them into shape. Using real 
+            data also shows that the idealized statistical distributions often assumed in statistical methods don't always hold in the real 
+            world <mdash/> for example, as we will see in Chapter 3, distributions of some real-world quantities (like the number of friends 
+            on Facebook) can have very long tails that can break many standard assumptions.
+          </p>
+          <p>
+            I apologize up front that the datasets are heavily US-centric. This is primarily because the best dataset for many of the 
+            demonstrations is the National Health and Nutrition Examination Surveys (NHANES) dataset that is available as an R package, 
+            and because many of the other complex datasets included in R (such as those in the fivethirtyeight package) are also based in 
+            the US. If you have suggestions for datasets from other regions, please pass them along to me!
+          </p>
+        </section>
+
+        <section xml:id="preface-doing-statistics">
+          <title>The importance of doing statistics</title>
+          <p>
+            The only way to really learn statistics is to do statistics. While historically many statistics courses were taught using 
+            point-and-click statistical software, it is increasingly common for statistical education to use open-source languages in which 
+            students can code their own analyses. I think that being able to code one's analyses is essential in order to gain a deep 
+            appreciation for statistical analysis, which is why the students in my course at Stanford are expected to learn to use the R 
+            statistical programming language to analyze data, alongside the theoretical knowledge that they learn from this book.
+          </p>
+          <p>
+            There are two online companions to this textbook that can help the reader get started learning to program; 
+            <url href="https://statsthinking21.github.io/statsthinking21-R-site/" visual="statsthinking21.github.io/statsthinking21-R-site/">one focuses on the R programming language</url>, 
+            and <url href="https://statsthinking21.github.io/statsthinking21-python/" visual="statsthinking21.github.io/statsthinking21-python/">another focuses on the Python language</url>. 
+            Both are currently works in progress <mdash/> please feel free to contribute!
+          </p>
+        </section>
+
+        <section xml:id="preface-open-source">
+          <title>An open source book</title>
+          <p>
+            This book is meant to be a living document, which is why its source is available online at 
+            <url href="https://github.com/statsthinking21/statsthinking21-core" visual="github.com/statsthinking21/statsthinking21-core">https://github.com/statsthinking21/statsthinking21-core</url>. 
+            If you find any errors in the book or want to make a suggestion for how to improve it, please open an issue on the Github site. 
+            Even better, submit a pull request with your suggested change.
+          </p>
+          <p>
+            The book is licensed according to the 
+            <url href="https://creativecommons.org/licenses/by-nc/4.0/" visual="creativecommons.org/licenses/by-nc/4.0">Creative Commons Attribution-NonCommercial 4.0 Generic (CC BY-NC 4.0) License</url>. 
+            Please see the terms of that license for more details.
+          </p>
+        </section>
+
+        <section xml:id="preface-acknowledgements">
+          <title>Acknowledgements</title>
+          <p>
+            I'd first like to thank Susan Holmes, who first inspired me to consider writing my own statistics book. Anna Khazenzon provided 
+            early comments and inspiration. Lucy King provided detailed comments and edits on the entire book, and helped clean up the code 
+            so that it was consistent with the Tidyverse. Michael Henry Tessler provided very helpful comments on the Bayesian analysis 
+            chapter. Particular thanks also go to Yihui Xie, creator of the Bookdown package, for improving the book's use of Bookdown 
+            features (including the ability for users to directly generate edits via the Edit button). Finally, Jeanette Mumford provided 
+            very helpful suggestions on the entire book.
+          </p>
+          <p>
+            I'd also like to thank others who provided helpful comments and suggestions: Athanassios Protopapas, Wesley Tansey, Jack Van 
+            Horn, Thor Aspelund.
+          </p>
+          <p>
+            Thanks to the following Twitter users for helpful suggestions: @enoriverbend
+          </p>
+          <p>
+            Thanks to the following individuals who have contributed edits or issues by Github or email: Isis Anderson, Larissa Bersh, 
+            Isil Bilgin, Forrest Dollins, Chuanji Gao, Nate Guimond, Alan He, Wu Jianxiao, James Kent, Dan Kessler, Philipp Kuhnke, 
+            Leila Madeleine, Lee Matos, Ryan McCormick, Jarod Meng, Kirsten Mettler, Shanaathanan Modchalingam, Martijn Stegeman, 
+            Mehdi Rahim, Jassary Rico-Herrera, Mingquian Tan, Wenjin Tao, Laura Tobar, Albane Valenzuela, Alexander Wang, Michael Waskom, 
+            barbyh, basicv8vc, brettelizabeth, codetrainee, dzonimn, epetsen, carlosivanr, hktang, jiamingkong, khtan, kiyofumi-kan, 
+            NevenaK, ttaweel.
+          </p>
+          <p>
+            Special thanks to Isil Bilgin for assistance in fixing many of these issues.
+          </p>
+        </section>
       </preface>
     </frontmatter>
 
