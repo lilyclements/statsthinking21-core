@@ -11,26 +11,14 @@ output:
 # Data Visualization {#data-visualization}
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
+source("R/setup.R")
 library(ggplot2)
-library(cowplot)
-library(knitr)
-library(NHANES)
 
-# drop duplicated IDs within the NHANES dataset
-NHANES=NHANES %>% dplyr::distinct(ID,.keep_all=TRUE)
-
-NHANES$isChild <- NHANES$Age<18
-
-NHANES_adult=NHANES %>%
-  drop_na(Height) %>%
-  subset(subset=Age>=18)
-
-# setup colorblind palette
-# from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
-# The palette with grey:
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
+NHANES_adult <- nhanes_data$NHANES_adult
 ```
 
 On January 28, 1986, the Space Shuttle Challenger exploded 73 seconds after takeoff, killing all 7 of the astronauts on board.  As when any such disaster occurs, there was an official investigation into the cause of the accident, which found that an O-ring connecting two sections of the solid rocket booster leaked, resulting in failure of the joint and explosion of the large liquid fuel tank (see figure \@ref(fig:srbLeak)).

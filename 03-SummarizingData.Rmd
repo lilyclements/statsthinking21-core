@@ -14,11 +14,7 @@ In this Chapter we will discuss why and how to summarize data.
 
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
-library(cowplot)
-library(knitr)
-options(digits = 2)
-
+source("R/setup.R")
 ```
 
 ## Why summarize data?
@@ -40,16 +36,10 @@ knitr::include_graphics("images/Sales_contract_Shuruppak_Louvre_AO3760.jpg")
 
 
 ```{r LoadNHANES, echo=FALSE}
-# load the NHANES data library
-library(NHANES)
-
-# drop duplicated IDs within the NHANES dataset
-NHANES <- 
-  NHANES %>% 
-  distinct(ID, .keep_all = TRUE)
-
-# open the help page for the dataset
-# help(NHANES)
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
 ```
 
 Let's look at some examples of the use of tables, using a more realistic dataset.  Throughout this book we will use the [National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) dataset.  This is an ongoing study that assesses the health and nutrition status of a sample of individuals from the United States on many different variables.  We will use a version of the dataset that is available for the R statistical software package.   For this example, we will look at a simple variable, called *PhysActive* in the dataset.  This variable contains one of three different values: "Yes" or "No" (indicating whether or not the person reports doing "moderate or vigorous-intensity sports, fitness or recreational activities"), or "NA" if the data are missing for that individual. There are different reasons that the data might be missing; for example, this question was not asked of children younger than 12 years of age, while in other cases an adult may have declined to answer the question during the interview, or the interviewer's recording of the answer on their form might be unreadable. 

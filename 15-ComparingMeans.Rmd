@@ -10,33 +10,26 @@ output:
 # Comparing means {#comparing-means}
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
+source("R/setup.R")
 library(ggplot2)
 library(tidyr)
 library(fivethirtyeight)
 library(BayesFactor)
 library(lme4)
 library(lmerTest)
-library(cowplot)
-library(knitr)
 library(emmeans)
 
 set.seed(123456) # set random seed to exactly replicate results
 
-# load the NHANES data library
-library(NHANES)
-
-# drop duplicated IDs within the NHANES dataset
-NHANES <- 
-  NHANES %>% 
-  dplyr::distinct(ID,.keep_all=TRUE)
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
 
 NHANES_adult <- 
   NHANES %>%
   subset(Age>=18) %>%
   drop_na(BMI)
-
-
 ```
 
 We have already encountered a number of cases where we wanted to ask questions about the mean of a sample.  In this chapter, we will delve deeper into the various ways that we can compare means across groups.

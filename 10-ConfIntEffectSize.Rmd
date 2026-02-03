@@ -14,29 +14,23 @@ In the previous chapter we discussed how we can use data to test hypotheses.  Th
 In this chapter we will discuss methods to address these two questions: confidence intervals to provide a measure of our uncertainty about our estimates, and effect sizes to provide a standardized way to understand how large the effects are. We will also discuss the concept of *statistical power* which tells us how likely we are to find any true effects that actually exist.
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
+source("R/setup.R")
 library(ggplot2)
-library(cowplot)
 library(boot)
 library(MASS)
 library(pwr)
+
 set.seed(123456) # set random seed to exactly replicate results
 
-library(knitr)
-
-# load the NHANES data library
-library(NHANES)
-
-# drop duplicated IDs within the NHANES dataset
-NHANES <-
-  NHANES %>% 
-  dplyr::distinct(ID,.keep_all=TRUE)
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
 
 NHANES_adult <- 
   NHANES %>%
   drop_na(Weight) %>%
   subset(Age>=18)
-
 ```
 
 ## Confidence intervals

@@ -26,8 +26,8 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.width=6, fig.height=6, #echo=FALSE, 
-                      warning=FALSE, message=FALSE)
+# Source common setup file
+source("R/setup.R")
 ```
 
 # Preface {-}

@@ -15,7 +15,7 @@ output:
 # import MASS first because it otherwise will mask dplyr::select
 library(MASS)
 
-library(tidyverse)
+source("R/setup.R")
 library(ggdendro)
 library(psych)
 library(gplots)

@@ -10,28 +10,24 @@ output:
 # Practical statistical modeling {#practical-example}
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
+source("R/setup.R")
 library(ggplot2)
 library(BayesFactor)
 library(emmeans)
 library(brms)
-library(cowplot)
-library(knitr)
 library(ggfortify)
 
 set.seed(123456) # set random seed to exactly replicate results
 
-# load the NHANES data library
-library(NHANES)
-
-# drop duplicated IDs within the NHANES dataset
-NHANES <- 
-  NHANES %>% 
-  dplyr::distinct(ID,.keep_all=TRUE)
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
 
 NHANES_adult <- 
   NHANES %>%
   subset(Age>=18)
+```
 
 ```
 

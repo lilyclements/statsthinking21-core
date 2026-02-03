@@ -10,8 +10,7 @@ output:
 # Introduction {#introduction}
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
-
+source("R/setup.R")
 ```
 
 "Statistical thinking will one day be as necessary for efficient citizenship as the ability to read and write.” - H.G. Wells

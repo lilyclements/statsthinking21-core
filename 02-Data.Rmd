@@ -10,8 +10,7 @@ output:
 # Working with data {#working-with-data}
 
 ```{r echo=FALSE}
-library(tidyverse)
-library(cowplot)
+source("R/setup.R")
 ```
 
 ## What are data?

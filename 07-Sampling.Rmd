@@ -10,10 +10,8 @@ output:
 # Sampling {#sampling} 
 
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
-library(tidyverse)
+source("R/setup.R")
 library(ggplot2)
-library(knitr)
-library(cowplot)
 ```
 
 One of the foundational ideas in statistics is that we can make inferences about an entire population based on a relatively small sample of individuals from that population.  In this chapter we will introduce the concept of statistical sampling and discuss why it works.
@@ -36,13 +34,10 @@ Sampling error is directly related to the quality of our measurement of the popu
 We will use the NHANES dataset as an example; we are going to assume that the NHANES dataset is the entire population of interest,  and then we will draw random samples from this population. We will have more to say in the next chapter about exactly how the generation of "random" samples works in a computer.
 
 ```{r echo=FALSE}
-# load the NHANES data library
-library(NHANES)
-
-# create a NHANES dataset without duplicated IDs 
-NHANES <-
-  NHANES %>%
-  distinct(ID, .keep_all = TRUE) 
+# Load and clean NHANES data
+source("R/load_data.R")
+nhanes_data <- load_nhanes()
+NHANES <- nhanes_data$NHANES
 
 #create a dataset of only adults
 NHANES_adult <- 
