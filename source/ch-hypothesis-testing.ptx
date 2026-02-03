@@ -499,7 +499,7 @@
     </p>
   </section>
 
-  <section xml:id="sec-learning-objectives">
+  <section xml:id="sec-hypothesis-testing-learning-objectives">
     <title>Learning objectives</title>
     <ul>
       <li>Identify the components of a hypothesis test, including the parameter of interest, the null and alternative hypotheses, and the test statistic.</li>
@@ -511,7 +511,7 @@
     </ul>
   </section>
 
-  <section xml:id="sec-suggested-readings">
+  <section xml:id="sec-hypothesis-testing-suggested-readings">
     <title>Suggested readings</title>
     <ul>
       <li><url href="https://library.mpib-berlin.mpg.de/ft/gg/GG_Mindless_2004.pdf" visual="library.mpib-berlin.mpg.de">Mindless Statistics, by Gerd Gigerenzer</url></li>
