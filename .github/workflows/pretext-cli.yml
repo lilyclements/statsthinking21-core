@@ -40,7 +40,6 @@ jobs:
 
             - name: build deploy targets
               run: |
-                cd PreText
                 version="$(pretext --version)"
                 major="$(echo $version | cut -d '.' -f 1)"
                 minor="$(echo $version | cut -d '.' -f 2)"
@@ -52,13 +51,13 @@ jobs:
                     pretext build
                 fi
             - name: stage deployment
-              run: cd PreText && pretext deploy --stage-only
+              run: pretext deploy --stage-only
 
             - name: Bundle output/stage as artifact
               uses: actions/upload-artifact@v4
               with:
                   name: deploy
-                  path: PreText/output/stage
+                  path: output/stage
 
     deploy-cloudflare:
         runs-on: ubuntu-latest
