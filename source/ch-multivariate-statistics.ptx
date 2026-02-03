@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ch-multivariate-statistics" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Multivariate Statistics</title>
+
+  <introduction>
+    <p>
+      <!-- Chapter introduction content goes here -->
+    </p>
+  </introduction>
+
+  <section xml:id="sec-multivariate-intro">
+    <title>Introduction to Multivariate Analysis</title>
+    <p>
+      <!-- Section content goes here -->
+    </p>
+  </section>
+
+</chapter>

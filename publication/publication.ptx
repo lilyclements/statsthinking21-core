@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<publication>
+  <!-- Configuration for HTML output -->
+  <common>
+    <!-- Set the base URL for the online version -->
+    <baseurl href="https://statsthinking21.github.io/statsthinking21-core/"/>
+  </common>
+  
+  <source>
+    <!-- Directories are specified relative to the main source file -->
+    <directories external="../external" generated="../generated"/>
+  </source>
+</publication>

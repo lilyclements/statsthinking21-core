@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ch-bayesian-statistics" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Bayesian Statistics</title>
+
+  <introduction>
+    <p>
+      <!-- Chapter introduction content goes here -->
+    </p>
+  </introduction>
+
+  <section xml:id="sec-bayes-theorem">
+    <title>Bayes' Theorem</title>
+    <p>
+      <!-- Section content goes here -->
+    </p>
+  </section>
+
+</chapter>

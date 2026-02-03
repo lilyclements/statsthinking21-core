@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ch-practical-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Practical Statistical Modeling</title>
+
+  <introduction>
+    <p>
+      <!-- Chapter introduction content goes here -->
+    </p>
+  </introduction>
+
+  <section xml:id="sec-real-world-examples">
+    <title>Real-World Examples</title>
+    <p>
+      <!-- Section content goes here -->
+    </p>
+  </section>
+
+</chapter>

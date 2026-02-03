@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chapter xml:id="ch-fitting-models" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Fitting Models to Data</title>
+
+  <introduction>
+    <p>
+      <!-- Chapter introduction content goes here -->
+    </p>
+  </introduction>
+
+  <section xml:id="sec-what-is-model">
+    <title>What is a Model?</title>
+    <p>
+      <!-- Section content goes here -->
+    </p>
+  </section>
+
+</chapter>

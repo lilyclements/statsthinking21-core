@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pretext xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
+  <docinfo>
+    <macros>
+      % Add any custom LaTeX macros here
+    </macros>
+    <latex-image-preamble>
+      \usepackage{tikz}
+    </latex-image-preamble>
+  </docinfo>
+
+  <book xml:id="statsthinking21">
+    <title>Statistical Thinking for the 21st Century</title>
+    <subtitle>A Systematic Way of Thinking About Data</subtitle>
+
+    <frontmatter xml:id="frontmatter">
+      <titlepage>
+        <author>
+          <personname>Russell A. Poldrack</personname>
+          <department>Department of Psychology</department>
+          <institution>Stanford University</institution>
+        </author>
+        <date><today /></date>
+      </titlepage>
+
+      <colophon>
+        <copyright>
+          <year>2019<ndash />2026</year>
+          <holder>Russell A. Poldrack</holder>
+          <minilicense>CC BY-NC 4.0 License</minilicense>
+          <shortlicense>
+            This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+            To view a copy of this license, visit
+            <url href="http://creativecommons.org/licenses/by-nc/4.0/" visual="creativecommons.org/licenses/by-nc/4.0">
+            CreativeCommons.org</url>
+          </shortlicense>
+        </copyright>
+      </colophon>
+
+      <preface xml:id="preface">
+        <title>Preface</title>
+        <p>
+          The goal of this book is to tell the story of statistics as it is used today by researchers around the world.
+          It's a different story than the one told in most introductory statistics books, which focus on teaching how to
+          use a set of tools to achieve very specific goals. This book focuses on understanding the basic ideas of
+          <em>statistical thinking</em> <mdash /> a systematic way of thinking about how we describe the world and use data to make
+          decisions and predictions, all in the context of the inherent uncertainty that exists in the real world.
+        </p>
+      </preface>
+    </frontmatter>
+
+    <xi:include href="./ch-introduction.ptx" />
+    <xi:include href="./ch-working-with-data.ptx" />
+    <xi:include href="./ch-summarizing-data.ptx" />
+    <xi:include href="./ch-data-visualization.ptx" />
+    <xi:include href="./ch-fitting-models.ptx" />
+    <xi:include href="./ch-probability.ptx" />
+    <xi:include href="./ch-sampling.ptx" />
+    <xi:include href="./ch-resampling.ptx" />
+    <xi:include href="./ch-hypothesis-testing.ptx" />
+    <xi:include href="./ch-quantifying-effects.ptx" />
+    <xi:include href="./ch-bayesian-statistics.ptx" />
+    <xi:include href="./ch-categorical-relationships.ptx" />
+    <xi:include href="./ch-continuous-relationships.ptx" />
+    <xi:include href="./ch-general-linear-model.ptx" />
+    <xi:include href="./ch-comparing-means.ptx" />
+    <xi:include href="./ch-multivariate-statistics.ptx" />
+    <xi:include href="./ch-practical-examples.ptx" />
+    <xi:include href="./ch-reproducible-research.ptx" />
+
+    <backmatter xml:id="backmatter">
+      <title>Backmatter</title>
+
+      <references xml:id="references">
+        <title>References</title>
+      </references>
+
+      <index>
+        <title>Index</title>
+        <index-list />
+      </index>
+
+    </backmatter>
+
+  </book>
+</pretext>
