@@ -56,6 +56,29 @@
     <p>
       Most statistical software includes functions to generate random numbers for each of the major probability distributions, such as the uniform distribution (all values between 0 and 1 equally), normal distribution, and binomial distribution (e.g. rolling the dice, coin flips). <!-- Figure showing examples of random numbers generated from a uniform or normal distribution would go here (rngExamples) -->
     </p>
+
+    <program language="r">
+      <input>
+# Generate random numbers from different distributions
+# Uniform distribution (all values between 0 and 1 equally likely)
+uniform_data &lt;- runif(10000)
+
+# Normal distribution (bell curve)
+normal_data &lt;- rnorm(10000)
+
+# Visualize
+p1 &lt;- tibble(x = uniform_data) %&gt;% 
+  ggplot(aes(x)) +
+  geom_histogram(bins = 100) + 
+  labs(title = "Uniform")
+
+p2 &lt;- tibble(x = normal_data) %&gt;% 
+  ggplot(aes(x)) +
+  geom_histogram(bins = 100) +
+  labs(title = "Normal")
+      </input>
+    </program>
+
     <p>
       One can also generate random numbers for any distribution using a <em>quantile</em> function for the distribution. This is the inverse of the cumulative distribution function; instead of identifying the cumulative probabilities for a set of values, the quantile function identifies the values for a set of cumulative probabilities. Using the quantile function, we can generate random numbers from a uniform distribution, and then map those into the distribution of interest via its quantile function.
     </p>

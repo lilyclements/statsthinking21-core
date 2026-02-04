@@ -56,6 +56,30 @@
       <p>
         How do we know that empirical probability gives us the right number? The answer to this question comes from the <em>law of large numbers</em>, which shows that the empirical probability will approach the true probability as the sample size increases. We can see this by simulating a large number of coin flips, and looking at our estimate of the probability of heads after each flip. We will spend more time discussing simulation in a later chapter; for now, just assume that we have a computational way to generate a random outcome for each coin flip.
       </p>
+
+      <program language="r">
+        <input>
+# Simulate coin flips to demonstrate law of large numbers
+set.seed(12345)
+nsamples &lt;- 30000  # number of flips
+
+# Create random coin flips with true probability of 0.5
+sampDf &lt;- 
+  tibble( 
+    trial_number = seq(nsamples), 
+    outcomes = rbinom(nsamples, 1, 0.5)
+  ) %&gt;%
+  mutate(mean_probability = cumsum(outcomes) / seq_along(outcomes))
+
+# Plot estimated probability vs trial number
+sampDf %&gt;% 
+  slice(10:nsamples) %&gt;%
+  ggplot(aes(x = trial_number, y = mean_probability)) +
+  geom_line() +
+  geom_hline(yintercept = 0.5, color = "red")
+        </input>
+      </program>
+
       <p>
         A demonstration of the law of large numbers would show that as the number of coin flip trials increases, the estimated probability of heads converges onto the true value of 0.5. However, note that the estimates can be very far off from the true value when the sample sizes are small. A real-world example of this was seen in the 2017 special election for the US Senate in Alabama, which pitted the Republican Roy Moore against Democrat Doug Jones. Early in the evening the vote counts were especially volatile, swinging from a large initial lead for Jones to a long period where Moore had the lead, until finally Jones took the lead to win the race.
       </p>

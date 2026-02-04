@@ -211,6 +211,38 @@
     <title>Odds ratios</title>
     <p>
       We can also represent the relative likelihood of different outcomes in the contingency table using the odds ratio that we introduced earlier, in order to better understand the magnitude of the effect. First, we represent the odds of being stopped for each race, then we compute their ratio:
+
+    <program language="r">
+      <input>
+      # Calculate odds ratio for 2x2 table
+      library(epitools)
+      oddsratio(contingency_table)
+
+      # Manual odds ratio calculation
+      odds1 &lt;- contingency_table[1,1] / contingency_table[1,2]
+      odds2 &lt;- contingency_table[2,1] / contingency_table[2,2]
+      or &lt;- odds1 / odds2
+      log_or &lt;- log(or)
+      cat(sprintf("Odds Ratio: %.2f\n", or))
+      cat(sprintf("Log Odds Ratio: %.2f\n", log_or))
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Calculate odds ratio for 2x2 table
+      library(epitools)
+      oddsratio(contingency_table)
+
+      # Manual odds ratio calculation
+      odds1 &lt;- contingency_table[1,1] / contingency_table[1,2]
+      odds2 &lt;- contingency_table[2,1] / contingency_table[2,2]
+      or &lt;- odds1 / odds2
+      log_or &lt;- log(or)
+      cat(sprintf("Odds Ratio: %.2f\n", or))
+      cat(sprintf("Log Odds Ratio: %.2f\n", log_or))
+      </input>
+    </program>
     </p>
     <md>
       <mrow>

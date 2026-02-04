@@ -11,6 +11,94 @@
     </p>
     <p>
       Second, we may want to take a large number of variables and reduce them to a smaller number of variables in a way that retains as much information as possible. This is referred to as <em>dimensionality reduction</em>, where <q>dimensionality</q> refers to the number of variables in the dataset. We will discuss two techniques commonly used for dimensionality reduction, known as <em>principal component analysis</em> and <em>factor analysis</em>.
+
+    <program language="r">
+      <input>
+      # Factor Analysis
+      library(psych)
+
+      # Determine number of factors
+      fa.parallel(data_numeric, fa = "fa")
+
+      # Perform factor analysis
+      fa_result &lt;- fa(data_numeric, nfactors = 2, rotate = "varimax")
+      print(fa_result)
+
+      # Factor loadings
+      fa_result$loadings
+
+      # Factor scores
+      factor_scores &lt;- factor.scores(data_numeric, fa_result)
+      head(factor_scores$scores)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Principal Component Analysis
+      # Prepare data (numeric variables only)
+      data_numeric &lt;- data[, sapply(data, is.numeric)]
+
+      # Standardize and perform PCA
+      pca_result &lt;- prcomp(data_numeric, scale. = TRUE)
+
+      # Summary of variance explained
+      summary(pca_result)
+
+      # Scree plot
+      plot(pca_result, type = "l", main = "Scree Plot")
+
+      # Biplot
+      biplot(pca_result)
+
+      # Loadings
+      pca_result$rotation[, 1:2]
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Factor Analysis
+      library(psych)
+
+      # Determine number of factors
+      fa.parallel(data_numeric, fa = "fa")
+
+      # Perform factor analysis
+      fa_result &lt;- fa(data_numeric, nfactors = 2, rotate = "varimax")
+      print(fa_result)
+
+      # Factor loadings
+      fa_result$loadings
+
+      # Factor scores
+      factor_scores &lt;- factor.scores(data_numeric, fa_result)
+      head(factor_scores$scores)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Principal Component Analysis
+      # Prepare data (numeric variables only)
+      data_numeric &lt;- data[, sapply(data, is.numeric)]
+
+      # Standardize and perform PCA
+      pca_result &lt;- prcomp(data_numeric, scale. = TRUE)
+
+      # Summary of variance explained
+      summary(pca_result)
+
+      # Scree plot
+      plot(pca_result, type = "l", main = "Scree Plot")
+
+      # Biplot
+      biplot(pca_result)
+
+      # Loadings
+      pca_result$rotation[, 1:2]
+      </input>
+    </program>
     </p>
     <p>
       Clustering and dimensionality reduction are often classified as forms of <em>unsupervised learning</em>; this is in contrast to <em>supervised learning</em> which characterizes models such as linear regression that you've learned about so far. The reason that we consider linear regression to be <q>supervised</q> is that we know the value of thing that we are trying to predict (i.e. the dependent variable) and we are trying to find the model that best predicts those values. In unspervised learning, we don't have a specific value that we are trying to predict; instead, we are trying to discover structure in the data that might be useful for understanding what's going on, which generally requires some assumptions about what kind of structure we want to find.

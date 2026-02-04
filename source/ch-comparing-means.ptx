@@ -48,6 +48,12 @@
     
     <p>
       Remember that a large p-value doesn't provide us with evidence in favor of the null hypothesis, since we had already assumed that the null hypothesis is true to start with. However, as we discussed in the chapter on Bayesian analysis, we can use the Bayes factor to quantify evidence for or against the null hypothesis. The Bayes factor listed here (approximately <m>2.73 \times 10^{16}</m>) denotes the fact that there is exceedingly strong evidence in favor of the null hypothesis over the alternative.
+
+    <program language="r">
+      <input>
+      ttestBF(NHANES_sample$BPDiaAve, mu=80, nullInterval=c(-Inf, 80))
+      </input>
+    </program>
     </p>
   </section>
 
@@ -145,6 +151,16 @@
     
     <p>
       We see that there does not seem to be much of a difference in mean blood pressure (about one point) between the first and second measurement. First let's test for a difference using an independent samples t-test, which ignores the fact that pairs of data points come from the same individuals. This analysis shows no significant difference. However, this analysis is inappropriate since it assumes that the two samples are independent, when in fact they are not, since the data come from the same individuals. We can plot the data with a line for each individual to show this (see the right panel in Figure <xref ref="fig-bp-measurements"/>).
+
+    <program language="r">
+      <input>
+      # Independent samples t-test
+      t.test(BMI ~ PhysActive, data = NHANES_adult)
+
+      # Welch's t-test (unequal variances)
+      t.test(BMI ~ PhysActive, data = NHANES_adult, var.equal = FALSE)
+      </input>
+    </program>
     </p>
     
     <p>

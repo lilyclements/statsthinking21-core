@@ -8,6 +8,60 @@
     </p>
     <p>
       In this chapter we will discuss methods to address these two questions: confidence intervals to provide a measure of our uncertainty about our estimates, and effect sizes to provide a standardized way to understand how large the effects are. We will also discuss the concept of <em>statistical power</em> which tells us how likely we are to find any true effects that actually exist.
+
+    <program language="r">
+      <input>
+      # Calculate Cohen's d effect size
+      library(effsize)
+      cohen.d(BMI ~ PhysActive, data = NHANES_sample)
+
+      # Manual calculation
+      group1 &lt;- NHANES_sample$BMI[NHANES_sample$PhysActive == "No"]
+      group2 &lt;- NHANES_sample$BMI[NHANES_sample$PhysActive == "Yes"]
+      mean_diff &lt;- mean(group1) - mean(group2)
+      pooled_sd &lt;- sqrt((var(group1) + var(group2)) / 2)
+      cohens_d &lt;- mean_diff / pooled_sd
+      print(cohens_d)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Calculate 95% CI for mean
+      mean_val &lt;- mean(data$variable)
+      se &lt;- sd(data$variable) / sqrt(length(data$variable))
+      ci_lower &lt;- mean_val - qt(0.975, df = length(data$variable) - 1) * se
+      ci_upper &lt;- mean_val + qt(0.975, df = length(data$variable) - 1) * se
+      c(ci_lower, ci_upper)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Calculate Cohen's d effect size
+      library(effsize)
+      cohen.d(BMI ~ PhysActive, data = NHANES_sample)
+
+      # Manual calculation
+      group1 &lt;- NHANES_sample$BMI[NHANES_sample$PhysActive == "No"]
+      group2 &lt;- NHANES_sample$BMI[NHANES_sample$PhysActive == "Yes"]
+      mean_diff &lt;- mean(group1) - mean(group2)
+      pooled_sd &lt;- sqrt((var(group1) + var(group2)) / 2)
+      cohens_d &lt;- mean_diff / pooled_sd
+      print(cohens_d)
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Calculate 95% CI for mean
+      mean_val &lt;- mean(data$variable)
+      se &lt;- sd(data$variable) / sqrt(length(data$variable))
+      ci_lower &lt;- mean_val - qt(0.975, df = length(data$variable) - 1) * se
+      ci_upper &lt;- mean_val + qt(0.975, df = length(data$variable) - 1) * se
+      c(ci_lower, ci_upper)
+      </input>
+    </program>
     </p>
   </introduction>
 

@@ -243,6 +243,44 @@
     <title>Bayesian hypothesis testing</title>
     <p>
       Having learned how to perform Bayesian estimation, we now turn to the use of Bayesian methods for hypothesis testing. Let's say that there are two politicians who differ in their beliefs about whether the public is in favor an extra tax to support the national parks. Senator Smith thinks that only 40% of people are in favor of the tax, whereas Senator Jones thinks that 60% of people are in favor. They arrange to have a poll done to test this, which asks 1000 randomly selected people whether they support such a tax. The results are that 490 of the people in the polled sample were in favor of the tax. Based on these data, we would like to know: Do the data support the claims of one senator over the other,and by how much? We can test this using a concept known as the <url href="https://bayesfactor.blogspot.com/2014/02/the-bayesfactor-package-this-blog-is.html">Bayes factor</url>, which quantifies which hypothesis is better by comparing how well each predicts the observed data.
+
+    <program language="r">
+      <input>
+      # Bayesian t-test with Bayes Factor
+      library(BayesFactor)
+
+      # Two-sample Bayesian t-test
+      bf &lt;- ttestBF(formula = BMI ~ PhysActive, data = NHANES_sample)
+      print(bf)
+
+      # Extract and interpret Bayes Factor
+      bf_value &lt;- extractBF(bf)$bf
+      cat(sprintf("Bayes Factor: %.2f\n", bf_value))
+
+      # Get posterior samples
+      samples &lt;- posterior(bf, iterations = 10000)
+      plot(samples[, "mu"])
+      </input>
+    </program>
+
+    <program language="r">
+      <input>
+      # Bayesian t-test with Bayes Factor
+      library(BayesFactor)
+
+      # Two-sample Bayesian t-test
+      bf &lt;- ttestBF(formula = BMI ~ PhysActive, data = NHANES_sample)
+      print(bf)
+
+      # Extract and interpret Bayes Factor
+      bf_value &lt;- extractBF(bf)$bf
+      cat(sprintf("Bayes Factor: %.2f\n", bf_value))
+
+      # Get posterior samples
+      samples &lt;- posterior(bf, iterations = 10000)
+      plot(samples[, "mu"])
+      </input>
+    </program>
     </p>
 
     <subsection xml:id="subsec-bayes-factors">

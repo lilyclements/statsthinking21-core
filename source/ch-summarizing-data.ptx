@@ -44,6 +44,16 @@
         A <em>distribution</em> describes how data are divided between different possible values. For this example, let's look at how many people fall into each of the physical activity categories.
       </p>
 
+      <program language="r">
+        <input>
+# Summarize physical activity data
+PhysActive_table &lt;- NHANES %&gt;%
+  dplyr::select(PhysActive) %&gt;%  # select the variable
+  group_by(PhysActive) %&gt;%        # group by values
+  summarize(AbsoluteFrequency = n())  # count the values
+        </input>
+      </program>
+
       <table xml:id="table-phys-active">
         <title>Frequency distribution for PhysActive variable</title>
         <tabular halign="left">
@@ -81,6 +91,21 @@
       <p>
         The relative frequency provides a much easier way to see how big the imbalance is. We can also interpret the relative frequencies as percentages by multiplying them by 100. In this example, we will drop the NA values as well, since we would like to be able to interpret the relative frequencies of active versus inactive people. However, for this to make sense we have to assume that the NA values are missing <q>at random</q>, meaning that their presence or absence is not related to the true value of the variable for that person. For example, if inactive participants were more likely to refuse to answer the question than active participants, then that would <em>bias</em> our estimate of the frequency of physical activity, meaning that our estimate would be different from the true value.
       </p>
+
+      <program language="r">
+        <input>
+# Compute percentages for physical activity categories
+PhysActive_table_filtered &lt;- NHANES %&gt;%
+  drop_na(PhysActive) %&gt;%
+  dplyr::select(PhysActive) %&gt;%
+  group_by(PhysActive) %&gt;%
+  summarize(AbsoluteFrequency = n()) %&gt;%
+  mutate(
+    RelativeFrequency = AbsoluteFrequency / sum(AbsoluteFrequency),
+    Percentage = RelativeFrequency * 100
+  )
+        </input>
+      </program>
 
       <table xml:id="table-phys-active-filtered">
         <title>Absolute and relative frequencies and percentages for PhysActive variable</title>

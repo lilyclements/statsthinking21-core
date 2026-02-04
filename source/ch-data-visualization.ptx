@@ -40,6 +40,31 @@
       There are many different types of plots that we can use, which have different advantages and disadvantages. Let's say that we are interested in characterizing the difference in height between men and women in the NHANES dataset. <xref ref="fig-plot-height"/> shows four different ways to plot these data.
     </p>
 
+    <program language="r">
+      <input>
+# Create different plot types for height by gender
+# Bar graph
+dfmean &lt;- NHANES_adult %&gt;% 
+  group_by(Gender) %&gt;% 
+  summarise(Height=mean(Height))
+
+p1 &lt;- ggplot(dfmean, aes(x=Gender, y=Height)) + 
+  geom_bar(stat="identity", color='gray') + 
+  coord_cartesian(ylim=c(0,210)) +
+  ggtitle('Bar graph')
+
+# Violin plot
+p2 &lt;- ggplot(NHANES_adult, aes(x=Gender, y=Height)) + 
+  geom_violin() +
+  ggtitle('Violin plot')
+
+# Box plot  
+p3 &lt;- ggplot(NHANES_adult, aes(x=Gender, y=Height)) + 
+  geom_boxplot() +
+  ggtitle('Box plot')
+      </input>
+    </program>
+
     <figure xml:id="fig-plot-height">
       <caption>Four different ways of plotting the difference in height between men and women in the NHANES dataset. Panel A plots the means of the two groups, which gives no way to assess the relative overlap of the two distributions. Panel B shows the same bars, but also overlays the data points, jittering them so that we can see their overall distribution. Panel C shows a violin plot, which shows the distribution of the datasets for each group. Panel D shows a box plot, which highlights the spread of the distribution along with any outliers (which are shown as individual points).</caption>
       <image source="plotHeight.png" width="80%">

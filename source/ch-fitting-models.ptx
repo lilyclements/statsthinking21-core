@@ -48,6 +48,21 @@
       Let's look at an example of building a model for data, using the data from NHANES. In particular, we will try to build a model of the height of children in the NHANES sample. First let's load the data and plot them (see <xref ref="fig-child-height"/>).
     </p>
 
+    <program language="r">
+      <input>
+# Select children with good height measurements
+NHANES_child &lt;- 
+  NHANES %&gt;%
+  drop_na(Height) %&gt;%
+  subset(Age &lt; 18)
+
+# Plot histogram of child heights
+NHANES_child %&gt;% 
+  ggplot(aes(Height)) + 
+  geom_histogram(bins = 100)
+      </input>
+    </program>
+
     <figure xml:id="fig-child-height">
       <caption>Histogram of height of children in NHANES.</caption>
       <image source="childHeight.png" width="50%">
